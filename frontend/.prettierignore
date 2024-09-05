@@ -1,0 +1,9 @@
+node_modules/
+assets/
+
+# Ignore artifacts:
+build
+dist
+
+package.json
+package-lock.json
