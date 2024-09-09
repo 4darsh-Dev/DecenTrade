@@ -15,20 +15,20 @@ const InfoCards = () => {
         {
             title: 'Explore NFTs',
             description:
-                'Ai diCoxer on mitigx eamth thea ugh-onm etelly, or rafl feciumae ar agirert exprlatte in extus ardum eson.',
-            buttonText: 'Coag Nat',
+                'Discover and invest in unique digital assets, from art to collectibles, on our platform.',
+            buttonText: 'Learn More',
         },
         {
             title: 'Top Creators',
             description:
-                'Vm all oixet or xellae clant thea ege. Om aal tan yr xein regnar ens egfent expirelie hilects armolor eson.',
-            buttonText: 'Cissa Neft',
+                'Meet the leading artists and creators in the NFT space, showcasing their latest works.',
+            buttonText: 'View Creators',
         },
         {
             title: 'How It Works',
             description:
-                'Vrutleges zon relisio eiam thea eym. Onm etelly, or rafl feciumae ase agirert coexplie in expus ardum eson.',
-            buttonText: 'Cuxg Neft',
+                'Understand the process of buying, selling, and creating NFTs with our easy-to-follow guide.',
+            buttonText: 'Get Started',
         },
     ]
 
