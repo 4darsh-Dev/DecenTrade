@@ -2,6 +2,10 @@
 
 DecenTrade is a decentralized digital marketplace built on the Ethereum blockchain, enabling secure and transparent transactions for digital assets.
 
+## Web App Screenshot
+![Screenshot 2024-09-09 231300](https://github.com/user-attachments/assets/bcc65b91-3104-486f-8f54-f895ed43720e)
+
+
 ## 🌟 Features
 
 - Smart contract-powered listings and purchases
