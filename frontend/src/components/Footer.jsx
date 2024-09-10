@@ -6,6 +6,8 @@ import {
     faInstagram,
 } from '@fortawesome/free-brands-svg-icons'
 
+import logo from '../assets/decentrade-logo.png'
+
 const Footer = () => {
     const waveRef = useRef(null)
 
@@ -22,7 +24,7 @@ const Footer = () => {
     }, [])
 
     return (
-        <footer className="bg-gray-900 my-12 text-white relative pt-20 pb-10">
+        <footer className="bg-gray-900 mt-12 text-white relative pt-20 pb-10">
             <div className="absolute top-0 left-0 w-full overflow-hidden">
                 <svg
                     ref={waveRef}
@@ -44,6 +46,14 @@ const Footer = () => {
                         <p className="text-gray-400">
                             Discover, collect, and sell extraordinary NFTs
                         </p>
+                        <span>
+                            <img
+                                style={{ width: '7.5rem' }}
+                                className="logo-img mt-4 ml-12"
+                                src={logo}
+                                alt={logo}
+                            />
+                        </span>
                     </div>
                     <div>
                         <h4 className="text-lg font-semibold mb-4">
@@ -141,7 +151,8 @@ const Footer = () => {
                 <div className="mt-10 pt-8 border-t border-gray-800 flex justify-between items-center">
                     <p className="text-gray-400">
                         &copy; 2024 DecenTrade. All rights reserved. Powered by
-                        Open Source <FontAwesomeIcon icon="fa-solid fa-heart" />
+                        Open Source
+                        {/* <FontAwesomeIcon icon={faHeart} /> */}
                     </p>
                     <div className="flex space-x-4">
                         <a

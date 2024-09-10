@@ -3,7 +3,14 @@ import { Search } from 'lucide-react'
 
 import logo from '../assets/decentrade-logo.png'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+import { faGithub } from '@fortawesome/free-brands-svg-icons'
+
 const Navbar = () => {
+    const handleGithubClick = () => {
+        window.open('https://github.com/4darsh-Dev/DecenTrade', '_blank')
+    }
     return (
         <nav className="flex items-center justify-between p-4 bg-transparent">
             <div className=" flex items-center text-white text-2xl font-bold">
@@ -42,8 +49,11 @@ const Navbar = () => {
                         size={20}
                     />
                 </div>
-                <button className="bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-full px-6 py-2 hover:opacity-90 transition-opacity">
-                    Github
+                <button
+                    onClick={handleGithubClick}
+                    className="bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-full px-6 py-2 hover:opacity-90 transition-opacity"
+                >
+                    Github <FontAwesomeIcon icon={faGithub} />
                 </button>
             </div>
         </nav>

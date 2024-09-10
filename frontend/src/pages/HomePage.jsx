@@ -7,7 +7,7 @@ import Footer from '../components/Footer'
 const HomePage = () => {
     return (
         <div className="min-h-screen ">
-            <div className="bg-cover bg-center bg-[url('/src/assets/decen-bg2.jpg')]">
+            <div className="bg-cover bg-center bg-[url('/src/assets/decen-bg2.webp')]">
                 <Navbar />
                 <main className="container mx-auto px-4">
                     <HeroSection />
