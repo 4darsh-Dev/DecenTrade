@@ -5,12 +5,13 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
 contract DecentradeNFT is ERC721URIStorage, Ownable {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
 
-    constructor() ERC721("DecentradeNFT", "DNFT") {}
+    constructor() ERC721("DecentradeNFT", "DNFT") Ownable(msg.sender) {}
 
     function mintNFT(
         address recipient,
@@ -64,80 +65,8 @@ contract DecentradeMarketplace is ReentrancyGuard, Ownable {
         uint256 price
     );
 
-    constructor() {
+    constructor() Ownable(msg.sender) {
         marketplaceOwner = payable(msg.sender);
-    }
-
-    function getListingFee() public view returns (uint256) {
-        return listingFee;
-    }
-
-    function setListingFee(uint256 _listingFee) public onlyOwner {
-        listingFee = _listingFee;
-    }
-
-    function createMarketItem(
-        address nftContract,
-        uint256 tokenId,
-        uint256 price
-    ) public payable nonReentrant {
-        require(price > 0, "Price must be at least 1 wei");
-        require(msg.value == listingFee, "Price must be equal to listing fee");
-
-        _itemIds.increment();
-        uint256 itemId = _itemIds.current();
-
-        idToMarketItem[itemId] = MarketItem(
-            itemId,
-            nftContract,
-            tokenId,
-            payable(msg.sender),
-            payable(address(0)),
-            price,
-            false
-        );
-
-        IERC721(nftContract).transferFrom(msg.sender, address(this), tokenId);
-
-        emit MarketItemCreated(
-            itemId,
-            nftContract,
-            tokenId,
-            msg.sender,
-            address(0),
-            price,
-            false
-        );
-    }
-
-    function createMarketSale(
-        address nftContract,
-        uint256 itemId
-    ) public payable nonReentrant {
-        uint256 price = idToMarketItem[itemId].price;
-        uint256 tokenId = idToMarketItem[itemId].tokenId;
-        require(
-            msg.value == price,
-            "Please submit the asking price in order to complete the purchase"
-        );
-
-        idToMarketItem[itemId].seller.transfer(msg.value);
-        IERC721(nftContract).transferFrom(address(this), msg.sender, tokenId);
-        idToMarketItem[itemId].owner = payable(msg.sender);
-        idToMarketItem[itemId].sold = true;
-        _itemsSold.increment();
-        payable(marketplaceOwner).transfer(listingFee);
-
-        tokenIdToOwnershipHistory[tokenId].push(msg.sender);
-
-        emit MarketItemSold(
-            itemId,
-            nftContract,
-            tokenId,
-            idToMarketItem[itemId].seller,
-            msg.sender,
-            price
-        );
     }
 
     function fetchMarketItems() public view returns (MarketItem[] memory) {
