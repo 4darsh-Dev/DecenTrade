@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
 import HomePage from './pages/HomePage'
+import NFTMarketplace from './components/NFTMarketplace'
 
 function App() {
     return (
@@ -17,6 +18,7 @@ function AppContent() {
         <>
             {/* <AnimatedCursor /> */}
             {/* <Navbar background={isOrchardRoute ? '#f4f4f4' : 'transparent'} /> */}
+            <NFTMarketplace />
             <Routes>
                 <Route path="/" element={<HomePage />} />
                 {/* <Route path="/register" element={<RegisterPage />} />
