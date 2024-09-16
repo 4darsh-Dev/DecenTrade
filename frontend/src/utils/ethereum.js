@@ -1,8 +1,9 @@
 // src/utils/ethereum.js
 import { ethers } from 'ethers'
 import { create } from 'ipfs-http-client'
-import DecentradeNFTAbi from '../contracts/DecentradeNFT.json'
-import DecentradeMarketplaceAbi from '../contracts/DecentradeMarketplace.json'
+import { Buffer } from 'buffer'
+import DecentradeNFTAbi from '/home/kalie/work/projects/DecenTrade/smart-contracts/artifacts/contracts/Marketplace.sol/DecentradeNFT.json'
+import DecentradeMarketplaceAbi from '/home/kalie/work/projects/DecenTrade/smart-contracts/artifacts/contracts/Marketplace.sol/DecentradeMarketplace.json'
 
 const nftAddress = 'YOUR_DEPLOYED_NFT_CONTRACT_ADDRESS'
 const marketplaceAddress = 'YOUR_DEPLOYED_MARKETPLACE_CONTRACT_ADDRESS'
@@ -115,4 +116,56 @@ export const buyNFT = async (signer, nftContract, itemId, price) => {
     )
     await transaction.wait()
     return transaction
+}
+
+export const listNFT = async (signer, tokenId, price) => {
+    try {
+        const marketplaceContract = getMarketplaceContract(signer)
+        const listingPrice = await marketplaceContract.getListingFee()
+        const transaction = await marketplaceContract.createMarketItem(
+            nftAddress,
+            tokenId,
+            ethers.utils.parseUnits(price, 'ether'),
+            { value: listingPrice }
+        )
+        await transaction.wait()
+        console.log(`NFT with Token ID ${tokenId} listed successfully.`)
+    } catch (error) {
+        console.error('Error listing NFT:', error)
+    }
+}
+
+export const mintNFT = async (signer, name, description, file) => {
+    try {
+        // Upload image to IPFS
+        const fileUrl = await uploadToIPFS(file)
+
+        // Create metadata
+        const metadata = JSON.stringify({
+            name,
+            description,
+            image: fileUrl,
+        })
+
+        // Upload metadata to IPFS
+        const metadataAdded = await ipfsClient.add(metadata)
+        const metadataUrl = `https://ipfs.infura.io/ipfs/${metadataAdded.path}`
+
+        // Mint NFT using the metadata URL
+        const nftContract = getNFTContract(signer)
+        const transaction = await nftContract.mintNFT(
+            await signer.getAddress(),
+            metadataUrl
+        )
+        const tx = await transaction.wait()
+
+        // Get the minted token ID
+        const event = tx.events[0]
+        const tokenId = event.args[2].toNumber()
+
+        console.log(`NFT minted with Token ID: ${tokenId}`)
+        return tokenId
+    } catch (error) {
+        console.error('Error minting NFT:', error)
+    }
 }
