@@ -1,5 +1,9 @@
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
 import HomePage from './pages/HomePage'
+import NFTMarketplace from './components/NFTMarketplace'
+import CreateNFT from './pages/CreateNFTPage'
+import ExplorePage from './pages/ExplorePage'
+import { useState } from 'react'
 
 function App() {
     return (
@@ -10,22 +14,16 @@ function App() {
 }
 
 function AppContent() {
-    // const location = useLocation()
-    // const isOrchardRoute = location.pathname === '/orchard'
-
+    const [wallet, setWallet] = useState(null)
     return (
         <>
             {/* <AnimatedCursor /> */}
             {/* <Navbar background={isOrchardRoute ? '#f4f4f4' : 'transparent'} /> */}
+            <NFTMarketplace wallet={wallet} setWallet={setWallet} />
             <Routes>
                 <Route path="/" element={<HomePage />} />
-                {/* <Route path="/register" element={<RegisterPage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/marketplace" element={<MarketplacePage />} />
-                <Route path="/profile-creation" element={<ProfileCreation />} />
-                <Route path="/orchard" element={<OrchardPage />} />
-                <Route path="/farm-management" element={<FarmManagement />} />
-                <Route path="/models-report" element={<ModelsReport />} /> */}
+                <Route path="/create" element={<CreateNFT wallet={wallet} />} />
+                <Route path="/explore" element={<ExplorePage />} />
             </Routes>
         </>
     )
