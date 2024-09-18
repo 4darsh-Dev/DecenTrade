@@ -3,6 +3,7 @@ import HomePage from './pages/HomePage'
 import NFTMarketplace from './components/NFTMarketplace'
 import CreateNFT from './pages/CreateNFTPage'
 import ExplorePage from './pages/ExplorePage'
+import { useState } from 'react'
 
 function App() {
     return (
@@ -13,14 +14,15 @@ function App() {
 }
 
 function AppContent() {
+    const [wallet, setWallet] = useState(null)
     return (
         <>
             {/* <AnimatedCursor /> */}
             {/* <Navbar background={isOrchardRoute ? '#f4f4f4' : 'transparent'} /> */}
-            <NFTMarketplace />
+            <NFTMarketplace wallet={wallet} setWallet={setWallet} />
             <Routes>
                 <Route path="/" element={<HomePage />} />
-                <Route path="/create" element={<CreateNFT />} />
+                <Route path="/create" element={<CreateNFT wallet={wallet} />} />
                 <Route path="/explore" element={<ExplorePage />} />
             </Routes>
         </>

@@ -27,11 +27,14 @@ export const connectWallet = async () => {
     if (window.ethereum) {
         try {
             await window.ethereum.request({ method: 'eth_requestAccounts' })
-            const provider = new ethers.providers.Web3Provider(window.ethereum)
+            console.log('connection req sent')
+            const provider = new ethers.BrowserProvider(window.ethereum)
+            console.log(provider, 'provider')
             const signer = provider.getSigner()
+            console.log('Wallet connected:', signer)
             return signer
         } catch (error) {
-            console.error('User denied account access')
+            console.error('User denied account access', error)
         }
     } else {
         console.log('Ethereum object not found, install MetaMask.')

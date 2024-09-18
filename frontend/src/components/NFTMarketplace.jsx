@@ -7,8 +7,8 @@ import {
     fetchMarketItems,
 } from '../utils/ethereum'
 
-const WalletConnect = () => {
-    const [wallet, setWallet] = useState(null)
+const WalletConnect = ({wallet,setWallet}) => {
+    
 
     const connect = async () => {
         const signer = await connectWallet()
