@@ -1,0 +1,72 @@
+# Add 'frontend' label to any changes within 'src' folder or sub folders
+frontend:
+  - frontend/src/**/*
+
+# Add 'backend' label to any changes to smart contracts
+backend:
+  - smart-contracts/**/*
+
+# Add 'test' label to any change to test files
+test:
+  - smart-contracts/test/**/*
+  - "**/*.test.js"
+  - "**/*.spec.js"
+
+# Add 'documentation' label to any change in documentation files
+documentation:
+  - "**/*.md"
+  - docs/**/*
+
+# Add 'dependencies' label to any changes in package files
+dependencies:
+  - package.json
+  - package-lock.json
+  - yarn.lock
+
+# Add 'smart contract' label to any change in Solidity files
+smart contract:
+  - "**/*.sol"
+
+# Add 'blockchain' label to any changes related to blockchain interactions
+blockchain:
+  - src/**/*ethereum*
+  - src/**/*web3*
+  - src/**/*wallet*
+
+# Add 'UI' label to any change to React components
+UI:
+  - frontend/src/**/*.jsx
+  - frontend/src/**/*.tsx
+  - frontend/src/**/*.css
+  - frontend/src/**/*.scss
+
+# Add 'config' label to any change in configuration files
+config:
+  - "**/*.config.js"
+  - "**/*.json"
+  - .env*
+
+# Add 'IPFS' label to any changes related to IPFS
+IPFS:
+  - src/**/*ipfs*
+
+# Add 'security' label to any changes in security-related files
+security:
+  - src/**/*auth*
+  - contracts/**/*
+  - "**/*.sol"
+
+# Add 'performance' label to any changes that might affect performance
+performance:
+  - "**/*.sol"
+  - src/**/*optimize*
+  - src/**/*performance*
+
+# Add 'feature' label to any branches that start with 'feature/'
+feature:
+  - "feature/**"
+
+# Add 'bugfix' label to any branches that start with 'fix/' or 'bugfix/'
+bugfix:
+  - "fix/**"
+  - "bugfix/**"
