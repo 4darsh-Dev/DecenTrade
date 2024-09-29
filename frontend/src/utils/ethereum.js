@@ -2,8 +2,8 @@
 import { ethers } from 'ethers'
 import { create } from 'ipfs-http-client'
 import { Buffer } from 'buffer'
-import DecentradeNFTAbi from '/home/kalie/work/projects/DecenTrade/smart-contracts/artifacts/contracts/Marketplace.sol/DecentradeNFT.json'
-import DecentradeMarketplaceAbi from '/home/kalie/work/projects/DecenTrade/smart-contracts/artifacts/contracts/Marketplace.sol/DecentradeMarketplace.json'
+import DecentradeNFTAbi from '../../../smart-contracts/artifacts/contracts/Marketplace.sol/DecentradeNFT.json'
+import DecentradeMarketplaceAbi from '../../../smart-contracts/artifacts/contracts/Marketplace.sol/DecentradeMarketplace.json'
 
 const nftAddress = 'YOUR_DEPLOYED_NFT_CONTRACT_ADDRESS'
 const marketplaceAddress = 'YOUR_DEPLOYED_MARKETPLACE_CONTRACT_ADDRESS'
