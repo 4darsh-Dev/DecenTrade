@@ -1,0 +1,119 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    background: transparent;
+    font-size: 1.25rem;
+}
+
+.navbar-logo {
+    display: flex;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 0 10px #fff, 0 0 20px #ff00ff, 0 0 30px #ff00ff, 0 0 40px #ff00ff;
+}
+
+.logo-img {
+    width: 3rem;
+    margin-right: 1rem;
+}
+
+.navbar-links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.navbar-link {
+    color: #ccc;
+    text-decoration: none;
+    position: relative;
+    transition: color 0.3s, text-shadow 0.3s;
+}
+
+.navbar-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    display: block;
+    margin-top: 5px;
+    right: 0;
+    background: #ff00ff;
+    transition: width 0.3s ease;
+    -webkit-transition: width 0.3s ease;
+}
+
+.navbar-link:hover::after {
+    width: 100%;
+    left: 0;
+    background: #ff00ff;
+}
+
+.navbar-link:hover {
+    color: white;
+    text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 30px #ff00ff;
+}
+
+.navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.search-container {
+    position: relative;
+}
+
+.search-input {
+    background: #333;
+    color: white;
+    border: none;
+    border-radius: 2rem;
+    padding: 0.5rem 1rem 0.5rem 2.5rem;
+    box-shadow: 0 0 10px #ff00ff;
+    transition: box-shadow 0.3s;
+}
+
+.search-input:focus {
+    outline: none;
+    box-shadow: 0 0 20px #ff00ff;
+}
+
+.search-icon {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #ff00ff;
+}
+
+.github-button {
+    background: linear-gradient(45deg, #ff00ff, #00ffff);
+    color: white;
+    border: none;
+    border-radius: 2rem;
+    padding: 0.5rem 1.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.github-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px #ff00ff;
+}
+
+@media (max-width: 768px) {
+    .navbar-links {
+        display: none;
+    }
+    .navbar {
+        flex-direction: column;
+    }
+    .navbar-actions {
+        margin-top: 1rem;
+    }
+}
