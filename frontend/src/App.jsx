@@ -18,7 +18,7 @@ function AppContent() {
     return (
         <>
             {/* <AnimatedCursor /> */}
-            {/* <Navbar background={isOrchardRoute ? '#f4f4f4' : 'transparent'} /> */}
+            {/* <Navbar /> */}
             <NFTMarketplace wallet={wallet} setWallet={setWallet} />
             <Routes>
                 <Route path="/" element={<HomePage />} />
