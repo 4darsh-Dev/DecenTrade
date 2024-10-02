@@ -32,6 +32,8 @@ DecenTrade/
 │ │ ├── utils/
 │ │ │ ├── web3.js
 │ │ │ └── ipfs.js
+│ │ ├── services/
+│ │ │ ├── pinataService.js
 │ │ ├── App.js
 │ │ └── index.js
 │ ├── package.json

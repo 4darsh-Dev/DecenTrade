@@ -1,5 +1,6 @@
 // src/pages/CreateNFT.jsx
-import React, { useState } from 'react'
+import { useState } from 'react'
+import PropTypes from 'prop-types'
 import { createNFT } from '../utils/ethereum'
 
 const CreateNFT = ({ wallet }) => {
@@ -20,10 +21,10 @@ const CreateNFT = ({ wallet }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if (!wallet) {
-            alert('Please connect your wallet')
-            return
-        }
+        // if (!wallet) {
+        //     alert('Please connect your wallet')
+        //     return
+        // }
 
         try {
             const { name, description, price, file } = formData
@@ -116,6 +117,9 @@ const CreateNFT = ({ wallet }) => {
             </form>
         </div>
     )
+}
+CreateNFT.propTypes = {
+    wallet: PropTypes.object.isRequired,
 }
 
 export default CreateNFT
