@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import {
     connectWallet,
     mintNFT,
@@ -7,9 +7,7 @@ import {
     fetchMarketItems,
 } from '../utils/ethereum'
 
-const WalletConnect = ({wallet,setWallet}) => {
-    
-
+const WalletConnect = ({ wallet, setWallet }) => {
     const connect = async () => {
         const signer = await connectWallet()
         setWallet(signer)
