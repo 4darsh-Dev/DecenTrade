@@ -1,0 +1,16 @@
+name: Greetings
+
+on: [pull_request_target, issues]
+
+jobs:
+  greeting:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - uses: actions/first-interaction@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          issue-message: "You've successfully raised your issue, We'll get back to you soon. Don't forget to star⭐ the Repo."
+          pr-message: "You've succesfully made your Pull Request. It will be reviewed soon. Please have patience. Don't forget to star⭐ the Repo."
