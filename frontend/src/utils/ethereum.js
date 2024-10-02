@@ -18,7 +18,7 @@ export const connectWallet = async () => {
             console.log('connection req sent')
             const provider = new ethers.BrowserProvider(window.ethereum)
             console.log(provider, 'provider')
-            const signer = provider.getSigner()
+            const signer = await provider.getSigner()
             console.log('Wallet connected:', signer)
             return signer
         } catch (error) {

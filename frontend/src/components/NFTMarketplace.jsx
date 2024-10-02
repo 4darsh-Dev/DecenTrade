@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
 import {
     connectWallet,
     mintNFT,
@@ -6,6 +7,7 @@ import {
     buyNFT,
     fetchMarketItems,
 } from '../utils/ethereum'
+import { ethers } from 'ethers'
 
 const WalletConnect = ({ wallet, setWallet }) => {
     const connect = async () => {
@@ -115,7 +117,7 @@ export default function NFTMarketplace() {
             <h1 className="text-3xl font-bold mb-4">
                 Decentrade NFT Marketplace
             </h1>
-            <WalletConnect setWallet={setWallet} />
+            <WalletConnect setWallet={setWallet} wallet={wallet} />
             {wallet && (
                 <>
                     <MintNFT wallet={wallet} />
@@ -124,4 +126,14 @@ export default function NFTMarketplace() {
             )}
         </div>
     )
+}
+WalletConnect.propTypes = {
+    wallet: PropTypes.object,
+    setWallet: PropTypes.func.isRequired,
+}
+MintNFT.propTypes = {
+    wallet: PropTypes.object,
+}
+MarketplaceItems.propTypes = {
+    wallet: PropTypes.object,
 }

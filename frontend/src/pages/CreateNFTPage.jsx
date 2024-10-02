@@ -119,7 +119,7 @@ const CreateNFT = ({ wallet }) => {
     )
 }
 CreateNFT.propTypes = {
-    wallet: PropTypes.string.isRequired,
+    wallet: PropTypes.object.isRequired,
 }
 
 export default CreateNFT
