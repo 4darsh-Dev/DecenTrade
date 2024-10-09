@@ -12,8 +12,14 @@ const Navbar = () => {
     return (
         <nav className="navbar">
             <div className="navbar-logo">
-                <img className="logo-img" src={logo} alt="DecenTrade Logo" />
-                DecenTrade
+                <a href="/">
+                    <img
+                        className="logo-img"
+                        src={logo}
+                        alt="DecenTrade Logo"
+                    />
+                </a>
+                <a href="/">DecenTrade</a>
             </div>
             <div className="navbar-links">
                 {[
@@ -26,6 +32,7 @@ const Navbar = () => {
                 ].map((item) => (
                     <a key={item.name} href={item.link} className="navbar-link">
                         {item.name}
+
                     </a>
                 ))}
             </div>
