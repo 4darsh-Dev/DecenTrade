@@ -11,7 +11,7 @@ critical:
   - "(critical|urgent|emergency|severe)"
 high-priority:
   - "(high priority|important|significant)"
-low-priority:
+low-priorit
   - "(low priority|minor|trivial)"
 
 # Component or area
@@ -67,16 +67,16 @@ linux:
   - "(linux|ubuntu|debian|fedora)"
 
 smart contract:
-  - '(?i)\b(smart contract|solidity|ethereum|web3|blockchain)\b'
+  - '(smart contract|solidity|ethereum|web3|blockchain)'
 
 # Add 'IPFS' label to issues mentioning IPFS
 IPFS:
-  - '(?i)\b(ipfs|interplanetary file system|decentralized storage)\b'
+  - '(ipfs|interplanetary file system|decentralized storage)'
 
 # Add 'wallet' label to issues related to wallet functionality
 wallet:
-  - '(?i)\b(wallet|metamask|connect|transaction|gas|eth)\b'
+  - '(wallet|metamask|connect|transaction|gas|eth)'
 
 # Add 'marketplace' label to issues related to marketplace functionality
 marketplace:
-  - '(?i)\b(marketplace|buy|sell|trade|list|item|asset|nft)\b'
+  - '(marketplace|buy|sell|trade|list|item|asset|nft)'
