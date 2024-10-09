@@ -4,6 +4,9 @@ import NFTMarketplace from './components/NFTMarketplace'
 import CreateNFT from './pages/CreateNFTPage'
 import ExplorePage from './pages/ExplorePage'
 import { useState } from 'react'
+import AboutPage from './pages/AboutPage'
+import CreatorsPage from './pages/CreatorsPage'
+import FAQPage from './pages/FAQPage'
 
 function App() {
     return (
@@ -24,6 +27,9 @@ function AppContent() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/create" element={<CreateNFT wallet={wallet} />} />
                 <Route path="/explore" element={<ExplorePage />} />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/creators" element={<CreatorsPage />} />
+                <Route path="/faqs" element={<FAQPage />} />
             </Routes>
         </>
     )

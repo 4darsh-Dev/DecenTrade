@@ -23,15 +23,16 @@ const Navbar = () => {
             </div>
             <div className="navbar-links">
                 {[
-                    'Home',
-                    'Explore',
-                    'About',
-                    'Creators',
-                    'How It Works',
-                    'FAQ',
+                    { name: 'Home', link: '/' },
+                    { name: 'Explore', link: '/explore' },
+                    { name: 'About', link: '/about' },
+                    { name: 'Creators', link: '/creators' },
+                    { name: 'How It Works', link: '/how-it-works' },
+                    { name: 'FAQs', link: '/faqs' },
                 ].map((item) => (
-                    <a key={item} href="#" className="navbar-link">
-                        {item}
+                    <a key={item.name} href={item.link} className="navbar-link">
+                        {item.name}
+
                     </a>
                 ))}
             </div>
