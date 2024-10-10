@@ -40,11 +40,13 @@ git clone https://github.com/4darsh-Dev/DecenTrade.git
 
 ## 🛠️ Tech Stack
 
-- Solidity: Smart contract development
-- ethers.js: JavaScript Library for interacting with Ethereum blockchain
-- React: Front-end framework
-- IPFS: Decentralized storage
-- Hardhat: Ethereum development environment
+- [![Solidity](https://img.shields.io/badge/Solidity-333333?logo=solidity&logoColor=white&style=flat-square&label=)](https://soliditylang.org/)
+- [![ethers.js](https://img.shields.io/badge/ethers.js-4B4B4B?logo=ethereum&logoColor=white&style=flat-square&label=)](https://docs.ethers.io/v5/)
+- [![React](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=black&style=flat-square&label=)](https://reactjs.org/)
+- [![IPFS](https://img.shields.io/badge/IPFS-5E9B8C?logo=ipfs&logoColor=white&style=flat-square&label=)](https://ipfs.io/)
+- [![Hardhat](https://img.shields.io/badge/Hardhat-5C4DE3?logo=hardhat&logoColor=white&style=flat-square&label=)](https://hardhat.org/)
+
+
 
 ## 🤝 Contributing
 
