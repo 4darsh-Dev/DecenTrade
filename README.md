@@ -39,8 +39,8 @@ DecenTrade is a **decentralized digital marketplace** built on the Ethereum bloc
 
 ### Prerequisites
 
-- Node.js (v16.0.0 or later)
-- npm (v6.0.0 or later)
+- Node.js (v20.0.0 or later)
+- npm (v10.8.0 or later)
 - MetaMask or similar Ethereum wallet
 
 ### Installation
@@ -48,24 +48,35 @@ DecenTrade is a **decentralized digital marketplace** built on the Ethereum bloc
 1. Clone the repository
 ```bash
 git clone https://github.com/4darsh-Dev/DecenTrade.git
+cd DecenTrade
 ```
-2. Install dependencies
+2. Install dependencies for smart contracts
 ```bash
-  cd DecenTrade
-  npm install
+  cd smart-contracts
+  yarn install
 ```
 3. Start the Development Server
 ```bash
+  cd frontend
+  npm i
   npm run dev
 ```
 
 ## 🛠️ Tech Stack
+
+- [![Solidity](https://img.shields.io/badge/Solidity-333333?logo=solidity&logoColor=white&style=flat-square&label=)](https://soliditylang.org/)
+- [![ethers.js](https://img.shields.io/badge/ethers.js-4B4B4B?logo=ethereum&logoColor=white&style=flat-square&label=)](https://docs.ethers.io/v5/)
+- [![React](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=black&style=flat-square&label=)](https://reactjs.org/)
+- [![IPFS](https://img.shields.io/badge/IPFS-5E9B8C?logo=ipfs&logoColor=white&style=flat-square&label=)](https://ipfs.io/)
+- [![Hardhat](https://img.shields.io/badge/Hardhat-5C4DE3?logo=hardhat&logoColor=white&style=flat-square&label=)](https://hardhat.org/)
+
 
 - **Solidity**: Smart contract development
 - **ethers.js**: JavaScript library for interacting with the Ethereum blockchain
 - **React**: Front-end framework
 - **IPFS**: Decentralized storage
 - **Hardhat**: Ethereum development environment
+
 
 ## Contributing 🤝
 
