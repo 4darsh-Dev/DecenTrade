@@ -8,8 +8,8 @@ import {
     uploadToIPFS,
 } from '../services/pinataService'
 
-const nftAddress = 'YOUR_DEPLOYED_NFT_CONTRACT_ADDRESS'
-const marketplaceAddress = 'YOUR_DEPLOYED_MARKETPLACE_CONTRACT_ADDRESS'
+const nftAddress = '0x16d8DfCB8FebDbB60E2ce382C5Bf35174ecb4F97'
+const marketplaceAddress = '0x590a018d141Ea9346A501458710D30E80DE3Ef56'
 
 export const connectWallet = async () => {
     if (window.ethereum) {
@@ -30,7 +30,11 @@ export const connectWallet = async () => {
 }
 
 export const getNFTContract = (signer) => {
-    return new ethers.Contract(nftAddress, DecentradeNFTAbi.abi, signer)
+    try {
+        return new ethers.Contract(nftAddress, DecentradeNFTAbi.abi, signer)
+    } catch (e) {
+        console.error(e)
+    }
 }
 
 export const getMarketplaceContract = (signer) => {
@@ -42,40 +46,53 @@ export const getMarketplaceContract = (signer) => {
 }
 
 export const createNFT = async (signer, name, description, price, file) => {
-    testIpfs()
-    const fileUrl = await uploadToIPFS(file)
-    const nftContract = getNFTContract(signer)
-    const marketplaceContract = getMarketplaceContract(signer)
+    try {
+        console.log(signer, name, description, price, file)
+        testIpfs()
+        const fileUrl = await uploadToIPFS(file)
+        const nftContract = getNFTContract(signer)
+        console.log('got nft contract', nftContract)
+        const marketplaceContract = getMarketplaceContract(signer)
+        console.log('got marketplace contract', marketplaceContract)
 
-    // Create NFT metadata
-    const data = JSON.stringify({
-        name,
-        description,
-        image: fileUrl,
-    })
-    const url = await uploadMetadataToIPFS(data)
-    // const added = await ipfsClient.add(data)
-    // const url = `https://ipfs.infura.io/ipfs/${added.path}`
+        // Create NFT metadata
+        const data = JSON.stringify({
+            name,
+            description,
+            image: fileUrl,
+        })
+        const url = await uploadMetadataToIPFS(data)
+        // const added = await ipfsClient.add(data)
+        // const url = `https://ipfs.infura.io/ipfs/${added.path}`
 
-    // Mint NFT
-    let transaction = await nftContract.mintNFT(await signer.getAddress(), url)
-    const tx = await transaction.wait()
+        // Mint NFT
+        if (!signer) {
+            console.log('no signer')
+            throw new Error('No signer')
+        }
+        const signerAddress = await signer.getAddress()
+        let transaction = await nftContract.mintNFT(signerAddress, url)
+        const tx = await transaction.wait()
 
-    const event = tx.events[0]
-    const value = event.args[2]
-    const tokenId = value.toNumber()
+        const event = tx.events[0]
+        const value = event.args[2]
+        const tokenId = value.toNumber()
 
-    // List NFT
-    const listingPrice = await marketplaceContract.getListingFee()
-    transaction = await marketplaceContract.createMarketItem(
-        nftAddress,
-        tokenId,
-        ethers.utils.parseUnits(price, 'ether'),
-        { value: listingPrice }
-    )
-    await transaction.wait()
+        // List NFT
+        const listingPrice = await marketplaceContract.getListingFee()
+        transaction = await marketplaceContract.createMarketItem(
+            nftAddress,
+            tokenId,
+            ethers.utils.parseUnits(price, 'ether'),
+            { value: listingPrice }
+        )
+        await transaction.wait()
 
-    return tokenId
+        return tokenId
+    } catch (e) {
+        console.error(e)
+        throw e
+    }
 }
 
 export const fetchMarketItems = async (signer) => {

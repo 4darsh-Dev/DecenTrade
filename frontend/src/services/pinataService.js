@@ -13,6 +13,7 @@ export const testIpfs = async () => {
         return response
     } catch (error) {
         console.error('Error testing IPFS:', error)
+        throw error
     }
 }
 export const uploadToIPFS = async (file) => {

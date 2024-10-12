@@ -21,10 +21,10 @@ const CreateNFT = ({ wallet }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        // if (!wallet) {
-        //     alert('Please connect your wallet')
-        //     return
-        // }
+        if (!wallet) {
+            alert('Please connect your wallet')
+            return
+        }
 
         try {
             const { name, description, price, file } = formData
@@ -119,7 +119,7 @@ const CreateNFT = ({ wallet }) => {
     )
 }
 CreateNFT.propTypes = {
-    wallet: PropTypes.object.isRequired,
+    wallet: PropTypes.object,
 }
 
 export default CreateNFT

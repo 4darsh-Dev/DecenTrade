@@ -109,9 +109,7 @@ const MarketplaceItems = ({ wallet }) => {
     )
 }
 
-export default function NFTMarketplace() {
-    const [wallet, setWallet] = useState(null)
-
+export default function NFTMarketplace({ wallet, setWallet }) {
     return (
         <div className="container mx-auto">
             <h1 className="text-3xl font-bold mb-4">
@@ -128,6 +126,10 @@ export default function NFTMarketplace() {
     )
 }
 WalletConnect.propTypes = {
+    wallet: PropTypes.object,
+    setWallet: PropTypes.func.isRequired,
+}
+NFTMarketplace.propTypes = {
     wallet: PropTypes.object,
     setWallet: PropTypes.func.isRequired,
 }
