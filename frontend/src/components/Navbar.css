@@ -1,29 +1,31 @@
 .navbar {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem 2rem;
+    padding: 1rem;
     background: transparent;
-    font-size: 1.1rem;
+    font-size: 1rem;
 }
 
 .navbar-logo {
     display: flex;
     align-items: center;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     font-weight: bold;
     color: white;
     text-shadow: 0 0 10px #fff, 0 0 20px #ff00ff, 0 0 30px #ff00ff, 0 0 40px #ff00ff;
 }
 
 .logo-img {
-    width: 3rem;
-    margin-right: 1rem;
+    width: 2.5rem;
+    margin-right: 0.5rem;
 }
 
 .navbar-links {
     display: flex;
-    gap: 1.5rem;
+    gap: 1rem;
+    margin: 1rem 0;
 }
 
 .navbar-link {
@@ -59,15 +61,19 @@
 
 .navbar-actions {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 1rem;
 }
 
 .search-container {
     position: relative;
+    flex-grow: 1;
+    max-width: 300px;
 }
 
 .search-input {
+    width: 100%;
     background: #333;
     color: white;
     border: none;
@@ -90,30 +96,104 @@
     color: #ff00ff;
 }
 
-.github-button {
+.github-button,
+.connect-wallet-button,
+.mint-nft-button {
     background: linear-gradient(45deg, #ff00ff, #00ffff);
     color: white;
     border: none;
     border-radius: 2rem;
-    padding: 0.5rem 1.5rem;
-    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
     cursor: pointer;
     transition: transform 0.3s, box-shadow 0.3s;
+    white-space: nowrap;
 }
 
-.github-button:hover {
-    transform: scale(1.1);
+.github-button:hover,
+.connect-wallet-button:hover,
+.mint-nft-button:hover {
+    transform: scale(1.05);
     box-shadow: 0 0 20px #ff00ff;
+}
+
+.mint-nft-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.token-uri-input {
+    flex-grow: 1;
+    min-width: 150px;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 2rem;
+    background: #333;
+    color: white;
+}
+
+.wallet-connected {
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+@media (max-width: 1024px) {
+    .navbar {
+        justify-content: center;
+        text-align: center;
+    }
+
+    .navbar-logo {
+        margin-bottom: 1rem;
+    }
+
+    .navbar-links {
+        width: 100%;
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+
+    .navbar-actions {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .search-container {
+        max-width: none;
+        width: 100%;
+        margin-bottom: 1rem;
+    }
 }
 
 @media (max-width: 768px) {
     .navbar-links {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .navbar-link::after {
         display: none;
     }
-    .navbar {
-        flex-direction: column;
-    }
+
     .navbar-actions {
-        margin-top: 1rem;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .github-button,
+    .connect-wallet-button,
+    .mint-nft-button {
+        width: 100%;
+    }
+
+    .mint-nft-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .token-uri-input {
+        width: 100%;
     }
 }
