@@ -1,7 +1,13 @@
 // src/pages/CreateNFT.jsx
-import { useState } from 'react'
+import { React, useState } from 'react'
 import PropTypes from 'prop-types'
-import { createNFT } from '../utils/ethereum'
+import { connectWallet, createNFT, getNFTContract } from '../utils/ethereum'
+import { ethers } from 'ethers'
+
+const nftAddress = import.meta.env.VITE_NFT_ADDRESS
+const marketplaceAddress = import.meta.env.VITE_MARKET_ADDRESS
+
+const PRIVATE_KEY = import.meta.env.VITE_PRIVATE_KEY
 
 const CreateNFT = ({ wallet }) => {
     const [formData, setFormData] = useState({
@@ -21,19 +27,33 @@ const CreateNFT = ({ wallet }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        // if (!wallet) {
-        //     alert('Please connect your wallet')
-        //     return
-        // }
 
         try {
             const { name, description, price, file } = formData
-            await createNFT(wallet, name, description, price, file)
-            alert('NFT created successfully!')
-            setFormData({ name: '', description: '', price: '', file: null })
+
+            // Ensure all required fields are filled
+            if (!name || !description || !price || !file) {
+                throw new Error('All fields are required')
+            }
+
+            const signer = await connectWallet()
+
+            try {
+                const tokenId = await createNFT(
+                    signer,
+                    name,
+                    description,
+                    price,
+                    file,
+                    nftAddress,
+                    marketplaceAddress
+                )
+                console.log('NFT created and listed with token ID:', tokenId)
+            } catch (error) {
+                console.error('Failed to create and list NFT:', error)
+            }
         } catch (error) {
             console.error('Error creating NFT:', error)
-            alert('Error creating NFT. Please try again.')
         }
     }
 
@@ -120,6 +140,7 @@ const CreateNFT = ({ wallet }) => {
 }
 CreateNFT.propTypes = {
     wallet: PropTypes.object.isRequired,
+    // wallet: PropTypes.object,
 }
 
 export default CreateNFT
