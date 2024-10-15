@@ -8,6 +8,7 @@ import AboutPage from './pages/AboutPage'
 import CreatorsPage from './pages/CreatorsPage'
 import FAQPage from './pages/FAQPage'
 import Navbar from './components/Navbar'
+import NotFoundPage from './components/NotFoundPage'
 
 function App() {
     const [wallet, setWallet] = useState(null)
@@ -41,6 +42,7 @@ function App() {
                         <Route path="/about" element={<AboutPage />} />
                         <Route path="/creators" element={<CreatorsPage />} />
                         <Route path="/faqs" element={<FAQPage />} />
+                        <Route path="*" element={<NotFoundPage />} />
                     </Routes>
                 </div>
             </div>
