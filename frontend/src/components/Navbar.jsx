@@ -18,7 +18,7 @@ const Navbar = ({ wallet, setWallet }) => {
     const connect = async () => {
         const signer = await connectWallet()
         setWallet(signer)
-        setShowMintOption(true)  // Show mint option after wallet is connected
+        setShowMintOption(true) // Show mint option after wallet is connected
     }
 
     const handleMint = async () => {
@@ -26,7 +26,7 @@ const Navbar = ({ wallet, setWallet }) => {
             try {
                 await mintNFT(wallet, tokenURI)
                 alert('NFT minted successfully!')
-                setTokenURI('')  // Clear the input after successful mint
+                setTokenURI('') // Clear the input after successful mint
             } catch (error) {
                 console.error('Error minting NFT:', error)
                 alert('Failed to mint NFT. Please try again.')
@@ -52,12 +52,18 @@ const Navbar = ({ wallet, setWallet }) => {
                 {[
                     { name: 'Home', link: '/' },
                     { name: 'Explore', link: '/explore' },
+                    { name: 'Create', link: '/create' },
                     { name: 'About', link: '/about' },
                     { name: 'Creators', link: '/creators' },
-                    { name: 'How It Works', link: '/how-it-works' },
+                    // { name: 'How It Works', link: '/how-it-works' },
+
                     { name: 'FAQs', link: '/faqs' },
                 ].map((item) => (
-                    <Link key={item.name} to={item.link} className="navbar-link">
+                    <Link
+                        key={item.name}
+                        to={item.link}
+                        className="navbar-link"
+                    >
                         {item.name}
                     </Link>
                 ))}
@@ -75,30 +81,14 @@ const Navbar = ({ wallet, setWallet }) => {
                     Github <FontAwesomeIcon icon={faGithub} />
                 </button>
                 {wallet ? (
-                    showMintOption ? (
-                        <div className="mint-nft-container">
-                            <input
-                                type="text"
-                                value={tokenURI}
-                                onChange={(e) => setTokenURI(e.target.value)}
-                                placeholder="Enter token URI"
-                                className="token-uri-input"
-                            />
-                            <button
-                                onClick={handleMint}
-                                className="mint-nft-button"
-                            >
-                                Mint NFT
-                            </button>
-                        </div>
-                    ) : (
-                        <span className="wallet-connected">Wallet connected</span>
-                    )
-                ) : (
                     <button
-                        onClick={connect}
                         className="connect-wallet-button"
+                        style={{ backgroundColor: 'green' }}
                     >
+                        Wallet Connected
+                    </button>
+                ) : (
+                    <button onClick={connect} className="connect-wallet-button">
                         Connect Wallet
                     </button>
                 )}

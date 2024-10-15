@@ -3,37 +3,19 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { ethers } from 'ethers'
 
-const NFTCard = ({ nft, onBuy }) => {
-    return (
-        <div className="border rounded-lg p-4 shadow-md">
-            <img
-                src={nft.image}
-                alt={nft.name}
-                className="w-full h-48 object-cover mb-4 rounded"
-            />
-            <h3 className="text-lg font-semibold mb-2">{nft.name}</h3>
-            <p className="text-gray-600 mb-2">{nft.description}</p>
-            <p className="font-bold mb-2">
-                {ethers.utils.formatEther(nft.price)} ETH
-            </p>
-            <div className="flex justify-between">
-                <Link
-                    to={`/nft/${nft.tokenId}`}
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                >
-                    View Details
-                </Link>
-                {onBuy && (
-                    <button
-                        onClick={() => onBuy(nft)}
-                        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-                    >
-                        Buy
-                    </button>
-                )}
-            </div>
-        </div>
-    )
-}
+const NFTCard = ({ nft, onBuy }) => (
+    <div className="border p-4 rounded-lg">
+        <h2 className="text-xl font-bold">
+            {nft.name || `NFT #${nft.tokenId}`}
+        </h2>
+        <p>Price: {nft.price} ETH</p>
+        <button
+            onClick={() => onBuy(nft)}
+            className="mt-2 bg-blue-500 text-white px-4 py-2 rounded"
+        >
+            Buy
+        </button>
+    </div>
+)
 
 export default NFTCard
