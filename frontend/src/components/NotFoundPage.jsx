@@ -1,21 +1,29 @@
-import React from 'react'
-import { Link } from 'react-router-dom';
-import './Navbar.css'
+import React from 'react';
+import image from "../assets/404.png";
 
 const NotFoundPage = () => {
-    return (
-        <div className="flex items-center justify-center min-h-screen bg-transparent px-4">
-            <div className="text-center -mt-38 md:-mt-52">
-                <h1 className="text-7xl md:text-9xl font-bold text-gray-50">404</h1>
-                <p className="text-3xl md:text-4xl mt-6 md:mt-6 text-gray-100">Oops! Page not found.</p>
-                <div className="mt-8 md:mt-12">
-                    <Link to="/" className="return-home-button text-2xl md:text-2xl">
-                        Go back to Home
-                    </Link>
-                </div>
-            </div>
-        </div>
-    )
-}
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-sky-700 to-indigo-950 text-white">
+      <div className="text-center -mt-32">
+        <img
+          src={image}
+          alt="Blockchain 404"
+          className="w-48 mx-auto animate-bounce shadow-xl transition-transform transform hover:scale-110"
+        />
+        
+        <h1 className=" text-4xl md:text-5xl font-extrabold mb-16 mt-8 md:mb-12 md:mt-4 animate-pulse drop-shadow-lg">
+          Oops!!! Page not found.
+        </h1>
 
-export default NotFoundPage
+        <a
+          href="/"
+          className="inline-block bg-gradient-to-r from-fuchsia-600 to-blue-500 text-white px-8 py-4 rounded-full hover:bg-gradient-to-r hover:from-blue-500 hover:to-fuchsia-600 transition duration-300 transform hover:scale-110 shadow-lg"
+        >
+          Back to Home
+        </a>
+      </div>
+    </div>
+  );
+};
+
+export default NotFoundPage;

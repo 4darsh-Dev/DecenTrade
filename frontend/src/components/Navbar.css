@@ -6,6 +6,7 @@
     padding: 1rem;
     background: transparent;
     font-size: 1rem;
+    background-color: #252550;
 }
 
 .navbar-logo {
@@ -14,7 +15,11 @@
     font-size: 1.4rem;
     font-weight: bold;
     color: white;
-    text-shadow: 0 0 10px #fff, 0 0 20px #ff00ff, 0 0 30px #ff00ff, 0 0 40px #ff00ff;
+    /* text-shadow:
+        0 0 10px #fff,
+        0 0 20px #ff00ff,
+        0 0 30px #ff00ff,
+        0 0 40px #ff00ff; */
 }
 
 .logo-img {
@@ -32,7 +37,9 @@
     color: #ccc;
     text-decoration: none;
     position: relative;
-    transition: color 0.3s, text-shadow 0.3s;
+    transition:
+        color 0.3s,
+        text-shadow 0.3s;
 }
 
 .navbar-link::after {
@@ -56,7 +63,10 @@
 
 .navbar-link:hover {
     color: white;
-    text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 30px #ff00ff;
+    text-shadow:
+        0 0 10px #ff00ff,
+        0 0 20px #ff00ff,
+        0 0 30px #ff00ff;
 }
 
 .navbar-actions {
@@ -107,7 +117,9 @@
     padding: 0.5rem 1rem;
     font-size: 0.9rem;
     cursor: pointer;
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition:
+        transform 0.3s,
+        box-shadow 0.3s;
     white-space: nowrap;
 }
 
@@ -117,6 +129,10 @@
 .mint-nft-button:hover {
     transform: scale(1.05);
     box-shadow: 0 0 20px #ff00ff;
+}
+
+.connect-wallet-button[style*='green'] {
+    background: #53b753 !important;
 }
 
 .mint-nft-container {
@@ -137,7 +153,7 @@
 }
 
 .wallet-connected {
-    color: #4CAF50;
+    color: #4caf50;
     font-weight: bold;
 }
 
