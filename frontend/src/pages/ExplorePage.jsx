@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { fetchMarketItems, buyNFT } from '../utils/ethereum'
 import NFTCard from '../components/NFTCard'
 import { connectWallet } from '../utils/ethereum'
+import { ethers } from 'ethers'
 
 const ExplorePage = () => {
     const [nfts, setNfts] = useState([])
@@ -18,23 +19,9 @@ const ExplorePage = () => {
     }, [])
 
     useEffect(() => {
-        const loadNFTs = async () => {
-            if (wallet) {
-                try {
-                    console.log('Starting to fetch market items...')
-                    setLoading(true)
-                    setError(null)
-                    const items = await fetchMarketItems(wallet)
-                    console.log('Fetched items:', items)
-                    setNfts(items)
-                } catch (err) {
-                    setError(err.message)
-                } finally {
-                    setLoading(false)
-                }
-            }
+        if (wallet) {
+            loadNFTs()
         }
-        loadNFTs()
     }, [wallet])
 
     const loadNFTs = async () => {
@@ -46,8 +33,6 @@ const ExplorePage = () => {
                 const items = await fetchMarketItems(wallet)
                 console.log('Fetched items:', items)
 
-                consolel.log(typeof items)
-
                 if (!Array.isArray(items)) {
                     throw new Error(
                         'Fetched items are not in the expected format'
@@ -55,13 +40,13 @@ const ExplorePage = () => {
                 }
 
                 const formattedItems = items.map((item) => ({
-                    itemId: item.itemId.toString(),
-                    nftContract: item.nftContract,
-                    tokenId: item.tokenId.toString(),
-                    seller: item.seller,
-                    owner: item.owner,
-                    price: item.price.toString(),
-                    sold: item.sold,
+                    itemId: item[0].toString(),
+                    nftContract: item[1],
+                    tokenId: item[2].toString(),
+                    seller: item[3],
+                    owner: item[4],
+                    price: ethers.formatEther(item[5]),
+                    sold: item[6],
                 }))
 
                 console.log('Formatted items:', formattedItems)
@@ -83,7 +68,12 @@ const ExplorePage = () => {
         if (wallet) {
             try {
                 setLoading(true)
-                await buyNFT(wallet, nft.nftContract, nft.itemId, nft.price)
+                await buyNFT(
+                    wallet,
+                    nft.nftContract,
+                    nft.itemId,
+                    ethers.parseEther(nft.price)
+                )
                 alert('NFT purchased successfully!')
                 await loadNFTs() // Refresh NFTs after purchase
             } catch (error) {
@@ -120,14 +110,9 @@ const ExplorePage = () => {
                 </p>
             ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {nfts &&
-                        nfts.map((nft) => (
-                            <NFTCard
-                                key={nft.itemId}
-                                nft={nft}
-                                onBuy={handleBuy}
-                            />
-                        ))}
+                    {nfts.map((nft) => (
+                        <NFTCard key={nft.itemId} nft={nft} onBuy={handleBuy} />
+                    ))}
                 </div>
             )}
         </div>
