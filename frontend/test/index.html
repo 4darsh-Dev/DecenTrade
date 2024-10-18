@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connect Wallet</title>
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.0/dist/ethers.umd.min.js"></script>
+</head>
+<body>
+  <h1>Connect Wallet Example</h1>
+  <button id="connectWalletBtn">Connect Wallet</button>
+  <p id="walletStatus">Wallet not connected</p>
+
+  <script>
+    const connectWalletBtn = document.getElementById('connectWalletBtn');
+    const walletStatus = document.getElementById('walletStatus');
+    let walletConnected = false; // Keep track of wallet connection state
+
+    const connectWallet = async () => {
+        try {
+            if (window.ethereum) {
+                const provider = new ethers.providers.Web3Provider(window.ethereum);
+                const signer = provider.getSigner();
+
+                await provider.send('eth_requestAccounts', []);
+                const address = await signer.getAddress();
+                console.log('Connected wallet address:', address);
+
+                walletStatus.textContent = `Wallet connected: ${address}`; // Update status
+                walletConnected = true; // Mark wallet as connected
+            } else {
+                alert('Please install MetaMask!');
+            }
+        } catch (error) {
+            console.error('Error connecting wallet:', error);
+            walletStatus.textContent = 'Failed to connect wallet.';
+        }
+    };
+
+    connectWalletBtn.addEventListener('click', connectWallet);
+  </script>
+</body>
+</html>

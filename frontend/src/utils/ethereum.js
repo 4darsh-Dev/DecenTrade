@@ -1,4 +1,3 @@
-
 import { ethers } from 'ethers';
 import DecentradeNFTAbi from '../../../smart-contracts/artifacts/contracts/Marketplace.sol/DecentradeNFT.json';
 import DecentradeMarketplaceAbi from '../../../smart-contracts/artifacts/contracts/Marketplace.sol/DecentradeMarketplace.json';
@@ -18,13 +17,13 @@ export const connectWallet = async () => {
     if (window.ethereum) {
         try {
             await window.ethereum.request({ method: 'eth_requestAccounts' });
-            const provider = new ethers.BrowserProvider(window.ethereum);
-            const signer = await provider.getSigner();
+            const provider = new ethers.Web3Provider(window.ethereum); // Updated to Web3Provider
+            const signer = provider.getSigner();
             console.log('Wallet connected:', await signer.getAddress());
             return signer;
         } catch (error) {
             console.error('Error connecting wallet:', error);
-            throw error;
+            throw new Error('Error connecting wallet: ' + error.message);
         }
     } else {
         console.error('Ethereum wallet not detected');
@@ -61,10 +60,7 @@ export const createNFT = async (signer, name, description, price, file) => {
         const mintTx = await nftContract.mintNFT(await signer.getAddress(), metadataUrl, 0);
         const mintReceipt = await mintTx.wait();
 
-        // Printing the mint receipt for debugging purposes
-        // console.log('Mint Receipt:', JSON.stringify(mintReceipt, null, 2));
-
-        // Extract tokenId using a more flexible approach
+        // Extract tokenId from the minting receipt
         let tokenId;
         if (mintReceipt.events) {
             const transferEvent = mintReceipt.events.find(e => e.event === 'Transfer');
@@ -74,7 +70,7 @@ export const createNFT = async (signer, name, description, price, file) => {
         }
 
         if (!tokenId) {
-            // If we couldn't extract the tokenId from events, try logs
+            // If we couldn't extract tokenId from events, try logs
             const iface = new ethers.Interface(DecentradeNFTAbi.abi);
             for (const log of mintReceipt.logs) {
                 try {
@@ -99,7 +95,7 @@ export const createNFT = async (signer, name, description, price, file) => {
         const approveTx = await nftContract.approve(marketplaceAddress, tokenId);
         await approveTx.wait();
 
-        // List NFT
+        // List NFT on the marketplace
         const listingFee = await marketplaceContract.getListingFee();
         const listingTx = await marketplaceContract.createMarketItem(
             nftAddress,
@@ -117,19 +113,34 @@ export const createNFT = async (signer, name, description, price, file) => {
 };
 
 export const fetchMarketItems = async (signer) => {
-    const marketplaceContract = getMarketplaceContract(signer);
-    return await marketplaceContract.fetchMarketItems();
+    try {
+        const marketplaceContract = getMarketplaceContract(signer);
+        return await marketplaceContract.fetchMarketItems();
+    } catch (error) {
+        console.error('Error fetching market items:', error);
+        throw error;
+    }
 };
 
 export const fetchMyNFTs = async (signer) => {
-    const marketplaceContract = getMarketplaceContract(signer);
-    return await marketplaceContract.fetchMyNFTs();
+    try {
+        const marketplaceContract = getMarketplaceContract(signer);
+        return await marketplaceContract.fetchMyNFTs();
+    } catch (error) {
+        console.error('Error fetching my NFTs:', error);
+        throw error;
+    }
 };
 
 export const buyNFT = async (signer, nftContract, itemId, price) => {
-    const marketplaceContract = getMarketplaceContract(signer);
-    const transaction = await marketplaceContract.createMarketSale(nftContract, itemId, { value: price });
-    return await transaction.wait();
+    try {
+        const marketplaceContract = getMarketplaceContract(signer);
+        const transaction = await marketplaceContract.createMarketSale(nftContract, itemId, { value: price });
+        return await transaction.wait();
+    } catch (error) {
+        console.error('Error buying NFT:', error);
+        throw error;
+    }
 };
 
 export const listNFT = async (signer, tokenId, price) => {
