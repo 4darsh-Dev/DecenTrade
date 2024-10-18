@@ -55,6 +55,8 @@ export const createNFT = async (signer, name, description, price, file) => {
         });
         const metadataUrl = await uploadMetadataToIPFS(metadata);
 
+        console.log('Metadata URL:', metadataUrl);
+
         // Mint NFT
         const mintTx = await nftContract.mintNFT(await signer.getAddress(), metadataUrl, 0);
         const mintReceipt = await mintTx.wait();
