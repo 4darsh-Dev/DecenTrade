@@ -1,4 +1,3 @@
-
 const hre = require("hardhat");
 
 async function main() {
@@ -11,28 +10,28 @@ async function main() {
     // Deploy DecentradeNFT
     console.log("Deploying DecentradeNFT...");
     const nftContract = await DecentradeNFT.deploy();
-    const mAddress = await nftContract.getAddress();
-    console.log("DecentradeNFT deployed to:", mAddress);
+    await nftContract.deployed(); // Wait for the contract to be deployed
+    console.log("DecentradeNFT deployed to:", nftContract.address);
 
     // Wait for the transaction to be mined and get the receipt
-    // const nftDeployReceipt = await nftContract.deployTransaction.wait();
+    const nftDeployReceipt = await nftContract.deployTransaction.wait();
 
-    // // Log gas used and transaction cost
-    // console.log("DecentradeNFT deployment gas used:", nftDeployReceipt.gasUsed.toString());
-    // console.log("DecentradeNFT deployment transaction cost:", hre.ethers.utils.formatEther(nftDeployReceipt.gasUsed.mul(nftContract.deployTransaction.gasPrice)) + " ETH");
+    // Log gas used and transaction cost
+    console.log("DecentradeNFT deployment gas used:", nftDeployReceipt.gasUsed.toString());
+    console.log("DecentradeNFT deployment transaction cost:", hre.ethers.utils.formatEther(nftDeployReceipt.gasUsed.mul(nftContract.deployTransaction.gasPrice)) + " ETH");
 
     // Deploy DecentradeMarketplace
     console.log("\nDeploying DecentradeMarketplace...");
     const marketplaceContract = await DecentradeMarketplace.deploy();
-    let marketplaceAddress = await marketplaceContract.getAddress();
-    console.log("DecentradeMarketplace deployed to:", marketplaceAddress);
+    await marketplaceContract.deployed(); // Wait for the contract to be deployed
+    console.log("DecentradeMarketplace deployed to:", marketplaceContract.address);
 
     // Wait for the transaction to be mined and get the receipt
-    // const marketplaceDeployReceipt = await marketplaceContract.deployTransaction.wait();
+    const marketplaceDeployReceipt = await marketplaceContract.deployTransaction.wait();
 
-    // // Log gas used and transaction cost
-    // console.log("DecentradeMarketplace deployment gas used:", marketplaceDeployReceipt.gasUsed.toString());
-    // console.log("DecentradeMarketplace deployment transaction cost:", hre.ethers.utils.formatEther(marketplaceDeployReceipt.gasUsed.mul(marketplaceContract.deployTransaction.gasPrice)) + " ETH");
+    // Log gas used and transaction cost
+    console.log("DecentradeMarketplace deployment gas used:", marketplaceDeployReceipt.gasUsed.toString());
+    console.log("DecentradeMarketplace deployment transaction cost:", hre.ethers.utils.formatEther(marketplaceDeployReceipt.gasUsed.mul(marketplaceContract.deployTransaction.gasPrice)) + " ETH");
 
     // Get contract sizes
     const nftContractSize = (await hre.artifacts.readArtifact("DecentradeNFT")).deployedBytecode.length / 2;
@@ -43,12 +42,12 @@ async function main() {
     console.log("DecentradeMarketplace size:", marketplaceContractSize, "bytes");
 
     // Calculate total deployment cost
-    // const totalCost = hre.ethers.utils.formatEther(
-    //     nftDeployReceipt.gasUsed.mul(nftContract.deployTransaction.gasPrice).add(
-    //         marketplaceDeployReceipt.gasUsed.mul(marketplaceContract.deployTransaction.gasPrice)
-    //     )
-    // );
-    // console.log("\nTotal deployment cost:", totalCost, "ETH");
+    const totalCost = hre.ethers.utils.formatEther(
+        nftDeployReceipt.gasUsed.mul(nftContract.deployTransaction.gasPrice).add(
+            marketplaceDeployReceipt.gasUsed.mul(marketplaceContract.deployTransaction.gasPrice)
+        )
+    );
+    console.log("\nTotal deployment cost:", totalCost, "ETH");
 
     console.log("\nDeployment completed successfully!");
 }
