@@ -12,8 +12,11 @@ const HomePage = () => {
                     <HeroSection />
                     <InfoCards />
                 </main>
+                <div className='text-center bg-transparent py-3 font-bold'>
+                <p className='text-white bold text-4xl'>Easily connect <span className='text-custom'>your</span> wallet for safe and secure transactions</p>
             </div>
-
+            </div>
+            
             <footer>
                 <Footer />
             </footer>
