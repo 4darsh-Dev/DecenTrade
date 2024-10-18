@@ -9,12 +9,19 @@ import "@openzeppelin/contracts/utils/Pausable.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/token/common/ERC2981.sol";
 
+/// @title DecentradeNFT
+/// @notice This contract implements a custom NFT with royalty support
 contract DecentradeNFT is ERC721URIStorage, ERC2981, Ownable, Pausable {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
 
     constructor() ERC721("DecentradeNFT", "DNFT") Ownable(msg.sender) {}
 
+    /// @notice Mint a new NFT
+    /// @param recipient The address that will own the minted NFT
+    /// @param tokenURI A URI pointing to the NFT's metadata
+    /// @param royaltyFee The royalty fee for secondary sales (in basis points)
+    /// @return The ID of the newly minted NFT
     function mintNFT(
         address recipient,
         string memory tokenURI,
@@ -28,14 +35,17 @@ contract DecentradeNFT is ERC721URIStorage, ERC2981, Ownable, Pausable {
         return newItemId;
     }
 
+    /// @notice Pause the contract
     function pause() public onlyOwner {
         _pause();
     }
 
+    /// @notice Unpause the contract
     function unpause() public onlyOwner {
         _unpause();
     }
 
+    /// @notice EIP165 support
     function supportsInterface(bytes4 interfaceId)
         public
         view
@@ -46,14 +56,18 @@ contract DecentradeNFT is ERC721URIStorage, ERC2981, Ownable, Pausable {
     }
 }
 
+/// @title DecentradeMarketplace
+/// @notice This contract implements a marketplace for trading NFTs
 contract DecentradeMarketplace is ReentrancyGuard, Ownable, Pausable {
     using Counters for Counters.Counter;
+    
+    // State variables
     Counters.Counter private _itemIds;
     Counters.Counter private _itemsSold;
-
     uint256 public listingFee = 0.025 ether;
     address payable public marketplaceOwner;
 
+    // Struct to represent a market item
     struct MarketItem {
         uint256 itemId;
         address nftContract;
@@ -64,9 +78,11 @@ contract DecentradeMarketplace is ReentrancyGuard, Ownable, Pausable {
         bool sold;
     }
 
+    // Mappings
     mapping(uint256 => MarketItem) private idToMarketItem;
     mapping(uint256 => address[]) private tokenIdToOwnershipHistory;
 
+    // Events
     event MarketItemCreated(
         uint256 indexed itemId,
         address indexed nftContract,
@@ -90,14 +106,22 @@ contract DecentradeMarketplace is ReentrancyGuard, Ownable, Pausable {
         marketplaceOwner = payable(msg.sender);
     }
 
+    /// @notice Set the listing fee
+    /// @param _listingFee The new listing fee
     function setListingFee(uint256 _listingFee) public onlyOwner {
         listingFee = _listingFee;
     }
 
+    /// @notice Get the current listing fee
+    /// @return The current listing fee
     function getListingFee() public view returns (uint256) {
         return listingFee;
     }
 
+    /// @notice Create a market item
+    /// @param nftContract The address of the NFT contract
+    /// @param tokenId The ID of the token to be listed
+    /// @param price The price at which to list the NFT
     function createMarketItem(
         address nftContract,
         uint256 tokenId,
@@ -132,16 +156,16 @@ contract DecentradeMarketplace is ReentrancyGuard, Ownable, Pausable {
         );
     }
 
+    /// @notice Create a market sale
+    /// @param nftContract The address of the NFT contract
+    /// @param itemId The ID of the market item
     function createMarketSale(
         address nftContract,
         uint256 itemId
     ) public payable nonReentrant whenNotPaused {
         uint256 price = idToMarketItem[itemId].price;
         uint256 tokenId = idToMarketItem[itemId].tokenId;
-        require(
-            msg.value == price,
-            "Please submit the asking price in order to complete the purchase"
-        );
+        require(msg.value == price, "Please submit the asking price to complete the purchase");
 
         idToMarketItem[itemId].seller.transfer(msg.value);
         IERC721(nftContract).transferFrom(address(this), msg.sender, tokenId);
@@ -162,6 +186,8 @@ contract DecentradeMarketplace is ReentrancyGuard, Ownable, Pausable {
         );
     }
 
+    /// @notice Fetch all unsold market items
+    /// @return Array of unsold market items
     function fetchMarketItems() public view returns (MarketItem[] memory) {
         uint256 itemCount = _itemIds.current();
         uint256 unsoldItemCount = _itemIds.current() - _itemsSold.current();
@@ -179,6 +205,8 @@ contract DecentradeMarketplace is ReentrancyGuard, Ownable, Pausable {
         return items;
     }
 
+    /// @notice Fetch NFTs owned by the caller
+    /// @return Array of market items owned by the caller
     function fetchMyNFTs() public view returns (MarketItem[] memory) {
         uint256 totalItemCount = _itemIds.current();
         uint256 itemCount = 0;
@@ -202,6 +230,8 @@ contract DecentradeMarketplace is ReentrancyGuard, Ownable, Pausable {
         return items;
     }
 
+    /// @notice Fetch items created by the caller
+    /// @return Array of market items created by the caller
     function fetchItemsCreated() public view returns (MarketItem[] memory) {
         uint256 totalItemCount = _itemIds.current();
         uint256 itemCount = 0;
@@ -225,16 +255,19 @@ contract DecentradeMarketplace is ReentrancyGuard, Ownable, Pausable {
         return items;
     }
 
-    function getOwnershipHistory(
-        uint256 tokenId
-    ) public view returns (address[] memory) {
+    /// @notice Get the ownership history of a token
+    /// @param tokenId The ID of the token
+    /// @return Array of addresses representing the ownership history
+    function getOwnershipHistory(uint256 tokenId) public view returns (address[] memory) {
         return tokenIdToOwnershipHistory[tokenId];
     }
 
+    /// @notice Pause the contract
     function pause() public onlyOwner {
         _pause();
     }
 
+    /// @notice Unpause the contract
     function unpause() public onlyOwner {
         _unpause();
     }

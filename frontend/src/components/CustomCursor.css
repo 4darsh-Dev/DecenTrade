@@ -1,0 +1,46 @@
+body {
+  cursor: none;
+}
+
+.custom-cursor-container {
+  pointer-events: none;
+  position: fixed;
+  z-index: 9999;
+}
+
+.custom-cursor {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: rgba(220, 220, 220, 0.7);
+  border: 2px solid rgba(200, 200, 200, 0.7);
+  position: absolute;
+  transition: width 0.3s, height 0.3s, background-color 0.3s;
+  transform: translate(-50%, -50%);
+}
+
+.custom-cursor-shadow {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgba(180, 180, 180, 0.3);
+  position: absolute;
+  transition: 0.1s;
+  transform: translate(-50%, -50%);
+}
+
+.custom-cursor-shadow.merged {
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.custom-cursor.hover {
+  width: 60px;
+  height: 60px;
+  background-color: rgba(220, 220, 220, 0.5);
+  border-color: rgba(200, 200, 200, 0.5);
+}
+
+a, button, input, textarea, select, [role="button"] {
+  cursor: none;
+}
