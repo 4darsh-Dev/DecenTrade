@@ -1,39 +1,18 @@
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { Search } from 'lucide-react'
 import logo from '../assets/decentrade-logo.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
 import './Navbar.css'
-import { connectWallet, mintNFT } from '../utils/ethereum'
+import WalletButton from './WalletButton'
+import { WalletContext } from '../context/WalletContext'
 
-const Navbar = ({ wallet, setWallet }) => {
-    const [tokenURI, setTokenURI] = useState('')
-    const [showMintOption, setShowMintOption] = useState(false)
+const Navbar = () => {
+    const { isConnected } = useContext(WalletContext);
 
     const handleGithubClick = () => {
         window.open('https://github.com/4darsh-Dev/DecenTrade', '_blank')
-    }
-
-    const connect = async () => {
-        const signer = await connectWallet()
-        setWallet(signer)
-        setShowMintOption(true) // Show mint option after wallet is connected
-    }
-
-    const handleMint = async () => {
-        if (wallet && tokenURI) {
-            try {
-                await mintNFT(wallet, tokenURI)
-                alert('NFT minted successfully!')
-                setTokenURI('') // Clear the input after successful mint
-            } catch (error) {
-                console.error('Error minting NFT:', error)
-                alert('Failed to mint NFT. Please try again.')
-            }
-        } else {
-            alert('Please enter a token URI.')
-        }
     }
 
     return (
@@ -55,8 +34,6 @@ const Navbar = ({ wallet, setWallet }) => {
                     { name: 'Create', link: '/create' },
                     { name: 'About', link: '/about' },
                     { name: 'Creators', link: '/creators' },
-                    // { name: 'How It Works', link: '/how-it-works' },
-
                     { name: 'FAQs', link: '/faqs' },
                 ].map((item) => (
                     <Link
@@ -80,18 +57,7 @@ const Navbar = ({ wallet, setWallet }) => {
                 <button onClick={handleGithubClick} className="github-button">
                     Github <FontAwesomeIcon icon={faGithub} />
                 </button>
-                {wallet ? (
-                    <button
-                        className="connect-wallet-button"
-                        style={{ backgroundColor: 'green' }}
-                    >
-                        Wallet Connected
-                    </button>
-                ) : (
-                    <button onClick={connect} className="connect-wallet-button">
-                        Connect Wallet
-                    </button>
-                )}
+                <WalletButton />
             </div>
         </nav>
     )
