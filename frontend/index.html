@@ -1,13 +1,112 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>DecenTrade | NFT Marketplace</title>
-    </head>
-    <body>
-        <div id="root"></div>
-        <script type="module" src="/src/main.jsx"></script>
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Improved Card Design</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 40px;
+        }
+
+        .card-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap; /* Allows cards to wrap in smaller screens */
+            gap: 20px; /* Space between cards */
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+            width: 300px; /* Fixed width for cards */
+        }
+
+        .card:hover {
+            transform: translateY(-10px); /* Lift effect on hover */
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-img {
+            width: 100%; /* Responsive image */
+            height: auto; /* Maintain aspect ratio */
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-size: 1.5em;
+            margin: 0 0 10px;
+        }
+
+        .card-description {
+            font-size: 1em;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .card-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .card-button:hover {
+            background-color: #0056b3; /* Darker shade on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Our Website</h1>
+        <div class="card-container">
+            <div class="card">
+                <img src="https://via.placeholder.com/300" alt="Card Image" class="card-img">
+                <div class="card-content">
+                    <h2 class="card-title">Card Title 1</h2>
+                    <p class="card-description">This is a brief description of the content in this card.</p>
+                    <button class="card-button">Learn More</button>
+                </div>
+            </div>
+            <div class="card">
+                <img src="https://via.placeholder.com/300" alt="Card Image" class="card-img">
+                <div class="card-content">
+                    <h2 class="card-title">Card Title 2</h2>
+                    <p class="card-description">This is a brief description of the content in this card.</p>
+                    <button class="card-button">Learn More</button>
+                </div>
+            </div>
+            <div class="card">
+                <img src="https://via.placeholder.com/300" alt="Card Image" class="card-img">
+                <div class="card-content">
+                    <h2 class="card-title">Card Title 3</h2>
+                    <p class="card-description">This is a brief description of the content in this card.</p>
+                    <button class="card-button">Learn More</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
 </html>
