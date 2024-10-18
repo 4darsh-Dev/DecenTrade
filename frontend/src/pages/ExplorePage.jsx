@@ -3,7 +3,7 @@ import { fetchMarketItems, buyNFT } from '../utils/ethereum'
 import NFTCard from '../components/NFTCard'
 import { connectWallet } from '../utils/ethereum'
 import { ethers } from 'ethers'
-import { ReloadIcon } from '@radix-ui/react-icons'
+import { HashLoader } from 'react-spinners'
 
 const ExplorePage = () => {
     const [nfts, setNfts] = useState([])
@@ -91,8 +91,10 @@ const ExplorePage = () => {
     if (loading) {
         return (
             <div className="flex items-top justify-center min-h-screen py-10">
-                <ReloadIcon className="my-2 h-8 w-8 animate-spin text-purple-600 " />
-                <p className="py-3 px-1.5">Loading NFTs...</p>
+                <HashLoader size={30} color="purple" />
+                <p className="py-0.5 px-2 blinking-text text-size-10">
+                    Loading NFTs...
+                </p>
             </div>
         )
     }
