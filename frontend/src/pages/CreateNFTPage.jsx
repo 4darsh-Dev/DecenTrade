@@ -58,13 +58,13 @@ const CreateNFT = ({ wallet }) => {
     }
 
     return (
-        <div className="container mx-auto px-4 py-8">
-            <h1 className="text-3xl font-bold mb-8">Create NFT</h1>
-            <form onSubmit={handleSubmit} className="max-w-lg">
+        <div className="container mx-auto px-4 py-8 bg-gray-100 min-h-screen">
+            <h1 className="text-3xl font-bold mb-8 text-center text-indigo-600">Create NFT</h1>
+            <form onSubmit={handleSubmit} className="max-w-lg mx-auto bg-white shadow-md rounded-lg p-6">
                 <div className="mb-4">
                     <label
                         htmlFor="name"
-                        className="block text-sm font-medium text-gray-700"
+                        className="block text-sm font-medium text-gray-700 mb-2"
                     >
                         Name
                     </label>
@@ -75,13 +75,13 @@ const CreateNFT = ({ wallet }) => {
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        className="mt-1 block w-full rounded-md border-black border shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 px-3 py-2 hover:border-blue-500 transition-colors duration-300"
                     />
                 </div>
                 <div className="mb-4">
                     <label
                         htmlFor="description"
-                        className="block text-sm font-medium text-gray-700"
+                        className="block text-sm font-medium text-gray-700 mb-2"
                     >
                         Description
                     </label>
@@ -91,13 +91,14 @@ const CreateNFT = ({ wallet }) => {
                         value={formData.description}
                         onChange={handleChange}
                         required
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        className="mt-1 block w-full rounded-md border-black border shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 px-3 py-2 hover:border-blue-500 transition-colors duration-300"
+                        rows="4"
                     ></textarea>
                 </div>
                 <div className="mb-4">
                     <label
                         htmlFor="price"
-                        className="block text-sm font-medium text-gray-700"
+                        className="block text-sm font-medium text-gray-700 mb-2"
                     >
                         Price (ETH)
                     </label>
@@ -109,13 +110,13 @@ const CreateNFT = ({ wallet }) => {
                         onChange={handleChange}
                         required
                         step="0.01"
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        className="mt-1 block w-full rounded-md border-black border shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 px-3 py-2 hover:border-blue-500 transition-colors duration-300"
                     />
                 </div>
-                <div className="mb-4">
+                <div className="mb-6">
                     <label
                         htmlFor="file"
-                        className="block text-sm font-medium text-gray-700"
+                        className="block text-sm font-medium text-gray-700 mb-2"
                     >
                         File
                     </label>
@@ -125,12 +126,19 @@ const CreateNFT = ({ wallet }) => {
                         name="file"
                         onChange={handleChange}
                         required
-                        className="mt-1 block w-full"
+                        className="mt-1 block w-full text-sm text-gray-500
+                        file:mr-4 file:py-2 file:px-4
+                        file:rounded-full file:border-0
+                        file:text-sm file:font-semibold
+                        file:bg-indigo-50 file:text-indigo-700
+                        hover:file:bg-indigo-100
+                        
+                     transition-colors duration-300"
                     />
                 </div>
                 <button
                     type="submit"
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md transition duration-300 ease-in-out transform hover:scale-105"
                 >
                     Create NFT
                 </button>
@@ -138,6 +146,7 @@ const CreateNFT = ({ wallet }) => {
         </div>
     )
 }
+
 CreateNFT.propTypes = {
     wallet: PropTypes.object.isRequired,
     // wallet: PropTypes.object,
