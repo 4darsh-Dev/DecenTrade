@@ -1,13 +1,121 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>DecenTrade | NFT Marketplace</title>
-    </head>
-    <body>
-        <div id="root"></div>
-        <script type="module" src="/src/main.jsx"></script>
-    </body>
+<head>
+    <meta charset="UTF-8" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Creators Page</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: #007bff;
+            color: white;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        .header p {
+            font-size: 1.25rem;
+        }
+
+        .creators-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .creator-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .creator-card:hover {
+            transform: scale(1.05);
+        }
+
+        .creator-card img {
+            width: 100%;
+            border-radius: 50%;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        .creator-card h3 {
+            margin: 10px 0 5px;
+            font-size: 1.5rem;
+        }
+
+        .creator-card p {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        .creator-card a {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .creator-card a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Meet Our Creators</h1>
+        <p>Discover the talented individuals behind our projects.</p>
+    </div>
+
+    <div class="creators-container">
+        <div class="creator-card">
+            <img src="creator1.jpg" alt="Creator 1"> <!-- Replace with your image -->
+            <h3>Jane Doe</h3>
+            <p>Graphic Designer and Illustrator</p>
+            <a href="#">View Profile</a>
+        </div>
+        <div class="creator-card">
+            <img src="creator2.jpg" alt="Creator 2"> <!-- Replace with your image -->
+            <h3>John Smith</h3>
+            <p>Web Developer and Programmer</p>
+            <a href="#">View Profile</a>
+        </div>
+        <div class="creator-card">
+            <img src="creator3.jpg" alt="Creator 3"> <!-- Replace with your image -->
+            <h3>Emily Johnson</h3>
+            <p>Content Creator and Blogger</p>
+            <a href="#">View Profile</a>
+        </div>
+        <div class="creator-card">
+            <img src="creator4.jpg" alt="Creator 4"> <!-- Replace with your image -->
+            <h3>Michael Brown</h3>
+            <p>Photographer and Videographer</p>
+            <a href="#">View Profile</a>
+        </div>
+        <!-- Add more creator cards as needed -->
+    </div>
+</body>
 </html>
