@@ -8,7 +8,7 @@ const HomePage = () => {
     return (
         <div className="min-h-screen">
             <div className="bg-cover bg-center bg-[url('/src/assets/decen-bg2.webp')]">
-                <main className="container mx-auto px-4">
+                <main className="container mx-auto p-4">
                     <HeroSection />
                     <InfoCards />
                 </main>

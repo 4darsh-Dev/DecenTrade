@@ -24,7 +24,7 @@ const Footer = () => {
     }, [])
 
     return (
-        <footer className="bg-gray-900 mt-12 text-white relative pt-20 pb-10">
+        <footer className="bg-gray-900  text-white relative pt-20 pb-10">
             <div className="absolute top-0 left-0 w-full overflow-hidden">
                 <svg
                     ref={waveRef}
