@@ -155,31 +155,57 @@
     font-weight: bold;
 }
 
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
 @media (max-width: 1024px) {
     .navbar {
-        justify-content: center;
-        text-align: center;
+        flex-wrap: wrap;
+        justify-content: space-between;
     }
 
     .navbar-logo {
-        margin-bottom: 1rem;
+        margin-bottom: 0;
     }
 
-    .navbar-links {
-        width: 100%;
-        justify-content: center;
-        margin-bottom: 1rem;
+    .menu-toggle {
+        display: block;
     }
 
+    .navbar-links,
     .navbar-actions {
         width: 100%;
-        justify-content: center;
+        display: none;
+        flex-direction: column;
+        gap: .53rem;
+        align-items: center;
+        padding: 1rem 0;
+    }
+
+    .navbar-links.active,
+    .navbar-actions.active {
+        display: flex;
+    }
+
+    .navbar-link {
+        margin: 0.5rem 0;
     }
 
     .search-container {
-        max-width: none;
-        width: 100%;
+        max-width: 100%;
         margin-bottom: 1rem;
+    }
+
+    .github-button,
+    .connect-wallet-button {
+        width: 100%;
+        margin: 0.5rem 0;
     }
 }
 
@@ -189,19 +215,28 @@
         align-items: center;
     }
 
-    .navbar-link::after {
-        display: none;
+    .navbar-link.active::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        display: block;
+        margin-top: 5px;
+        left: 0;
+        background: #ff00ff;
     }
 
-    .navbar-actions {
-        flex-direction: column;
-        align-items: stretch;
+    .navbar-link {
+        margin: 0.5rem 0;
+        padding-bottom: 5px;
     }
 
     .github-button,
     .connect-wallet-button,
     .mint-nft-button {
-        width: 100%;
+        width: 80%;
+        max-width: 250px;
+        margin: 0.5rem auto;
     }
 
     .mint-nft-container {
@@ -211,5 +246,27 @@
 
     .token-uri-input {
         width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar-logo {
+        font-size: 1.2rem;
+    }
+
+    .logo-img {
+        width: 2rem;
+    }
+
+    .search-input {
+        font-size: 0.9rem;
+    }
+
+    .github-button,
+    .connect-wallet-button {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.8rem;
+        width: 70%;
+        max-width: 200px;
     }
 }

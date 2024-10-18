@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { Search } from 'lucide-react'
+import React, { useState, useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom'
+import { Search, Menu, X } from 'lucide-react'
 import logo from '../assets/decentrade-logo.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
@@ -10,6 +10,16 @@ import { connectWallet, mintNFT } from '../utils/ethereum'
 const Navbar = ({ wallet, setWallet }) => {
     const [tokenURI, setTokenURI] = useState('')
     const [showMintOption, setShowMintOption] = useState(false)
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
+    const location = useLocation()
+
+    useEffect(() => {
+        if (isMenuOpen) {
+            document.body.classList.add('menu-open');
+        } else {
+            document.body.classList.remove('menu-open');
+        }
+    }, [isMenuOpen]);
 
     const handleGithubClick = () => {
         window.open('https://github.com/4darsh-Dev/DecenTrade', '_blank')
@@ -36,6 +46,10 @@ const Navbar = ({ wallet, setWallet }) => {
         }
     }
 
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    }
+
     return (
         <nav className="navbar">
             <div className="navbar-logo">
@@ -48,27 +62,29 @@ const Navbar = ({ wallet, setWallet }) => {
                 </Link>
                 <Link to="/">DecenTrade</Link>
             </div>
-            <div className="navbar-links">
+            <button className="menu-toggle" onClick={toggleMenu}>
+                {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+            <div className={`navbar-links ${isMenuOpen ? 'active' : ''}`}>
                 {[
                     { name: 'Home', link: '/' },
                     { name: 'Explore', link: '/explore' },
                     { name: 'Create', link: '/create' },
                     { name: 'About', link: '/about' },
                     { name: 'Creators', link: '/creators' },
-                    // { name: 'How It Works', link: '/how-it-works' },
-
                     { name: 'FAQs', link: '/faqs' },
                 ].map((item) => (
                     <Link
                         key={item.name}
                         to={item.link}
-                        className="navbar-link"
+                        className={`navbar-link ${location.pathname === item.link ? 'active' : ''}`}
+                        onClick={toggleMenu}
                     >
                         {item.name}
                     </Link>
                 ))}
             </div>
-            <div className="navbar-actions">
+            <div className={`navbar-actions ${isMenuOpen ? 'active' : ''}`}>
                 <div className="search-container">
                     <input
                         type="text"
