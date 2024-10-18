@@ -15,10 +15,11 @@ async function main() {
 
     // Wait for the transaction to be mined and get the receipt
     const nftDeployReceipt = await nftContract.deployTransaction.wait();
-
+    
     // Log gas used and transaction cost
+    const nftGasPrice = nftContract.deployTransaction.gasPrice || (await hre.ethers.provider.getGasPrice());
     console.log("DecentradeNFT deployment gas used:", nftDeployReceipt.gasUsed.toString());
-    console.log("DecentradeNFT deployment transaction cost:", hre.ethers.utils.formatEther(nftDeployReceipt.gasUsed.mul(nftContract.deployTransaction.gasPrice)) + " ETH");
+    console.log("DecentradeNFT deployment transaction cost:", hre.ethers.utils.formatEther(nftDeployReceipt.gasUsed.mul(nftGasPrice)) + " ETH");
 
     // Deploy DecentradeMarketplace
     console.log("\nDeploying DecentradeMarketplace...");
@@ -28,10 +29,11 @@ async function main() {
 
     // Wait for the transaction to be mined and get the receipt
     const marketplaceDeployReceipt = await marketplaceContract.deployTransaction.wait();
-
+    
     // Log gas used and transaction cost
+    const marketplaceGasPrice = marketplaceContract.deployTransaction.gasPrice || (await hre.ethers.provider.getGasPrice());
     console.log("DecentradeMarketplace deployment gas used:", marketplaceDeployReceipt.gasUsed.toString());
-    console.log("DecentradeMarketplace deployment transaction cost:", hre.ethers.utils.formatEther(marketplaceDeployReceipt.gasUsed.mul(marketplaceContract.deployTransaction.gasPrice)) + " ETH");
+    console.log("DecentradeMarketplace deployment transaction cost:", hre.ethers.utils.formatEther(marketplaceDeployReceipt.gasUsed.mul(marketplaceGasPrice)) + " ETH");
 
     // Get contract sizes
     const nftContractSize = (await hre.artifacts.readArtifact("DecentradeNFT")).deployedBytecode.length / 2;
@@ -43,8 +45,8 @@ async function main() {
 
     // Calculate total deployment cost
     const totalCost = hre.ethers.utils.formatEther(
-        nftDeployReceipt.gasUsed.mul(nftContract.deployTransaction.gasPrice).add(
-            marketplaceDeployReceipt.gasUsed.mul(marketplaceContract.deployTransaction.gasPrice)
+        nftDeployReceipt.gasUsed.mul(nftGasPrice).add(
+            marketplaceDeployReceipt.gasUsed.mul(marketplaceGasPrice)
         )
     );
     console.log("\nTotal deployment cost:", totalCost, "ETH");
