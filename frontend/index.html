@@ -1,13 +1,112 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>DecenTrade | NFT Marketplace</title>
-    </head>
-    <body>
-        <div id="root"></div>
-        <script type="module" src="/src/main.jsx"></script>
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Page - Enhanced Input Field Design</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto; /* Center the container */
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px; /* Rounded corners for the container */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for the container */
+        }
+
+        h1 {
+            text-align: center; /* Center the heading */
+            margin-bottom: 20px; /* Space below the heading */
+        }
+
+        .input-container {
+            margin-bottom: 20px; /* Space between input fields */
+            position: relative; /* Position for absolute error message */
+        }
+
+        .input-label {
+            display: block;
+            font-size: 14px;
+            color: #555; /* Label color */
+            margin-bottom: 5px; /* Space between label and input */
+        }
+
+        .input-field {
+            width: 100%; /* Full width */
+            padding: 10px; /* Padding inside input */
+            border: 1px solid #ccc; /* Border color */
+            border-radius: 5px; /* Rounded corners */
+            font-size: 16px; /* Font size */
+            transition: border-color 0.3s ease; /* Smooth border transition */
+        }
+
+        .input-field:focus {
+            border-color: #007bff; /* Change border color on focus */
+            outline: none; /* Remove default outline */
+        }
+
+        .input-error {
+            color: red; /* Error message color */
+            font-size: 12px; /* Font size for error message */
+            position: absolute; /* Position error message */
+            bottom: -18px; /* Position below input */
+            left: 0; /* Align to the left */
+        }
+
+        .submit-button {
+            background-color: #007bff; /* Button color */
+            color: white; /* Button text color */
+            border: none; /* No border */
+            padding: 10px 15px; /* Padding for button */
+            border-radius: 5px; /* Rounded corners for button */
+            cursor: pointer; /* Pointer cursor on hover */
+            font-size: 16px; /* Font size for button */
+            transition: background-color 0.3s ease; /* Smooth transition for button */
+            width: 100%; /* Full width for button */
+        }
+
+        .submit-button:hover {
+            background-color: #0056b3; /* Darker shade on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Create Page</h1>
+        <div class="input-container">
+            <label for="input-field" class="input-label">Your Label</label>
+            <input type="text" id="input-field" class="input-field" placeholder="Enter your text here">
+            <span class="input-error"></span>
+        </div>
+        <button class="submit-button" onclick="submitForm()">Submit</button>
+    </div>
+
+    <script>
+        const inputField = document.getElementById('input-field');
+        const errorMessage = document.querySelector('.input-error');
+
+        inputField.addEventListener('input', function() {
+            if (inputField.value.trim() === '') {
+                errorMessage.textContent = 'This field is required.';
+            } else {
+                errorMessage.textContent = '';
+            }
+        });
+
+        function submitForm() {
+            if (inputField.value.trim() === '') {
+                errorMessage.textContent = 'This field is required.';
+            } else {
+                alert('Form submitted successfully!');
+                // Here you can handle the form submission, e.g., send data to server
+            }
+        }
+    </script>
+</body>
 </html>
