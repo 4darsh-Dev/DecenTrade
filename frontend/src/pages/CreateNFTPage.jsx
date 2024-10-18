@@ -64,7 +64,7 @@ const CreateNFT = ({ wallet }) => {
                 <div className="mb-4">
                     <label
                         htmlFor="name"
-                        className="block text-sm font-medium text-gray-700"
+                        className="block text-lg font-medium text-gray-700"
                     >
                         Name
                     </label>
@@ -75,13 +75,13 @@ const CreateNFT = ({ wallet }) => {
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        className="mt-1 block w-full text-[14px] rounded-lg border border-gray-300 bg-white px-4 py-2 shadow-md focus:outline-none focus:border-[#ff00ff] focus:ring-1 focus:ring-[#ff00ff] transition duration-300"
                     />
                 </div>
                 <div className="mb-4">
                     <label
                         htmlFor="description"
-                        className="block text-sm font-medium text-gray-700"
+                        className="block text-lg font-medium text-gray-700"
                     >
                         Description
                     </label>
@@ -91,13 +91,13 @@ const CreateNFT = ({ wallet }) => {
                         value={formData.description}
                         onChange={handleChange}
                         required
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        className="mt-1 text-[14px] block w-full rounded-lg border border-gray-300 bg-white px-4 py-2 shadow-md focus:outline-none focus:border-[#ff00ff] focus:ring-1 focus:ring-[#ff00ff] transition duration-300"
                     ></textarea>
                 </div>
                 <div className="mb-4">
                     <label
                         htmlFor="price"
-                        className="block text-sm font-medium text-gray-700"
+                        className="block text-lg font-medium text-gray-700"
                     >
                         Price (ETH)
                     </label>
@@ -109,13 +109,13 @@ const CreateNFT = ({ wallet }) => {
                         onChange={handleChange}
                         required
                         step="0.01"
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        className="mt-1 block text-[14px] text-black w-full rounded-lg border border-gray-300 bg-white px-4 py-2 shadow-md focus:outline-none focus:border-[#ff00ff] focus:ring-1 focus:ring-[#ff00ff] transition duration-300"
                     />
                 </div>
                 <div className="mb-4">
                     <label
                         htmlFor="file"
-                        className="block text-sm font-medium text-gray-700"
+                        className="block text-lg font-medium text-gray-700"
                     >
                         File
                     </label>
