@@ -1,7 +1,8 @@
 // src/pages/CreateNFT.jsx
 import { React, useState } from 'react'
 import PropTypes from 'prop-types'
-import { connectWallet, createNFT } from '../utils/ethereum'
+import { connectWallet, createNFT, getNFTContract } from '../utils/ethereum'
+import { ethers } from 'ethers'
 
 const nftAddress = import.meta.env.VITE_NFT_ADDRESS
 const marketplaceAddress = import.meta.env.VITE_MARKET_ADDRESS
