@@ -1,13 +1,81 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>DecenTrade | NFT Marketplace</title>
-    </head>
-    <body>
-        <div id="root"></div>
-        <script type="module" src="/src/main.jsx"></script>
-    </body>
+<head>
+    <meta charset="UTF-8" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scroll to Top Example</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            height: 2000px; /* Simulating a long page */
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: #007bff;
+            color: white;
+        }
+
+        .scroll-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            display: none; /* Hidden by default */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            transition: opacity 0.3s;
+        }
+
+        .scroll-to-top:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Scroll to Top Button Example</h1>
+        <p>Scroll down to see the button appear.</p>
+    </div>
+
+    <!-- Main content goes here -->
+    <div style="padding: 20px;">
+        <h2>Content Section</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum. </p>
+        <!-- Add more content as needed to make the page longer -->
+    </div>
+
+    <button class="scroll-to-top" id="scrollBtn">↑ Scroll to Top</button>
+
+    <script>
+        // Get the button
+        const scrollBtn = document.getElementById("scrollBtn");
+
+        // Show the button when scrolling down 100px from the top
+        window.onscroll = function() {
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                scrollBtn.style.display = "block";
+            } else {
+                scrollBtn.style.display = "none";
+            }
+        };
+
+        // When the user clicks the button, scroll to the top of the document
+        scrollBtn.onclick = function() {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth" // Smooth scroll effect
+            });
+        };
+    </script>
+</body>
 </html>
