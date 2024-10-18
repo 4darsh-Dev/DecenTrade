@@ -1,35 +1,7 @@
 import { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import {
-    connectWallet,
-    mintNFT,
-    listNFT,
-    buyNFT,
-    fetchMarketItems,
-} from '../utils/ethereum'
+import { mintNFT, listNFT, buyNFT, fetchMarketItems } from '../utils/ethereum'
 import { ethers } from 'ethers'
-
-const WalletConnect = ({ wallet, setWallet }) => {
-    const connect = async () => {
-        const signer = await connectWallet()
-        setWallet(signer)
-    }
-
-    return (
-        <div className="p-4">
-            {wallet ? (
-                <p className="text-green-500">Wallet connected</p>
-            ) : (
-                <button
-                    onClick={connect}
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                >
-                    Connect Wallet
-                </button>
-            )}
-        </div>
-    )
-}
 
 const MintNFT = ({ wallet }) => {
     const [tokenURI, setTokenURI] = useState('')
@@ -109,13 +81,12 @@ const MarketplaceItems = ({ wallet }) => {
     )
 }
 
-export default function NFTMarketplace({ wallet, setWallet }) {
+export default function NFTMarketplace({ wallet }) {
     return (
         <div className="container mx-auto">
             <h1 className="text-3xl font-bold mb-4">
                 Decentrade NFT Marketplace
             </h1>
-            <WalletConnect setWallet={setWallet} wallet={wallet} />
             {wallet && (
                 <>
                     <MintNFT wallet={wallet} />
@@ -125,17 +96,15 @@ export default function NFTMarketplace({ wallet, setWallet }) {
         </div>
     )
 }
-WalletConnect.propTypes = {
-    wallet: PropTypes.object,
-    setWallet: PropTypes.func.isRequired,
-}
 NFTMarketplace.propTypes = {
     wallet: PropTypes.object,
-    setWallet: PropTypes.func.isRequired,
 }
 MintNFT.propTypes = {
     wallet: PropTypes.object,
 }
 MarketplaceItems.propTypes = {
+    wallet: PropTypes.object,
+}
+NFTMarketplace.propTypes = {
     wallet: PropTypes.object,
 }
