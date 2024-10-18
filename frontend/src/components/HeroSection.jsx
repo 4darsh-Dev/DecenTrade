@@ -24,7 +24,7 @@ const HeroSection = () => {
         <div className="relative h-screen flex items-center justify-center overflow-hidden">
             <canvas ref={canvasRef} className="absolute inset-0 z-0" />
             <div className="relative z-10 text-center">
-                <h1 className="text-6xl font-bold mb-4 text-white">
+                <h1 className="text-6xl custom-h1 font-bold mb-4 text-baby-pink">
                     Explore, Collect and Sell
                     <br />
                     Extraordinary NFTs
