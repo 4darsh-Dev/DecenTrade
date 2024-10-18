@@ -1,4 +1,3 @@
-// src/utils/ethereum.js
 import { ethers } from 'ethers'
 import DecentradeNFTAbi from '../../../smart-contracts/artifacts/contracts/Marketplace.sol/DecentradeNFT.json'
 import DecentradeMarketplaceAbi from '../../../smart-contracts/artifacts/contracts/Marketplace.sol/DecentradeMarketplace.json'
@@ -8,24 +7,27 @@ import {
     uploadToIPFS,
 } from '../services/pinataService'
 
-const nftAddress = '0x16d8DfCB8FebDbB60E2ce382C5Bf35174ecb4F97'
-const marketplaceAddress = '0x590a018d141Ea9346A501458710D30E80DE3Ef56'
+const nftAddress = import.meta.env.VITE_NFT_ADDRESS
+const marketplaceAddress = import.meta.env.VITE_MARKET_ADDRESS
+
+console.log('marketplaceAddress:', marketplaceAddress)
+console.log('nftAddress:', nftAddress)
 
 export const connectWallet = async () => {
     if (window.ethereum) {
         try {
             await window.ethereum.request({ method: 'eth_requestAccounts' })
-            console.log('connection req sent')
             const provider = new ethers.BrowserProvider(window.ethereum)
-            console.log(provider, 'provider')
             const signer = await provider.getSigner()
-            console.log('Wallet connected:', signer)
+            console.log('Wallet connected:', await signer.getAddress())
             return signer
         } catch (error) {
-            console.error('User denied account access', error)
+            console.error('Error connecting wallet:', error)
+            throw error
         }
     } else {
-        console.log('Ethereum object not found, install MetaMask.')
+        console.error('Ethereum wallet not detected')
+        throw new Error('Ethereum wallet not detected')
     }
 }
 
@@ -47,64 +49,96 @@ export const getMarketplaceContract = (signer) => {
 
 export const createNFT = async (signer, name, description, price, file) => {
     try {
-        console.log(signer, name, description, price, file)
         testIpfs()
         const fileUrl = await uploadToIPFS(file)
         const nftContract = getNFTContract(signer)
-        console.log('got nft contract', nftContract)
         const marketplaceContract = getMarketplaceContract(signer)
-        console.log('got marketplace contract', marketplaceContract)
 
         // Create NFT metadata
-        const data = JSON.stringify({
+        const metadata = JSON.stringify({
             name,
             description,
             image: fileUrl,
         })
-        const url = await uploadMetadataToIPFS(data)
-        // const added = await ipfsClient.add(data)
-        // const url = `https://ipfs.infura.io/ipfs/${added.path}`
+        const metadataUrl = await uploadMetadataToIPFS(metadata)
+
+        console.log('Metadata URL:', metadataUrl)
 
         // Mint NFT
-        if (!signer) {
-            console.log('no signer')
-            throw new Error('No signer')
-        }
-        const signerAddress = await signer.getAddress()
-        let transaction = await nftContract.mintNFT(signerAddress, url)
-        const tx = await transaction.wait()
+        const mintTx = await nftContract.mintNFT(
+            await signer.getAddress(),
+            metadataUrl,
+            0
+        )
+        const mintReceipt = await mintTx.wait()
 
-        const event = tx.events[0]
-        const value = event.args[2]
-        const tokenId = value.toNumber()
+        // Printing the mint receipt for debugging purposes
+        // console.log('Mint Receipt:', JSON.stringify(mintReceipt, null, 2));
+
+        // Extract tokenId using a more flexible approach
+        let tokenId
+        if (mintReceipt.events) {
+            const transferEvent = mintReceipt.events.find(
+                (e) => e.event === 'Transfer'
+            )
+            if (transferEvent && transferEvent.args) {
+                tokenId = transferEvent.args[2]
+            }
+        }
+
+        if (!tokenId) {
+            // If we couldn't extract the tokenId from events, try logs
+            const iface = new ethers.Interface(DecentradeNFTAbi.abi)
+            for (const log of mintReceipt.logs) {
+                try {
+                    const parsed = iface.parseLog(log)
+                    if (parsed && parsed.name === 'Transfer') {
+                        tokenId = parsed.args[2]
+                        break
+                    }
+                } catch (e) {
+                    // This log was not for the Transfer event, continue to the next log
+                }
+            }
+        }
+
+        if (!tokenId) {
+            throw new Error(
+                'Failed to extract tokenId from transaction receipt'
+            )
+        }
+
+        console.log('Minted NFT with tokenId:', tokenId.toString())
+
+        // Approve marketplace contract to transfer the NFT
+        const approveTx = await nftContract.approve(marketplaceAddress, tokenId)
+        await approveTx.wait()
 
         // List NFT
-        const listingPrice = await marketplaceContract.getListingFee()
-        transaction = await marketplaceContract.createMarketItem(
+        const listingFee = await marketplaceContract.getListingFee()
+        const listingTx = await marketplaceContract.createMarketItem(
             nftAddress,
             tokenId,
-            ethers.utils.parseUnits(price, 'ether'),
-            { value: listingPrice }
+            ethers.parseEther(price.toString()),
+            { value: listingFee }
         )
-        await transaction.wait()
+        await listingTx.wait()
 
         return tokenId
-    } catch (e) {
-        console.error(e)
-        throw e
+    } catch (error) {
+        console.error('Error creating NFT:', error)
+        throw error
     }
 }
 
 export const fetchMarketItems = async (signer) => {
     const marketplaceContract = getMarketplaceContract(signer)
-    const data = await marketplaceContract.fetchMarketItems()
-    return data
+    return await marketplaceContract.fetchMarketItems()
 }
 
 export const fetchMyNFTs = async (signer) => {
     const marketplaceContract = getMarketplaceContract(signer)
-    const data = await marketplaceContract.fetchMyNFTs()
-    return data
+    return await marketplaceContract.fetchMyNFTs()
 }
 
 export const buyNFT = async (signer, nftContract, itemId, price) => {
@@ -114,57 +148,48 @@ export const buyNFT = async (signer, nftContract, itemId, price) => {
         itemId,
         { value: price }
     )
-    await transaction.wait()
-    return transaction
+    return await transaction.wait()
 }
 
 export const listNFT = async (signer, tokenId, price) => {
     try {
         const marketplaceContract = getMarketplaceContract(signer)
-        const listingPrice = await marketplaceContract.getListingFee()
+        const listingFee = await marketplaceContract.getListingFee()
         const transaction = await marketplaceContract.createMarketItem(
             nftAddress,
             tokenId,
-            ethers.utils.parseUnits(price, 'ether'),
-            { value: listingPrice }
+            ethers.parseEther(price.toString()),
+            { value: listingFee }
         )
         await transaction.wait()
         console.log(`NFT with Token ID ${tokenId} listed successfully.`)
     } catch (error) {
         console.error('Error listing NFT:', error)
+        throw error
     }
 }
 
 export const mintNFT = async (signer, name, description, file) => {
     try {
-        // Upload image to IPFS
         const fileUrl = await uploadToIPFS(file)
-
-        // Create metadata
-        const metadata = JSON.stringify({
-            name,
-            description,
-            image: fileUrl,
-        })
-
-        // Upload metadata to IPFS
+        const metadata = JSON.stringify({ name, description, image: fileUrl })
         const metadataUrl = await uploadMetadataToIPFS(metadata)
 
-        // Mint NFT using the metadata URL
         const nftContract = getNFTContract(signer)
         const transaction = await nftContract.mintNFT(
             await signer.getAddress(),
-            metadataUrl
+            metadataUrl,
+            0
         )
-        const tx = await transaction.wait()
+        const receipt = await transaction.wait()
 
-        // Get the minted token ID
-        const event = tx.events[0]
-        const tokenId = event.args[2].toNumber()
+        const event = receipt.events.find((event) => event.event === 'Transfer')
+        const tokenId = event.args[2]
 
         console.log(`NFT minted with Token ID: ${tokenId}`)
         return tokenId
     } catch (error) {
         console.error('Error minting NFT:', error)
+        throw error
     }
 }

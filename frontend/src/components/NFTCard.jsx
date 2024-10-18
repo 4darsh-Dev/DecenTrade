@@ -1,36 +1,44 @@
-// src/components/NFTCard.jsx
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { ethers } from 'ethers'
 
 const NFTCard = ({ nft, onBuy }) => {
+    const truncateAddress = (address) =>
+        `${address.slice(0, 6)}...${address.slice(-4)}`
+
+    const handleAddressClick = (address) => {
+        window.open(`https://sepolia.etherscan.io/address/${address}`, '_blank')
+    }
+
     return (
-        <div className="border rounded-lg p-4 shadow-md">
-            <img
-                src={nft.image}
-                alt={nft.name}
-                className="w-full h-48 object-cover mb-4 rounded"
-            />
-            <h3 className="text-lg font-semibold mb-2">{nft.name}</h3>
-            <p className="text-gray-600 mb-2">{nft.description}</p>
-            <p className="font-bold mb-2">
-                {ethers.utils.formatEther(nft.price)} ETH
-            </p>
-            <div className="flex justify-between">
-                <Link
-                    to={`/nft/${nft.tokenId}`}
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                >
-                    View Details
-                </Link>
-                {onBuy && (
-                    <button
-                        onClick={() => onBuy(nft)}
-                        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+        <div className="bg-white rounded-lg shadow-md overflow-hidden">
+            <div className="p-4">
+                <h2 className="text-xl font-semibold mb-2">{`NFT #${nft.tokenId}`}</h2>
+                <p className="text-gray-600 mb-2">
+                    <span className="font-semibold">Contract:</span>{' '}
+                    <span
+                        className="text-blue-600 cursor-pointer"
+                        onClick={() => handleAddressClick(nft.nftContract)}
                     >
-                        Buy
-                    </button>
-                )}
+                        {truncateAddress(nft.nftContract)}
+                    </span>
+                </p>
+                <p className="text-gray-600 mb-2">
+                    <span className="font-semibold">Owner:</span>{' '}
+                    {truncateAddress(nft.owner)}
+                </p>
+                <p className="text-gray-600 mb-2">
+                    <span className="font-semibold">Seller:</span>{' '}
+                    {truncateAddress(nft.seller)}
+                </p>
+                <p className="text-2xl font-bold text-indigo-600 mb-4">
+                    {nft.price} ETH
+                </p>
+                <button
+                    onClick={() => onBuy(nft)}
+                    className="w-full bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition duration-300"
+                >
+                    Buy Now
+                </button>
             </div>
         </div>
     )
