@@ -92,9 +92,7 @@ const ExplorePage = () => {
         return (
             <div className="flex items-top justify-center min-h-screen py-10">
                 <HashLoader size={30} color="purple" />
-                <p className="py-0.5 px-2 blinking-text text-size-10">
-                    Loading NFTs...
-                </p>
+                <p className="py-0.5 px-2 blinking-text">Loading NFTs...</p>
             </div>
         )
     }
