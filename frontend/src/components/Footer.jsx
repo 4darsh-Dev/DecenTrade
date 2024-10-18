@@ -24,9 +24,9 @@ const Footer = () => {
     }, [])
 
     return (
-        <footer className="bg-gray-900 mt-12 text-white relative pt-20 pb-10">
+        <footer className="bg-gray-900 mt-0 text-white relative pt-20 pb-10">
             <div className="absolute top-0 left-0 w-full overflow-hidden">
-                <svg
+                {/* <svg
                     ref={waveRef}
                     className="w-full h-20"
                     viewBox="0 0 1440 100"
@@ -37,7 +37,7 @@ const Footer = () => {
                         fillOpacity="0.5"
                         d="M0,32L60,37.3C120,43,240,53,360,58.7C480,64,600,64,720,58.7C840,53,960,43,1080,42.7C1200,43,1320,53,1380,58.7L1440,64L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"
                     />
-                </svg>
+                </svg> */}
             </div>
             <div className="container mx-auto px-4">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">

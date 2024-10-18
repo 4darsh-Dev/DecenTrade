@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.custom-h1{
+    color:#fde8fa;
+    text-shadow:
+        0 0 5px #a855f7,
+        0 0 5px #a855f7,
+        0 0 5px #a855f7; 
+}

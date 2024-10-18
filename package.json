@@ -2,6 +2,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
     "@fortawesome/free-brands-svg-icons": "^6.6.0",
-    "@fortawesome/react-fontawesome": "^0.2.2"
+    "@fortawesome/react-fontawesome": "^0.2.2",
+    "yarn": "^1.22.22"
   }
 }
