@@ -242,13 +242,13 @@
 
 /* Optional: dark mode styles */
 body.dark-mode {
-    background-color: #121212; /* Dark background */
-    color: #ffffff; /* Light text color */
+    background-color: #2b2929; /* Slightly lighter dark background */
+    color: #e0e0e0;  /* Light text color */
 }
 
 /* Adjust navbar colors for dark mode */
 .navbar.dark-mode {
-    background-color: #1a1a1a; /* Darker navbar */
+    background-color: #2a2929; /* Darker navbar */
 }
 
 /* Specific styles for the SVG icons */

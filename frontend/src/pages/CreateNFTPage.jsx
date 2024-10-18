@@ -1,13 +1,10 @@
-// src/pages/CreateNFT.jsx
-import { React, useState } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { connectWallet, createNFT, getNFTContract } from '../utils/ethereum'
+import { connectWallet, createNFT } from '../utils/ethereum'
 import { ethers } from 'ethers'
 
 const nftAddress = import.meta.env.VITE_NFT_ADDRESS
 const marketplaceAddress = import.meta.env.VITE_MARKET_ADDRESS
-
-const PRIVATE_KEY = import.meta.env.VITE_PRIVATE_KEY
 
 const CreateNFT = ({ wallet }) => {
     const [formData, setFormData] = useState({
@@ -58,13 +55,13 @@ const CreateNFT = ({ wallet }) => {
     }
 
     return (
-        <div className="container mx-auto px-4 py-8">
-            <h1 className="text-3xl font-bold mb-8">Create NFT</h1>
+        <div className="container mx-auto px-4 py-8 dark:bg-gray-900">
+            <h1 className="text-3xl font-bold mb-8 dark:text-white">Create NFT</h1>
             <form onSubmit={handleSubmit} className="max-w-lg">
                 <div className="mb-4">
                     <label
                         htmlFor="name"
-                        className="block text-sm font-medium text-gray-700"
+                        className="block text-sm font-medium  dark:text-white" // Ensure text is white in dark mode
                     >
                         Name
                     </label>
@@ -75,13 +72,14 @@ const CreateNFT = ({ wallet }) => {
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-700 dark:text-white focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        style={{ color: 'black' }}
                     />
                 </div>
                 <div className="mb-4">
                     <label
                         htmlFor="description"
-                        className="block text-sm font-medium text-gray-700"
+                        className="block text-sm font-medium  dark:text-white" // Ensure text is white in dark mode
                     >
                         Description
                     </label>
@@ -91,13 +89,14 @@ const CreateNFT = ({ wallet }) => {
                         value={formData.description}
                         onChange={handleChange}
                         required
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-700 dark:text-white focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                         style={{ color: 'black' }}
                     ></textarea>
                 </div>
                 <div className="mb-4">
                     <label
                         htmlFor="price"
-                        className="block text-sm font-medium text-gray-700"
+                        className="block text-sm font-medium  dark:text-white" // Ensure text is white in dark mode
                     >
                         Price (ETH)
                     </label>
@@ -109,13 +108,14 @@ const CreateNFT = ({ wallet }) => {
                         onChange={handleChange}
                         required
                         step="0.01"
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        // className="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-700 dark:text-white focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        style={{ color: 'black' }}
                     />
                 </div>
                 <div className="mb-4">
                     <label
                         htmlFor="file"
-                        className="block text-sm font-medium text-gray-700"
+                        className="block text-sm font-medium  dark:text-white" // Ensure text is white in dark mode
                     >
                         File
                     </label>
@@ -125,7 +125,7 @@ const CreateNFT = ({ wallet }) => {
                         name="file"
                         onChange={handleChange}
                         required
-                        className="mt-1 block w-full"
+                        className="mt-1 block w-full dark:bg-gray-700 dark:text-white"
                     />
                 </div>
                 <button
@@ -138,9 +138,9 @@ const CreateNFT = ({ wallet }) => {
         </div>
     )
 }
+
 CreateNFT.propTypes = {
     wallet: PropTypes.object.isRequired,
-    // wallet: PropTypes.object,
 }
 
 export default CreateNFT
