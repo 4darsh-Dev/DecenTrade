@@ -1,13 +1,111 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>DecenTrade | NFT Marketplace</title>
-    </head>
-    <body>
-        <div id="root"></div>
-        <script type="module" src="/src/main.jsx"></script>
-    </body>
+<head>
+    <meta charset="UTF-8" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trending & Popular NFTs</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: #007bff;
+            color: white;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        .header p {
+            font-size: 1.25rem;
+        }
+
+        .nft-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .nft-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .nft-card:hover {
+            transform: scale(1.05);
+        }
+
+        .nft-card img {
+            width: 100%;
+            border-radius: 8px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        .nft-card h3 {
+            margin: 10px 0 5px;
+            font-size: 1.5rem;
+        }
+
+        .nft-card p {
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .market-value {
+            font-weight: bold;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Trending & Popular NFTs</h1>
+        <p>Discover the latest trends and popular NFTs in the market.</p>
+    </div>
+
+    <div class="nft-container">
+        <div class="nft-card">
+            <img src="nft1.jpg" alt="NFT 1"> <!-- Replace with your image -->
+            <h3>Art Piece One</h3>
+            <p>A beautiful digital artwork.</p>
+            <p class="market-value">Market Value: $500</p>
+        </div>
+        <div class="nft-card">
+            <img src="nft2.jpg" alt="NFT 2"> <!-- Replace with your image -->
+            <h3>Crypto Collectible</h3>
+            <p>A rare crypto collectible.</p>
+            <p class="market-value">Market Value: $750</p>
+        </div>
+        <div class="nft-card">
+            <img src="nft3.jpg" alt="NFT 3"> <!-- Replace with your image -->
+            <h3>Digital Sculpture</h3>
+            <p>A stunning 3D digital sculpture.</p>
+            <p class="market-value">Market Value: $1,200</p>
+        </div>
+        <div class="nft-card">
+            <img src="nft4.jpg" alt="NFT 4"> <!-- Replace with your image -->
+            <h3>Animated Clip</h3>
+            <p>An exclusive animated NFT clip.</p>
+            <p class="market-value">Market Value: $300</p>
+        </div>
+        <!-- Add more NFT cards as needed -->
+    </div>
+</body>
 </html>
