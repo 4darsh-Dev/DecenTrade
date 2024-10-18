@@ -23,7 +23,7 @@ export const connectWallet = async () => {
             return signer;
         } catch (error) {
             console.error('Error connecting wallet:', error);
-            throw new Error('Error connecting wallet: ' + error.message);
+            throw new Error(`Error connecting wallet: ' ${error.message}`);
         }
     } else {
         console.error('Ethereum wallet not detected');
@@ -171,8 +171,8 @@ export const mintNFT = async (signer, name, description, file) => {
         const transaction = await nftContract.mintNFT(await signer.getAddress(), metadataUrl, 0);
         const receipt = await transaction.wait();
 
-        const event = receipt.events.find(event => event.event === 'Transfer');
-        const tokenId = event.args[2];
+        const mintevent = receipt.events.find(event => event.event === 'Transfer');
+        const tokenId = mintevent.args[2];
 
         console.log(`NFT minted with Token ID: ${tokenId}`);
         return tokenId;
