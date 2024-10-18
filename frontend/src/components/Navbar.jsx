@@ -55,6 +55,7 @@ const Navbar = ({ wallet, setWallet }) => {
                     { name: 'Create', link: '/create' },
                     { name: 'About', link: '/about' },
                     { name: 'Creators', link: '/creators' },
+                    { name: 'Contact Us', link: '/contact' },
                     // { name: 'How It Works', link: '/how-it-works' },
 
                     { name: 'FAQs', link: '/faqs' },
