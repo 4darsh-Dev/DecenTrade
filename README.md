@@ -101,6 +101,19 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 #### Project Link: [https://github.com/4darsh-Dev/DecenTrade](https://github.com/4darsh-Dev/DecenTrade)
 
 ## 🙏 Acknowledgments
+Metric	Description	Value (Example)
+Total Users	Number of registered users	1000
+Active Users (Monthly)	Users actively interacting	500
+Total Listings	Number of digital assets listed	200
+Average Listing Price	Average price of digital assets	0.5 ETH
+Transaction Volume (Monthly)	Total value of digital assets traded	100 ETH
+Smart Contract Audits	Number of security audits	2
+GitHub Stars	Community interest	100
+
+Open Issues	Number of reported bugs	5
+
+Export to Sheets
+
 
 - [OpenZeppelin](https://openzeppelin.com/) for secure smart contract templates
 - [Ethereum](https://ethereum.org/) for the blockchain platform
