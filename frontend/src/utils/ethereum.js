@@ -1,11 +1,11 @@
 import { ethers } from 'ethers'
 import DecentradeNFTAbi from '../../../smart-contracts/artifacts/contracts/Marketplace.sol/DecentradeNFT.json'
 import DecentradeMarketplaceAbi from '../../../smart-contracts/artifacts/contracts/Marketplace.sol/DecentradeMarketplace.json'
-import {
-    testIpfs,
-    uploadMetadataToIPFS,
-    uploadToIPFS,
-} from '../services/pinataService'
+// import {
+//     testIpfs,
+//     uploadMetadataToIPFS,
+//     uploadToIPFS,
+// } from '../services/pinataService'
 
 const nftAddress = import.meta.env.VITE_NFT_ADDRESS
 const marketplaceAddress = import.meta.env.VITE_MARKET_ADDRESS
@@ -46,20 +46,53 @@ export const getMarketplaceContract = (signer) => {
         signer
     )
 }
-
+const uploadToIPFS = async (file) => {
+    try {
+        const formData = new FormData()
+        formData.append('file', file)
+        const response = await fetch('http://localhost:5000/ipfs/uploadImage', {
+            method: 'POST',
+            body: formData,
+        })
+        const data = await response.json()
+        console.log('IPFS Response:', data)
+        return data.ipfsHash
+    } catch (e) {
+        console.error(e)
+    }
+}
+const uploadMetadataToIPFS = async (metadata) => {
+    try {
+        const formData = new FormData()
+        formData.append('metadata', metadata)
+        console.log(formData, 'formData')
+        const response = await fetch(
+            'http://localhost:5000/ipfs/uploadMetaData',
+            {
+                method: 'POST',
+                body: formData,
+            }
+        )
+        const data = await response.json()
+        console.log('IPFS Response:', data)
+        return data.ipfsHash
+    } catch (e) {
+        console.error(e)
+    }
+}
 export const createNFT = async (signer, name, description, price, file) => {
     try {
-        testIpfs()
         const fileUrl = await uploadToIPFS(file)
         const nftContract = getNFTContract(signer)
         const marketplaceContract = getMarketplaceContract(signer)
-
+        // console.log(fileUrl, 'fileUrl')
         // Create NFT metadata
         const metadata = JSON.stringify({
             name,
             description,
             image: fileUrl,
         })
+        console.log(metadata, 'metadata')
         const metadataUrl = await uploadMetadataToIPFS(metadata)
 
         console.log('Metadata URL:', metadataUrl)

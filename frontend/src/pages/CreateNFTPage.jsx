@@ -1,5 +1,5 @@
 // src/pages/CreateNFT.jsx
-import { React, useState } from 'react'
+import { useState } from 'react'
 import PropTypes from 'prop-types'
 import { connectWallet, createNFT, getNFTContract } from '../utils/ethereum'
 import { ethers } from 'ethers'

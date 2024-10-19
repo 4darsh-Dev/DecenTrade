@@ -19,6 +19,7 @@ const Navbar = ({ wallet, setWallet }) => {
         const signer = await connectWallet()
         setWallet(signer)
         setShowMintOption(true) // Show mint option after wallet is connected
+        setShowMintOption(true) // Show mint option after wallet is connected
     }
 
     const handleMint = async () => {
@@ -72,7 +73,7 @@ const Navbar = ({ wallet, setWallet }) => {
                 <div className="search-container">
                     <input
                         type="text"
-                        placeholder="Search NFTs"
+                        // placeholder="Search NFTs"
                         className="search-input"
                     />
                     <Search className="search-icon" size={20} />
