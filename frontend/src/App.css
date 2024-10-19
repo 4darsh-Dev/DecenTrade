@@ -1,42 +1,94 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* Reset styles */
+html, body, h1, h2, h3, p, ul, li, button {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font-family: Arial, sans-serif;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* Global styles */
+body {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+h1, h2, h3 {
+    font-weight: bold;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+ul {
+    list-style: none;
 }
 
-.card {
-  padding: 2em;
+a {
+    text-decoration: none;
+    color: #007bff;
 }
 
-.read-the-docs {
-  color: #888;
+a:hover {
+    text-decoration: underline;
+}
+
+/* Header styles */
+header {
+    background-color: #f0f0f0;
+    padding: 1rem;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+}
+
+nav ul li {
+    margin-right: 1rem;
+}
+
+nav a {
+    color: #333;
+    font-weight: bold;
+}
+
+/* Main content styles */
+main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+p {
+    margin-bottom: 1rem;
+}
+
+/* Footer styles */
+footer {
+    background-color: #f0f0f0;
+    padding: 1rem;
+    text-align: center;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav ul li {
+        margin-right: 0;
+        margin-bottom: 1rem;
+    }
 }
