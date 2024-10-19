@@ -9,6 +9,8 @@ import FAQPage from './pages/FAQPage'
 import Navbar from './components/Navbar'
 import CreateNFT from './pages/CreateNFTPage'
 import NotFoundPage from './components/NotFoundPage'
+import ScrollToTop from './components/ScrollToTop'
+import CircularProgress from './components/CircularProgress'
 function App() {
     const [wallet, setWallet] = useState(null)
     useEffect(() => {
@@ -46,6 +48,8 @@ function App() {
                     </Routes>
                 </div>
             </div>
+            <CircularProgress></CircularProgress>
+            <ScrollToTop></ScrollToTop>
         </BrowserRouter>
     )
 }
