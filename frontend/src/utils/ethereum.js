@@ -10,8 +10,10 @@ import DecentradeMarketplaceAbi from '../../../smart-contracts/artifacts/contrac
 const nftAddress = import.meta.env.VITE_NFT_ADDRESS
 const marketplaceAddress = import.meta.env.VITE_MARKET_ADDRESS
 
-console.log('marketplaceAddress:', marketplaceAddress)
-console.log('nftAddress:', nftAddress)
+// For local testing ONLY
+// const API_URL = "http://localhost:3000"
+
+const API_URL = import.meta.env.VITE_API_URL
 
 export const connectWallet = async () => {
     if (window.ethereum) {
@@ -50,7 +52,7 @@ const uploadToIPFS = async (file) => {
     try {
         const formData = new FormData()
         formData.append('file', file)
-        const response = await fetch('http://localhost:5000/ipfs/uploadImage', {
+        const response = await fetch(API_URL + '/ipfs/uploadImage', {
             method: 'POST',
             body: formData,
         })
@@ -65,9 +67,9 @@ const uploadMetadataToIPFS = async (metadata) => {
     try {
         const formData = new FormData()
         formData.append('metadata', metadata)
-        console.log(formData, 'formData')
+        // console.log(formData, 'formData')
         const response = await fetch(
-            'http://localhost:5000/ipfs/uploadMetaData',
+            API_URL + '/ipfs/uploadMetaData',
             {
                 method: 'POST',
                 body: formData,
@@ -92,10 +94,10 @@ export const createNFT = async (signer, name, description, price, file) => {
             description,
             image: fileUrl,
         })
-        console.log(metadata, 'metadata')
+        // console.log(metadata, 'metadata')
         const metadataUrl = await uploadMetadataToIPFS(metadata)
 
-        console.log('Metadata URL:', metadataUrl)
+        // console.log('Metadata URL:', metadataUrl)
 
         // Mint NFT
         const mintTx = await nftContract.mintNFT(
