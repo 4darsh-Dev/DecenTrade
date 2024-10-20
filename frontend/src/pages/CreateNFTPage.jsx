@@ -1,13 +1,10 @@
-// src/pages/CreateNFT.jsx
-import { useState } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { connectWallet, createNFT, getNFTContract } from '../utils/ethereum'
+import { connectWallet, createNFT } from '../utils/ethereum'
 import { ethers } from 'ethers'
 
 const nftAddress = import.meta.env.VITE_NFT_ADDRESS
 const marketplaceAddress = import.meta.env.VITE_MARKET_ADDRESS
-
-const PRIVATE_KEY = import.meta.env.VITE_PRIVATE_KEY
 
 const CreateNFT = ({ wallet }) => {
     const [formData, setFormData] = useState({
@@ -27,10 +24,6 @@ const CreateNFT = ({ wallet }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if (!wallet) {
-            alert('Please connect your wallet')
-            return
-        }
 
         try {
             const { name, description, price, file } = formData
@@ -62,89 +55,104 @@ const CreateNFT = ({ wallet }) => {
     }
 
     return (
-        <div className="container mx-auto px-4 py-8">
-            <h1 className="text-3xl font-bold mb-8">Create NFT</h1>
-            <form onSubmit={handleSubmit} className="max-w-lg">
-                <div className="mb-4">
-                    <label
-                        htmlFor="name"
-                        className="block text-sm font-medium text-gray-700"
+
+        <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-gray-900 via-purple-900 to-black overflow-hidden">
+        <div
+            className="text-white shadow-2xl rounded-lg p-10 mt-10 mb-10 max-w-2xl w-full mx-4 transform transition-all duration-300 hover:scale-105 hover:shadow-3xl"
+            style={{
+                background: 'linear-gradient(to bottom right, #252550 20%, #ff00ff 100%)',
+            }}
+        >
+                <h1 className="text-4xl font-bold text-center text-white mb-6">
+                    CREATE NFT
+                </h1>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                    <div>
+                        <label
+                            htmlFor="name"
+                            className="block text-sm font-medium mb-1"
+                        >
+                            Name
+                        </label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            placeholder="Enter NFT name"
+                            required
+                            className="w-full p-3 border-none rounded-lg shadow-sm bg-white text-black focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
+                        />
+                    </div>
+                    <div>
+                        <label
+                            htmlFor="description"
+                            className="block text-sm font-medium mb-1"
+                        >
+                            Description
+                        </label>
+                        <textarea
+                            id="description"
+                            name="description"
+                            value={formData.description}
+                            onChange={handleChange}
+                            placeholder="Enter NFT description"
+                            required
+                            className="w-full p-3 border-none rounded-lg shadow-sm bg-white text-black focus:outline-none focus:ring-2 focus:ring-purple-500 transition resize-none"
+                            rows="4"
+                        ></textarea>
+                    </div>
+                    <div>
+                        <label
+                            htmlFor="price"
+                            className="block text-sm font-medium mb-1"
+                        >
+                            Price (ETH)
+                        </label>
+                        <input
+                            type="number"
+                            id="price"
+                            name="price"
+                            value={formData.price}
+                            onChange={handleChange}
+                            placeholder="Set a price in ETH"
+                            required
+                            step="0.01"
+                            className="w-full p-3 border-none rounded-lg shadow-sm bg-white text-black focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
+                        />
+                    </div>
+                    <div>
+                        <label
+                            htmlFor="file"
+                            className="block text-sm font-medium mb-1"
+                        >
+                            File
+                        </label>
+                        <input
+                            type="file"
+                            id="file"
+                            name="file"
+                            onChange={handleChange}
+                            required
+                            className="w-full p-3 border-none rounded-lg shadow-sm bg-white text-black cursor-pointer focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
+                        />
+                    </div>
+                    <button
+                        type="submit"
+                        className="w-full bg-purple-800 hover:bg-purple-900 text-white font-bold py-3 rounded-lg transition"
                     >
-                        Name
-                    </label>
-                    <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                    />
-                </div>
-                <div className="mb-4">
-                    <label
-                        htmlFor="description"
-                        className="block text-sm font-medium text-gray-700"
-                    >
-                        Description
-                    </label>
-                    <textarea
-                        id="description"
-                        name="description"
-                        value={formData.description}
-                        onChange={handleChange}
-                        required
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                    ></textarea>
-                </div>
-                <div className="mb-4">
-                    <label
-                        htmlFor="price"
-                        className="block text-sm font-medium text-gray-700"
-                    >
-                        Price (ETH)
-                    </label>
-                    <input
-                        type="number"
-                        id="price"
-                        name="price"
-                        value={formData.price}
-                        onChange={handleChange}
-                        required
-                        step="0.01"
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                    />
-                </div>
-                <div className="mb-4">
-                    <label
-                        htmlFor="file"
-                        className="block text-sm font-medium text-gray-700"
-                    >
-                        File
-                    </label>
-                    <input
-                        type="file"
-                        id="file"
-                        name="file"
-                        onChange={handleChange}
-                        required
-                        className="mt-1 block w-full"
-                    />
-                </div>
-                <button
-                    type="submit"
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                >
-                    Create NFT
-                </button>
-            </form>
+                        Create NFT
+                    </button>
+                </form>
+            </div>
+
         </div>
     )
 }
+
 CreateNFT.propTypes = {
     wallet: PropTypes.object.isRequired,
-    // wallet: PropTypes.object,
 }
 
 export default CreateNFT
