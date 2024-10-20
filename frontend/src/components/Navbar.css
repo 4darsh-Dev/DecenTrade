@@ -213,3 +213,42 @@
         width: 100%;
     }
 }
+.mode-toggle {
+    display: flex;
+    align-items: center;
+    margin-left: 1rem; /* Add space between FAQs and toggle button */
+}
+
+.toggle-button {
+    background: linear-gradient(90deg, #4a90e2, #9013fe); /* Gradient background */
+    border: none;
+    color: white; /* Text color */
+    font-size: 1.5rem; /* Adjust size as needed */
+    cursor: pointer;
+    padding: 0.05rem 0.2rem; /* Reduced padding for a smaller background */
+    border-radius: 50%; /* Keep it round */
+    transition: all 0.3s; /* Smooth transitions for all properties */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    display: flex; /* Flex display for centering SVG */
+    align-items: center; /* Center SVG vertically */
+    justify-content: center; /* Center SVG horizontally */
+}
+
+.toggle-button:hover {
+    background: linear-gradient(90deg, #9013fe, #4a90e2); /* Reverse gradient on hover */
+    transform: translateY(-2px); /* Lift effect on hover */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); /* Deeper shadow on hover */
+}
+
+/* Optional: dark mode styles */
+body.dark-mode {
+    background-color: #2b2929; /* Slightly lighter dark background */
+    color: #e0e0e0;  /* Light text color */
+}
+
+/* Adjust navbar colors for dark mode */
+.navbar.dark-mode {
+    background-color: #2a2929; /* Darker navbar */
+}
+
+/* Specific styles for the SVG icons */
