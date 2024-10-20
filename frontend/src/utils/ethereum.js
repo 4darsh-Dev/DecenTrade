@@ -10,7 +10,10 @@ import DecentradeMarketplaceAbi from '../../../smart-contracts/artifacts/contrac
 const nftAddress = import.meta.env.VITE_NFT_ADDRESS
 const marketplaceAddress = import.meta.env.VITE_MARKET_ADDRESS
 
-const API_URL = "http://localhost:3000"
+// For local testing ONLY
+// const API_URL = "http://localhost:3000"
+
+const API_URL = import.meta.env.VITE_API_URL
 
 export const connectWallet = async () => {
     if (window.ethereum) {
