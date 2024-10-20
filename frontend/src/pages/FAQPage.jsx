@@ -1,7 +1,8 @@
 import React,{useState, useEffect} from 'react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
-import FAQImage from '../assets/FAQs-photo.jpg';
+import FAQImage from '../assets/faq-image.png';
+import "../styles/faq.css"
 
 const FAQPage = () => {
 
@@ -55,16 +56,16 @@ const FAQPage = () => {
     return (
       <>
         
-        <div className="flex justify-center items-center gap-20 max-w-7xl mx-auto mt-8 p-4">
-          <div className="faq-component w-1/2 mr-4">
-          <h2 className="text-4xl font-semibold mb-6 text-gray-900">Frequently Asked Questions</h2>
+        <div className="Faq-container">
+          <div className="faq-left-portion">
+          <h2 className="faq-heading">Frequently Asked Questions</h2>
           {faqData.map((item, index) => (
             <FAQItem key={index} question={item.question} answer={item.answer} />
           ))}
           </div>
           
           <div className="w-1/2 ml-4">
-          <img src={FAQImage} alt="FAQ illustration" className="w-full h-auto rounded-lg shadow-md" />
+          <img src={FAQImage} alt="FAQ illustration" className="faq-image" />
           </div>
         </div>
         
@@ -87,7 +88,7 @@ const FAQItem = ({ question, answer }) => {
     <div className="border-b border-gray-300 py-4">
       <div
         className="flex justify-between items-center cursor-pointer"
-        onClick={toggleFAQ}
+        onClick={toggleFAQ} role='button'
       >
         <h3 className="text-lg font-medium text-gray-800">{question}</h3>
         <span className="text-gray-500">{isOpen ? '-' : '+'}</span>
