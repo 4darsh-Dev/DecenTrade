@@ -1,13 +1,10 @@
-// src/pages/CreateNFT.jsx
-import { React, useState } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { connectWallet, createNFT, getNFTContract } from '../utils/ethereum'
+import { connectWallet, createNFT } from '../utils/ethereum'
 import { ethers } from 'ethers'
 
 const nftAddress = import.meta.env.VITE_NFT_ADDRESS
 const marketplaceAddress = import.meta.env.VITE_MARKET_ADDRESS
-
-const PRIVATE_KEY = import.meta.env.VITE_PRIVATE_KEY
 
 const CreateNFT = ({ wallet }) => {
     const [formData, setFormData] = useState({
@@ -58,6 +55,7 @@ const CreateNFT = ({ wallet }) => {
     }
 
     return (
+
         <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-gray-900 via-purple-900 to-black overflow-hidden">
         <div
             className="text-white shadow-2xl rounded-lg p-10 mt-10 mb-10 max-w-2xl w-full mx-4 transform transition-all duration-300 hover:scale-105 hover:shadow-3xl"
@@ -148,13 +146,13 @@ const CreateNFT = ({ wallet }) => {
                     </button>
                 </form>
             </div>
+
         </div>
     )
 }
 
 CreateNFT.propTypes = {
     wallet: PropTypes.object.isRequired,
-    // wallet: PropTypes.object,
 }
 
 export default CreateNFT
