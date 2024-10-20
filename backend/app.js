@@ -10,8 +10,16 @@ const app = express()
 const port = process.env.PORT || 3000
 
 app.use(express.json())
-app.use(cors({ origin: 'http://localhost:5173' }))
+// app.use(cors({ origin: 'http://localhost:5173' }))
+
+// Allow all origins for now to simplify the frontend setup
+app.use(cors({
+  origin: '*'
+}));
+
 app.use('/ipfs', ipfsRoutes)
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`)
 })
+
+export default app;
