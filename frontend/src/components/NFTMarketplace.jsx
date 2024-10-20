@@ -1,11 +1,6 @@
 import { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import {
-    mintNFT,
-    listNFT,
-    buyNFT,
-    fetchMarketItems,
-} from '../utils/ethereum'
+import { mintNFT, listNFT, buyNFT, fetchMarketItems } from '../utils/ethereum'
 import { ethers } from 'ethers'
 
 const MintNFT = ({ wallet }) => {
@@ -101,7 +96,9 @@ export default function NFTMarketplace({ wallet }) {
         </div>
     )
 }
-
+NFTMarketplace.propTypes = {
+    wallet: PropTypes.object,
+}
 MintNFT.propTypes = {
     wallet: PropTypes.object,
 }
