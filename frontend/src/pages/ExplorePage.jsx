@@ -3,7 +3,7 @@ import { fetchMarketItems, buyNFT } from '../utils/ethereum'
 import NFTCard from '../components/NFTCard'
 import { connectWallet } from '../utils/ethereum'
 import { ethers } from 'ethers'
-
+import LoaderComponent from '../components/Loader'
 const ExplorePage = () => {
     const [nfts, setNfts] = useState([])
     const [loading, setLoading] = useState(true)
@@ -90,7 +90,7 @@ const ExplorePage = () => {
     if (loading) {
         return (
             <div className="text-center py-10">
-                Loading NFTs... Please wait.
+                <LoaderComponent></LoaderComponent>
             </div>
         )
     }
