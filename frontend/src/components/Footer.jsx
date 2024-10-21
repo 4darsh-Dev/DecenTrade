@@ -41,7 +41,114 @@ const Footer = () => {
                 </svg>
             </div>
             <div className="container mx-auto px-4">
-                {/* Your existing footer content */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div>
+                        <h3 className="text-xl font-bold mb-4">DecenTrade</h3>
+                        <p className="text-gray-400">
+                            Discover, collect, and sell extraordinary NFTs
+                        </p>
+                        <span>
+                            <img
+                                style={{ width: '7.5rem' }}
+                                className="logo-img mt-4 ml-12"
+                                src={logo}
+                                alt={logo}
+                            />
+                        </span>
+                    </div>
+                    <div>
+                        <h4 className="text-lg font-semibold mb-4">
+                            Quick Links
+                        </h4>
+                        <ul className="space-y-2">
+                            {[
+                                'Home',
+                                'Explore',
+                                'About',
+                                'Creators',
+                                'How It Works',
+                                'FAQ',
+                            ].map((item) => (
+                                <li key={item}>
+                                    <a
+                                        href="#"
+                                        className="text-gray-400 hover:text-white transition-colors"
+                                    >
+                                        {item}
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 className="text-lg font-semibold mb-4">
+                            Community
+                        </h4>
+                        <ul className="space-y-2">
+                            <li>
+                                <a
+                                    href="#"
+                                    className="text-gray-400 hover:text-white transition-colors"
+                                >
+                                    Help Center
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="#"
+                                    className="text-gray-400 hover:text-white transition-colors"
+                                >
+                                    Partners
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="#"
+                                    className="text-gray-400 hover:text-white transition-colors"
+                                >
+                                    Suggestions
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="#"
+                                    className="text-gray-400 hover:text-white transition-colors"
+                                >
+                                    Blog
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="#"
+                                    className="text-gray-400 hover:text-white transition-colors"
+                                >
+                                    Newsletter
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 className="text-lg font-semibold mb-4">
+                            Subscribe
+                        </h4>
+                        <p className="text-gray-400 mb-4">
+                            Get the latest updates and news
+                        </p>
+                        <form className="flex">
+                            <input
+                                type="email"
+                                placeholder="Enter your email"
+                                className="bg-gray-800 text-white rounded-l-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-purple-500 flex-grow"
+                            />
+                            <button
+                                type="submit"
+                                className="bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-r-full px-4 py-2 hover:opacity-90 transition-opacity"
+                            >
+                                Subscribe
+                            </button>
+                        </form>
+                    </div>
+                </div>
                 <div className="mt-10 pt-8 border-t border-gray-800 flex justify-between items-center">
                     <p className="text-gray-400">
                         &copy; 2024 DecenTrade. All rights reserved. Powered by Open Source
