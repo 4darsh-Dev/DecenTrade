@@ -180,50 +180,50 @@ contract DecentradeMarketplace is ReentrancyGuard, Ownable, Pausable {
     }
 
     function fetchMyNFTs() public view returns (MarketItem[] memory) {
-        uint256 totalItemCount = _itemIds.current();
-        uint256 itemCount = 0;
-        uint256 currentIndex = 0;
+    uint256 totalItemCount = _itemIds.current();
+    uint256 itemCount = 0;
+    MarketItem[] memory items = new MarketItem[](totalItemCount);
 
-        for (uint256 i = 0; i < totalItemCount; i++) {
-            if (idToMarketItem[i + 1].owner == msg.sender) {
-                itemCount += 1;
-            }
+    for (uint256 i = 0; i < totalItemCount; i++) {
+        MarketItem storage currentItem = idToMarketItem[i + 1];
+        if (currentItem.owner == msg.sender) {
+            items[itemCount] = currentItem;
+            itemCount += 1;
         }
-
-        MarketItem[] memory items = new MarketItem[](itemCount);
-        for (uint256 i = 0; i < totalItemCount; i++) {
-            if (idToMarketItem[i + 1].owner == msg.sender) {
-                uint256 currentId = i + 1;
-                MarketItem storage currentItem = idToMarketItem[currentId];
-                items[currentIndex] = currentItem;
-                currentIndex += 1;
-            }
-        }
-        return items;
     }
+
+    // Resize the array to match the actual number of items
+    MarketItem[] memory userItems = new MarketItem[](itemCount);
+    for (uint256 i = 0; i < itemCount; i++) {
+        userItems[i] = items[i];
+    }
+
+    return userItems;
+}
+
 
     function fetchItemsCreated() public view returns (MarketItem[] memory) {
-        uint256 totalItemCount = _itemIds.current();
-        uint256 itemCount = 0;
-        uint256 currentIndex = 0;
+    uint256 totalItemCount = _itemIds.current();
+    uint256 itemCount = 0;
+    MarketItem[] memory items = new MarketItem[](totalItemCount);
 
-        for (uint256 i = 0; i < totalItemCount; i++) {
-            if (idToMarketItem[i + 1].seller == msg.sender) {
-                itemCount += 1;
-            }
+    for (uint256 i = 0; i < totalItemCount; i++) {
+        MarketItem storage currentItem = idToMarketItem[i + 1];
+        if (currentItem.seller == msg.sender) {
+            items[itemCount] = currentItem;
+            itemCount += 1;
         }
-
-        MarketItem[] memory items = new MarketItem[](itemCount);
-        for (uint256 i = 0; i < totalItemCount; i++) {
-            if (idToMarketItem[i + 1].seller == msg.sender) {
-                uint256 currentId = i + 1;
-                MarketItem storage currentItem = idToMarketItem[currentId];
-                items[currentIndex] = currentItem;
-                currentIndex += 1;
-            }
-        }
-        return items;
     }
+
+    // Resize the array to match the actual number of items
+    MarketItem[] memory userItems = new MarketItem[](itemCount);
+    for (uint256 i = 0; i < itemCount; i++) {
+        userItems[i] = items[i];
+    }
+
+    return userItems;
+}
+
 
     function getOwnershipHistory(
         uint256 tokenId
