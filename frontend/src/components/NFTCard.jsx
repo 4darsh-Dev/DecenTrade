@@ -1,7 +1,7 @@
 import React from 'react'
 import { ethers } from 'ethers'
 
-const NFTCard = ({ nft, onBuy }) => {
+const NFTCard = ({ nft, onBuy, imageUrl, name, description }) => {
     const truncateAddress = (address) =>
         `${address.slice(0, 6)}...${address.slice(-4)}`
 
@@ -13,6 +13,19 @@ const NFTCard = ({ nft, onBuy }) => {
         <div className="bg-white rounded-lg shadow-md overflow-hidden">
             <div className="p-4">
                 <h2 className="text-xl font-semibold mb-2">{`NFT #${nft.tokenId}`}</h2>
+                {imageUrl && (
+                    <img
+                        src={imageUrl}
+                        alt={name}
+                        className="w-full h-64 object-cover mb-4"
+                    />
+                )}
+                {/* <h2 className="text-xl font-bold mb-2">
+                    {name || `NFT #${nft.tokenId}`}
+                </h2> */}
+                <p className="mb-2">
+                    {description || 'No description available'}
+                </p>
                 <p className="text-gray-600 mb-2">
                     <span className="font-semibold">Contract:</span>{' '}
                     <span
