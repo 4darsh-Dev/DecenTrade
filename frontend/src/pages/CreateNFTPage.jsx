@@ -1,9 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { connectWallet, createNFT } from '../utils/ethereum'
 import { ethers } from 'ethers'
-import Footer from '../components/Footer'
-import image from '../assets/decen-bg.jpg'
 
 const nftAddress = import.meta.env.VITE_NFT_ADDRESS
 const marketplaceAddress = import.meta.env.VITE_MARKET_ADDRESS
@@ -15,21 +13,7 @@ const CreateNFT = ({ wallet }) => {
         price: '',
         file: null,
     })
-
-    const [dragging, setDragging] = useState(false); 
-    const fileInputRef = useRef(null);
-    const textareaRef = useRef(null);
-
-    const adjustTextareaHeight = () => {
-        if (textareaRef.current) {
-            textareaRef.current.style.height = 'auto'; // Reset the height
-            textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`; // Set height to fit content
-        }
-    };
-    
-    useEffect(() => {
-        adjustTextareaHeight();
-    }, [formData.description]);
+    const [dragging, setDragging] = useState(false);
 
     const handleChange = (e) => {
         const { name, value, files } = e.target;
@@ -37,19 +21,15 @@ const CreateNFT = ({ wallet }) => {
             ...prevState,
             [name]: files ? files[0] : value,
         }));
-
-        if (name === 'description') {
-            adjustTextareaHeight();
-        }
     }
 
     const handleDragOver = (e) => {
         e.preventDefault();
-        setDragging(true);
+        if (!dragging) setDragging(true); // Prevent unnecessary reassignments
     }
 
     const handleDragLeave = () => {
-        setDragging(false);
+        if (dragging) setDragging(false); // Prevent unnecessary reassignments
     }
 
     const handleDrop = (e) => {
@@ -86,7 +66,6 @@ const CreateNFT = ({ wallet }) => {
         try {
             const { name, description, price, file } = formData
 
-            // Ensure all required fields are filled
             if (!name || !description || !price || !file) {
                 throw new Error('All fields are required')
             }
@@ -113,163 +92,132 @@ const CreateNFT = ({ wallet }) => {
     }
 
     return (
-        <div
-            className="min-h-screen flex flex-col justify-between"
-            style={{
-                backgroundImage: `url(${image})`,
-                backgroundSize: '100% 100%',
-                backgroundPosition: 'center center',
-                backgroundRepeat: 'no-repeat',
-                backgroundAttachment: 'fixed',
-            }}
-        >
-            <div className="flex-grow flex justify-center items-center w-full">
-                <div className="relative z-10 w-full max-w-xl bg-black bg-opacity-100 shadow-md rounded-3xl px-10 py-10 mt-10 mb-8">
-                <h1 className="text-6xl font-extrabold mb-8 text-center text-[#00ffff] shadow-purple-900" 
-                    style={{ textShadow: '4px 4px 15px #ff00ff' }}>
-                    Create Your NFT
+        <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-gray-900 via-purple-900 to-black overflow-hidden">
+            <div
+                className="text-white shadow-2xl rounded-lg p-10 mt-10 mb-10 max-w-2xl w-full mx-4 transform transition-all duration-300 hover:scale-105 hover:shadow-3xl"
+                style={{
+                    background: 'linear-gradient(to bottom right, #252550 20%, #ff00ff 100%)',
+                }}
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+                role="button" 
+            >
+                <h1 className="text-4xl font-bold text-center text-white mb-6">
+                    CREATE NFT
                 </h1>
-                    <form onSubmit={handleSubmit} className="space-y-8"
-                    style={{ backgroundColor: 'black', backgroundOpacity: 0.9}}>
-                        <div className="flex flex-col items-center">
-                            <label
-                                htmlFor="name"
-                                className="block text-2xl font-bold mb-2 text-white"
-                                style={{ textShadow: '2px 2px 10px #00ffff' }}
-                            >
-                                NFT Name
-                            </label>
-                            <input
-                                type="text"
-                                id="name"
-                                name="name"
-                                value={formData.name}
-                                onChange={handleChange}
-                                required
-                                className="block bg-white text-black px-6 py-3 rounded-full w-full max-w-md transition duration-300 box-shadow hover: 0 0 20px #ff00ff shadow-lg mx-auto"
-                            />
+                <form onSubmit={handleSubmit} className="space-y-6">
+                    <div>
+                        <label
+                            htmlFor="name"
+                            className="block text-sm font-medium mb-1"
+                        >
+                            Name
+                        </label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            placeholder="Enter NFT name"
+                            required
+                            className="w-full p-3 border-none rounded-lg shadow-sm bg-white text-black focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
+                        />
+                    </div>
+                    <div>
+                        <label
+                            htmlFor="description"
+                            className="block text-sm font-medium mb-1"
+                        >
+                            Description
+                        </label>
+                        <textarea
+                            id="description"
+                            name="description"
+                            value={formData.description}
+                            onChange={handleChange}
+                            placeholder="Enter NFT description"
+                            required
+                            className="w-full p-3 border-none rounded-lg shadow-sm bg-white text-black focus:outline-none focus:ring-2 focus:ring-purple-500 transition resize-none"
+                            rows="4"
+                        ></textarea>
+                    </div>
+                    <div>
+                        <label
+                            htmlFor="price"
+                            className="block text-sm font-medium mb-1"
+                        >
+                            Price (ETH)
+                        </label>
+                        <input
+                            type="number"
+                            id="price"
+                            name="price"
+                            value={formData.price}
+                            onChange={handleChange}
+                            placeholder="Set a price in ETH"
+                            required
+                            step="0.01"
+                            className="w-full p-3 border-none rounded-lg shadow-sm bg-white text-black focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
+                        />
+                    </div>
+                    <div>
+                        <label
+                            htmlFor="file"
+                            className="block text-sm font-medium mb-1"
+                        >
+                            File
+                        </label>
+                        <div
+                            className={`p-3 border-none rounded-lg shadow-sm bg-white text-black focus:outline-none focus:ring-2 focus:ring-purple-500 transition cursor-pointer ${
+                                dragging ? 'border-dashed border-purple-500' : ''
+                            }`}
+                            onDragOver={handleDragOver}
+                            onDragLeave={handleDragLeave}
+                            onDrop={handleDrop}
+                            role="button" 
+                        >
+                            {formData.file ? (
+                                <div className="flex justify-between items-center">
+                                    <span>{formData.file.name}</span>
+                                    <button
+                                        type="button"
+                                        onClick={handleCancelFile}
+                                        className="text-red-500 hover:text-red-700 transition"
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
+                            ) : (
+                                <div className="flex items-center"> 
+                                    <p className="text-gray-500">Drag And Drop File Or</p>
+                                    <input
+                                        type="file"
+                                        id="file"
+                                        name="file"
+                                        onChange={handleFileChange}
+                                        required
+                                        className="cursor-pointer ml-1" 
+                                    />
+                                </div>
+                            )}
                         </div>
-                        <div className="flex flex-col items-center">
-    <label
-        htmlFor="description"
-        className="block text-2xl font-bold mb-2 text-white"
-        style={{ textShadow: '2px 2px 10px #00ffff' }}
-    >
-        Description
-    </label>
-    <textarea
-        id="description"
-        name="description"
-        value={formData.description}
-        onChange={handleChange}
-        ref={textareaRef}
-        rows={1}
-        className="block bg-white text-black px-6 py-3 rounded-xl w-full max-w-md transition duration-300 box-shadow hover: 0 0 20px #ff00ff shadow-lg mx-auto"
-        style={{
-            resize: 'none',
-            overflowY: 'hidden',
-            height: 'auto',
-            borderRadius: '30px', // Control the border-radius to avoid the circle shape
-        }}
-    />
-</div>
-                        <div className="flex flex-col items-center">
-                            <label
-                                htmlFor="price"
-                                className="block text-2xl font-bold mb-2 text-white"
-                                style={{ textShadow: '2px 2px 10px #00ffff' }}
-                            >
-                                Price (ETH)
-                            </label>
-                            <input
-                                type="number"
-                                id="price"
-                                name="price"
-                                value={formData.price}
-                                onChange={handleChange}
-                                required
-                                step="0.01"
-                                className="block bg-white text-black px-6 py-3 rounded-full w-full max-w-md transition duration-300 box-shadow hover: 0 0 20px #ff00ff shadow-lg mx-auto"
-                            />
-                        </div>
-                        <div className="flex flex-col items-center">
-                            <label
-                                htmlFor="file"
-                                className="block text-2xl font-bold mb-2 text-white"
-                                style={{ textShadow: '2px 2px 10px #00ffff' }}
-                            >
-                                Upload File
-                            </label>
-                            <div
-                                className={`flex flex-col items-center justify-center border-2 border-dashed rounded-lg ${dragging ? 'border-blue-500' : 'border-gray-500'} bg-black text-white px-6 py-3 w-full max-w-md transition duration-300 box-shadow hover: 0 0 20px #ff00ff shadow-lg mx-auto`}
-                                onDragOver={handleDragOver}
-                                onDragLeave={handleDragLeave}
-                                onDrop={handleDrop}
-                            >
-                                <input
-                                    type="file"
-                                    id="file"
-                                    name="file"
-                                    ref={fileInputRef}
-                                    style={{ display: 'none' }}
-                                    onChange={handleFileChange}
-                                />
-                                {!formData.file ? (
-                                    <>
-                                        <p className="text-lg font-semibold text-white">
-                                            Drag & drop your file here, or
-                                        </p>
-                                        <button
-                                            type="button"
-                                            onClick={() => fileInputRef.current.click()}
-                                            className="mt-4 inline-block bg-white text-black px-6 py-2 rounded-full transition duration-300 transform hover:scale-110"
-                                        >
-                                            Browse Files
-                                        </button>
-                                    </>
-                                ) : (
-                                    <>
-                                        <p className="text-lg font-semibold text-white mb-2">
-                                            Uploaded File: {formData.file.name}
-                                        </p>
-                                        <div className="flex space-x-4">
-                                            <button
-                                                type="button"
-                                                onClick={handleCancelFile}
-                                                className="inline-block bg-red-500 text-white px-4 py-2 rounded-full transition duration-300 transform hover:scale-110"
-                                            >
-                                                Cancel File
-                                            </button>
-                                            <button
-                                                type="button"
-                                                onClick={() => fileInputRef.current.click()}
-                                                className="inline-block bg-blue-500 text-white px-4 py-2 rounded-full transition duration-300 transform hover:scale-110"
-                                            >
-                                                Change File
-                                            </button>
-                                        </div>
-                                    </>
-                                )}
-                            </div>
-                        </div>
-                        <div className="flex justify-center">
-                            <button
-                                type="submit"
-                                className="inline-block bg-gradient-to-r from-fuchsia-600 to-blue-500 text-white px-8 py-4 rounded-full transition duration-300 transform hover:scale-110"
-                                style={{ boxShadow: '0 0 25px #ff00ff', textShadow: '2px 2px 10px #00ffff' }}>
-                                Create NFT
-                            </button>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                    <button
+                        type="submit"
+                        className="w-full bg-purple-800 hover:bg-purple-900 text-white font-bold py-3 rounded-lg transition"
+                    >
+                        Create NFT
+                    </button>
+                </form>
             </div>
-            <Footer />
         </div>
-    );
-};
+    )
+}
 
 CreateNFT.propTypes = {
     wallet: PropTypes.object.isRequired,
-};
+}
 
-export default CreateNFT;
+export default CreateNFT
