@@ -14,6 +14,7 @@ const marketplaceAddress = import.meta.env.VITE_MARKET_ADDRESS
 // const API_URL = "http://localhost:3000"
 
 const API_URL = import.meta.env.VITE_API_URL
+const VITE_PINATA_GATEWAY = import.meta.env.VITE_PINATA_GATEWAY
 
 export const connectWallet = async () => {
     if (window.ethereum) {
@@ -107,10 +108,7 @@ export const createNFT = async (signer, name, description, price, file) => {
         )
         const mintReceipt = await mintTx.wait()
 
-        // Printing the mint receipt for debugging purposes
-        // console.log('Mint Receipt:', JSON.stringify(mintReceipt, null, 2));
 
-        // Extract tokenId using a more flexible approach
         let tokenId
         if (mintReceipt.events) {
             const transferEvent = mintReceipt.events.find(
@@ -166,10 +164,48 @@ export const createNFT = async (signer, name, description, price, file) => {
     }
 }
 
+
+const fetchMetadata = async (tokenURI) => {
+    try {
+        //dbg
+        // console.log('Fetching metadata from:', tokenURI)
+        let tokenLink = ('https://' + VITE_PINATA_GATEWAY + '/ipfs/' + tokenURI)
+        const response = await fetch(tokenLink)
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        const metadata = await response.json()
+        //dbg
+        // console.log('Fetched metadata:', metadata)
+        return metadata
+    } catch (error) {
+        console.error('Error fetching metadata:', error)
+        return null
+    }
+}
+
 export const fetchMarketItems = async (signer) => {
     const marketplaceContract = getMarketplaceContract(signer)
-    return await marketplaceContract.fetchMarketItems()
+    const items = await marketplaceContract.fetchMarketItems()
+
+    // Fetch token URIs for each item
+    const itemsWithMetadata = await Promise.all(items.map(async (item) => {
+        const nftContract = getNFTContract(signer)
+        try {
+            const tokenURI = await nftContract.tokenURI(item.tokenId)
+            //dbg
+            // console.log(`Token URI for item ${item.tokenId}:`, tokenURI)
+            const metadata = await fetchMetadata(tokenURI)
+            return { ...item, metadata }
+        } catch (error) {
+            console.error(`Error fetching tokenURI for item ${item.tokenId}:`, error)
+            return { ...item, metadata: null }
+        }
+    }))
+
+    return itemsWithMetadata
 }
+
 
 export const fetchMyNFTs = async (signer) => {
     const marketplaceContract = getMarketplaceContract(signer)
