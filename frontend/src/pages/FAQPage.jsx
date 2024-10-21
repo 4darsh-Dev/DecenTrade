@@ -68,8 +68,7 @@ const FAQPage = () => {
           <img src={FAQImage} alt="FAQ illustration" className="faq-image" />
           </div>
         </div>
-        
-        <Footer />
+       
       </>
     )
 }
