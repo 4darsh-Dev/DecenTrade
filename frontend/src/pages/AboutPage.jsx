@@ -5,10 +5,10 @@ import { motion } from 'framer-motion'
 const AboutPage = () => {
     return (
         <>
-            <section className="min-h-screen bg-gradient-to-b from-[#252550] to-[#1A1A1A] text-white flex flex-col justify-center items-center p-6">
-                <div className="glassmorphism-container p-10 rounded-lg shadow-lg max-w-6xl mx-auto mt-12">
+            <section className="min-h-screen w-full bg-gradient-to-b from-[#252550] to-[#1A1A1A] text-white flex flex-col justify-center items-center p-6 overflow-hidden">
+                <div className="glassmorphism-container p-10 rounded-lg shadow-lg max-w-6xl mx-auto mt-12 w-full sm:w-11/12">
                     <motion.h1
-                        className="text-6xl font-bold mb-6 animate-pulse text-center"
+                        className="text-4xl sm:text-6xl font-bold mb-6 animate-pulse text-center"
                         initial={{ opacity: 0, y: -50 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
@@ -17,7 +17,7 @@ const AboutPage = () => {
                     </motion.h1>
 
                     <motion.p
-                        className="text-xl mb-8 max-w-4xl text-center font-medium leading-relaxed"
+                        className="text-lg sm:text-xl mb-8 max-w-4xl text-center font-medium leading-relaxed mx-auto"
                         initial={{ opacity: 0, y: 50 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1.2 }}
@@ -25,10 +25,10 @@ const AboutPage = () => {
                         DecenTrade is a decentralized digital marketplace built
                         on the Ethereum blockchain, empowering users to engage
                         in secure and transparent transactions for digital
-                        assets. 💎✨
+                        assets.
                     </motion.p>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
                         {features.map((feature, index) => (
                             <motion.div
                                 key={index}
@@ -180,7 +180,7 @@ const additionalFeatures = [
     },
 ]
 
-// Add styles directly to the Tailwind CSS in your project
+// Add glassmorphism styles directly to Tailwind CSS
 const glassmorphismStyle = `
     .glassmorphism-container {
         backdrop-filter: blur(10px);
