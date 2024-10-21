@@ -2,11 +2,102 @@ import React from 'react'
 import Footer from '../components/Footer'
 import { motion } from 'framer-motion'
 
+// Sample feature data with unique IDs
+const features = [
+    {
+        id: 'feature1',
+        title: '🤖 Smart Contract-Powered Listings',
+        description:
+            'Seamlessly create and manage listings with the security of smart contracts for safe and trustless transactions.',
+    },
+    {
+        id: 'feature2',
+        title: '🖥️ User-Friendly Interface',
+        description:
+            'Enjoy an intuitive design for effortless browsing and interaction with digital assets.',
+    },
+    {
+        id: 'feature3',
+        title: '🔒 Secure Wallet Integration',
+        description:
+            'Easily connect your wallet for safe and secure transactions, ensuring your assets are protected.',
+    },
+    {
+        id: 'feature4',
+        title: '🌟 Decentralized Rating & Review System',
+        description:
+            'Share and explore genuine feedback from users to foster trust in the marketplace.',
+    },
+    {
+        id: 'feature5',
+        title: '🎨 Support for Various Digital Assets',
+        description:
+            'Trade a wide range of digital items, including art, collectibles, domains, and more!',
+    },
+]
+
+const additionalFeatures = [
+    {
+        id: 'additional1',
+        title: '🌍 Global Accessibility',
+        description:
+            'Connect with users worldwide and trade without geographical barriers.',
+    },
+    {
+        id: 'additional2',
+        title: '🔗 Blockchain Transparency',
+        description:
+            'All transactions are recorded on the blockchain, ensuring complete transparency.',
+    },
+    {
+        id: 'additional3',
+        title: '⚡ Fast Transactions',
+        description:
+            'Enjoy quick transactions without the delays of traditional systems.',
+    },
+    {
+        id: 'additional4',
+        title: '🔄 Continuous Development',
+        description:
+            'Our platform evolves based on user feedback and technological advancements.',
+    },
+    {
+        id: 'additional5',
+        title: '💡 Educational Resources',
+        description:
+            'Access guides and tutorials to help you navigate the digital asset space.',
+    },
+    {
+        id: 'additional6',
+        title: '🔒 Enhanced Security',
+        description:
+            'Your assets are safe with our top-tier security protocols.',
+    },
+    {
+        id: 'additional7',
+        title: '📈 Analytics Dashboard',
+        description:
+            'Monitor your assets and performance with our comprehensive analytics tools.',
+    },
+    {
+        id: 'additional8',
+        title: '🎉 Regular Updates',
+        description:
+            'Stay informed with our regular updates about new features and enhancements.',
+    },
+    {
+        id: 'additional9',
+        title: '👩‍💻 24/7 Support',
+        description:
+            'Get help whenever you need it with our dedicated support team.',
+    },
+]
+
 const AboutPage = () => {
     return (
         <>
             <section className="min-h-screen w-full bg-gradient-to-b from-[#252550] to-[#1A1A1A] text-white flex flex-col justify-center items-center p-6 overflow-hidden">
-                <div className="glassmorphism-container p-10 rounded-lg shadow-lg max-w-6xl mx-auto mt-12 w-full sm:w-11/12">
+                <div className="p-10 rounded-lg shadow-lg max-w-6xl mx-auto mt-12 w-full sm:w-11/12">
                     <motion.h1
                         className="text-4xl sm:text-6xl font-bold mb-6 animate-pulse text-center"
                         initial={{ opacity: 0, y: -50 }}
@@ -29,9 +120,9 @@ const AboutPage = () => {
                     </motion.p>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-                        {features.map((feature, index) => (
+                        {features.map((feature) => (
                             <motion.div
-                                key={index}
+                                key={feature.id} // Use unique ID as key
                                 className="bg-gradient-to-r from-[#47B7FF] to-[#CA35FF] p-6 rounded-lg shadow-lg hover:shadow-xl transform transition duration-100 glassmorphism flex flex-col justify-between h-full"
                                 whileHover={{ scale: 1.05 }}
                                 initial={{ opacity: 0, y: 20 }}
@@ -79,9 +170,9 @@ const AboutPage = () => {
                         Why Choose Us?
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {additionalFeatures.map((item, index) => (
+                        {additionalFeatures.map((item) => (
                             <motion.div
-                                key={index}
+                                key={item.id} // Use unique ID as key
                                 className="bg-gradient-to-r from-[#9F10B2] to-[#541C82] p-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-100 glassmorphism"
                                 initial={{ opacity: 0, y: 30 }}
                                 animate={{ opacity: 1, y: 0 }}
@@ -102,92 +193,5 @@ const AboutPage = () => {
         </>
     )
 }
-
-// Sample feature data
-const features = [
-    {
-        title: '🤖 Smart Contract-Powered Listings',
-        description:
-            'Seamlessly create and manage listings with the security of smart contracts for safe and trustless transactions.',
-    },
-    {
-        title: '🖥️ User-Friendly Interface',
-        description:
-            'Enjoy an intuitive design for effortless browsing and interaction with digital assets.',
-    },
-    {
-        title: '🔒 Secure Wallet Integration',
-        description:
-            'Easily connect your wallet for safe and secure transactions, ensuring your assets are protected.',
-    },
-    {
-        title: '🌟 Decentralized Rating & Review System',
-        description:
-            'Share and explore genuine feedback from users to foster trust in the marketplace.',
-    },
-    {
-        title: '🎨 Support for Various Digital Assets',
-        description:
-            'Trade a wide range of digital items, including art, collectibles, domains, and more!',
-    },
-]
-
-const additionalFeatures = [
-    {
-        title: '🌍 Global Accessibility',
-        description:
-            'Connect with users worldwide and trade without geographical barriers.',
-    },
-    {
-        title: '🔗 Blockchain Transparency',
-        description:
-            'All transactions are recorded on the blockchain, ensuring complete transparency.',
-    },
-    {
-        title: '⚡ Fast Transactions',
-        description:
-            'Enjoy quick transactions without the delays of traditional systems.',
-    },
-    {
-        title: '🔄 Continuous Development',
-        description:
-            'Our platform evolves based on user feedback and technological advancements.',
-    },
-    {
-        title: '💡 Educational Resources',
-        description:
-            'Access guides and tutorials to help you navigate the digital asset space.',
-    },
-    {
-        title: '🔒 Enhanced Security',
-        description:
-            'Your assets are safe with our top-tier security protocols.',
-    },
-    {
-        title: '📈 Analytics Dashboard',
-        description:
-            'Monitor your assets and performance with our comprehensive analytics tools.',
-    },
-    {
-        title: '🎉 Regular Updates',
-        description:
-            'Stay informed with our regular updates about new features and enhancements.',
-    },
-    {
-        title: '👩‍💻 24/7 Support',
-        description:
-            'Get help whenever you need it with our dedicated support team.',
-    },
-]
-
-// Add glassmorphism styles directly to Tailwind CSS
-const glassmorphismStyle = `
-    .glassmorphism-container {
-        backdrop-filter: blur(10px);
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 15px;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-`
 
 export default AboutPage
