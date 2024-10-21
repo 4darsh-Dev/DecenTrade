@@ -1,4 +1,4 @@
-import { ethers } from 'ethers'
+import { ethers, JsonRpcProvider } from 'ethers'
 import DecentradeNFTAbi from '../../../smart-contracts/artifacts/contracts/Marketplace.sol/DecentradeNFT.json'
 import DecentradeMarketplaceAbi from '../../../smart-contracts/artifacts/contracts/Marketplace.sol/DecentradeMarketplace.json'
 // import {
@@ -9,6 +9,7 @@ import DecentradeMarketplaceAbi from '../../../smart-contracts/artifacts/contrac
 
 const nftAddress = import.meta.env.VITE_NFT_ADDRESS
 const marketplaceAddress = import.meta.env.VITE_MARKET_ADDRESS
+const infuraApiUrl = import.meta.env.VITE_INFURE_API
 
 // For local testing ONLY
 // const API_URL = "http://localhost:3000"
@@ -43,10 +44,13 @@ export const getNFTContract = (signer) => {
 }
 
 export const getMarketplaceContract = (signer) => {
+    const provider = new JsonRpcProvider(infuraApiUrl)
+
+    console.log('provider:', provider)
     return new ethers.Contract(
         marketplaceAddress,
         DecentradeMarketplaceAbi.abi,
-        signer
+        provider
     )
 }
 const uploadToIPFS = async (file) => {
@@ -69,13 +73,10 @@ const uploadMetadataToIPFS = async (metadata) => {
         const formData = new FormData()
         formData.append('metadata', metadata)
         // console.log(formData, 'formData')
-        const response = await fetch(
-            API_URL + '/ipfs/uploadMetaData',
-            {
-                method: 'POST',
-                body: formData,
-            }
-        )
+        const response = await fetch(API_URL + '/ipfs/uploadMetaData', {
+            method: 'POST',
+            body: formData,
+        })
         const data = await response.json()
         console.log('IPFS Response:', data)
         return data.ipfsHash
@@ -107,7 +108,6 @@ export const createNFT = async (signer, name, description, price, file) => {
             0
         )
         const mintReceipt = await mintTx.wait()
-
 
         let tokenId
         if (mintReceipt.events) {
@@ -164,12 +164,11 @@ export const createNFT = async (signer, name, description, price, file) => {
     }
 }
 
-
 const fetchMetadata = async (tokenURI) => {
     try {
         //dbg
         // console.log('Fetching metadata from:', tokenURI)
-        let tokenLink = ('https://' + VITE_PINATA_GATEWAY + '/ipfs/' + tokenURI)
+        let tokenLink = 'https://' + VITE_PINATA_GATEWAY + '/ipfs/' + tokenURI
         const response = await fetch(tokenLink)
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`)
@@ -189,23 +188,27 @@ export const fetchMarketItems = async (signer) => {
     const items = await marketplaceContract.fetchMarketItems()
 
     // Fetch token URIs for each item
-    const itemsWithMetadata = await Promise.all(items.map(async (item) => {
-        const nftContract = getNFTContract(signer)
-        try {
-            const tokenURI = await nftContract.tokenURI(item.tokenId)
-            //dbg
-            // console.log(`Token URI for item ${item.tokenId}:`, tokenURI)
-            const metadata = await fetchMetadata(tokenURI)
-            return { ...item, metadata }
-        } catch (error) {
-            console.error(`Error fetching tokenURI for item ${item.tokenId}:`, error)
-            return { ...item, metadata: null }
-        }
-    }))
+    const itemsWithMetadata = await Promise.all(
+        items.map(async (item) => {
+            const nftContract = getNFTContract(signer)
+            try {
+                const tokenURI = await nftContract.tokenURI(item.tokenId)
+                //dbg
+                console.log(`Token URI for item ${item.tokenId}:`, tokenURI)
+                const metadata = await fetchMetadata(tokenURI)
+                return { ...item, metadata }
+            } catch (error) {
+                console.error(
+                    `Error fetching tokenURI for item ${item.tokenId}:`,
+                    error
+                )
+                return { ...item, metadata: null }
+            }
+        })
+    )
 
     return itemsWithMetadata
 }
-
 
 export const fetchMyNFTs = async (signer) => {
     const marketplaceContract = getMarketplaceContract(signer)
