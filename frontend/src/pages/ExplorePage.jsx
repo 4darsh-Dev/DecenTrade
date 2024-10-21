@@ -12,14 +12,21 @@ const ExplorePage = () => {
 
     useEffect(() => {
         const initializeWallet = async () => {
-            const wallet = await connectWallet()
-            setWallet(wallet)
+            console.log("Connecting to wallet...")
+            try {
+                const wallet = await connectWallet()
+                setWallet(wallet)
+            } catch {
+                console.log("No wallet detected")
+                setError('No wallet found. Please connect your wallet to use the application.')
+            }
         }
         initializeWallet()
     }, [])
 
     useEffect(() => {
         if (wallet) {
+            console.log("Loading NFTs...")
             loadNFTs()
         }
     }, [wallet])
@@ -34,9 +41,7 @@ const ExplorePage = () => {
                 console.log('Fetched items:', items)
 
                 if (!Array.isArray(items)) {
-                    throw new Error(
-                        'Fetched items are not in the expected format'
-                    )
+                    throw new Error('Fetched items are not in the expected format')
                 }
 
                 const formattedItems = items.map((item) => ({
@@ -87,17 +92,30 @@ const ExplorePage = () => {
         }
     }
 
-    if (loading) {
+    
+    if (error) {
+        return (
+            <div className="flex justify-center items-center mt-20">
+    <div className="bg-gradient-to-r from-red-600 to-red-400 border border-blue-700 text-white px-10 py-8 rounded-xl shadow-2xl max-w-2xl text-lg" role="alert">
+        <div className="mb-4">
+            <strong className="font-bold text-2xl block text-center text-white">Error!</strong>
+        </div>
+        <div>
+            <span className="block sm:inline text-white">{error}</span>
+        </div>
+    </div>
+</div>
+
+
+
+        )
+    }
+    
+    else if (loading) {
         return (
             <div className="text-center py-10">
                 Loading NFTs... Please wait.
             </div>
-        )
-    }
-
-    if (error) {
-        return (
-            <div className="text-center py-10 text-red-500">Error: {error}</div>
         )
     }
 
