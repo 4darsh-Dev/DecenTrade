@@ -10,6 +10,8 @@ import Navbar from './components/Navbar'
 import CreateNFT from './pages/CreateNFTPage'
 import NotFoundPage from './components/NotFoundPage'
 import Footer from './components/Footer'
+import CustomCursor from './components/CustomCursor'
+
 function App() {
     const [wallet, setWallet] = useState(null)
     useEffect(() => {
@@ -18,6 +20,7 @@ function App() {
     return (
         <BrowserRouter>
             <div className="min-h-screen">
+                <CustomCursor />
                 <div className="">
                     <Navbar wallet={wallet} setWallet={setWallet} />
                     <Routes>
@@ -45,7 +48,7 @@ function App() {
                         <Route path="/create" element={<CreateNFT />} />
                         <Route path="*" element={<NotFoundPage />} />
                     </Routes>
-                    <Footer/>
+                    <Footer />
                 </div>
             </div>
         </BrowserRouter>
