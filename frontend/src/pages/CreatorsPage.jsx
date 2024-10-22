@@ -6,7 +6,6 @@ const CreatorsPage = () => {
         <>
             <h1>Creators Page</h1>
 
-            <Footer />
         </>
     )
 }
