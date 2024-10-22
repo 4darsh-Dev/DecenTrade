@@ -14,9 +14,7 @@ const HomePage = () => {
                 </main>
             </div>
 
-            <footer>
-                <Footer />
-            </footer>
+
         </div>
     )
 }

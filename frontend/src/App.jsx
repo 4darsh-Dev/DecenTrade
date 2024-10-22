@@ -9,6 +9,7 @@ import FAQPage from './pages/FAQPage'
 import Navbar from './components/Navbar'
 import CreateNFT from './pages/CreateNFTPage'
 import NotFoundPage from './components/NotFoundPage'
+import Footer from './components/Footer'
 function App() {
     const [wallet, setWallet] = useState(null)
     useEffect(() => {
@@ -44,6 +45,7 @@ function App() {
                         <Route path="/create" element={<CreateNFT />} />
                         <Route path="*" element={<NotFoundPage />} />
                     </Routes>
+                    <Footer/>
                 </div>
             </div>
         </BrowserRouter>
