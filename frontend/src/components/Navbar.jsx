@@ -57,7 +57,9 @@ const Navbar = ({ wallet, setWallet }) => {
                     { name: 'Create', link: '/create' },
                     { name: 'About', link: '/about' },
                     { name: 'Creators', link: '/creators' },
+                    { name: 'How It Works', link: '/how-it-works' },
                     { name: 'FAQs', link: '/faqs' },
+           
                 ].map((item) => (
                     <Link key={item.name} to={item.link} className="navbar-link">
                         {item.name}

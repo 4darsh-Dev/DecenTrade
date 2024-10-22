@@ -60,25 +60,57 @@ const Footer = () => {
                             Quick Links
                         </h4>
                         <ul className="space-y-2">
-                            {[
-                                'Home',
-                                'Explore',
-                                'About',
-                                'Creators',
-                                'How It Works',
-                                'FAQ',
-                            ].map((item) => (
-                                <li key={item}>
-                                    <a
-                                        href="#"
-                                        className="text-gray-400 hover:text-white transition-colors"
-                                    >
-                                        {item}
-                                    </a>
-                                </li>
-                            ))}
+                            <li>
+                                <a
+                                    href="/"
+                                    className="text-gray-400 hover:text-white transition-colors"
+                                >
+                                    Home
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="/explore"
+                                    className="text-gray-400 hover:text-white transition-colors"
+                                >
+                                    Explore
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="/about"
+                                    className="text-gray-400 hover:text-white transition-colors"
+                                >
+                                    About
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="/creators"
+                                    className="text-gray-400 hover:text-white transition-colors"
+                                >
+                                    Creators
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="/how-it-works"
+                                    className="text-gray-400 hover:text-white transition-colors"
+                                >
+                                    How It Works
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="/faqs"
+                                    className="text-gray-400 hover:text-white transition-colors"
+                                >
+                                    FAQ
+                                </a>
+                            </li>
                         </ul>
                     </div>
+
                     <div>
                         <h4 className="text-lg font-semibold mb-4">
                             Community
