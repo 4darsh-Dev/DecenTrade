@@ -17,6 +17,7 @@
     "buffer": "^6.0.3",
     "dotenv": "^16.4.5",
     "ethers": "^6.13.2",
+    "framer-motion": "^11.11.9",
     "lucide-react": "^0.438.0",
     "pinata-web3": "^0.5.0",
     "react": "^18.3.1",
