@@ -69,6 +69,7 @@ const Navbar = ({ wallet, setWallet }) => {
                 <Link to="/">DecenTrade</Link>
             </div>
 
+
             <div className="hamburger-menu">
                 <button onClick={toggleMenu} className="hamburger-button">
                     <Menu size={24} />
