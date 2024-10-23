@@ -40,7 +40,7 @@ const Navbar = ({ wallet, setWallet }) => {
 
     const toggleDarkMode = () => {
         setDarkMode(!darkMode)
-        document.body.classList.toggle('dark-mode', !darkMode)
+        document.body.classList.toggle('dark', !darkMode)
     }
 
     const toggleMenu = () => {
@@ -57,7 +57,7 @@ const Navbar = ({ wallet, setWallet }) => {
     ]
 
     return (
-        <nav className={`navbar ${darkMode ? 'dark-mode' : ''}`}>
+        <nav className={`navbar`}>
             <div className="navbar-logo">
                 <Link to="/">
                     <img

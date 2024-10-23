@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Footer from '../components/Footer';
 import './CreatorsPage.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
@@ -93,20 +92,21 @@ const CreatorsPage = () => {
     return (
         <>
 
-            <section className="contributor-contributors">
+            <section className=" dark:bg-slate-900">
+                <div className='contributor-contributors'>
                 {loading ? (
                     <div id="loading" className="contributor-loading">
                     </div>
                 ) : (
                     <>
-                        <h2>Project Statistics</h2>
+                        <h2 className='dark:text-white'>Project Statistics</h2>
                         {renderStats()}
-                        <h2>Meet Our Contributors</h2>
+                        <h2 className='dark:text-white'>Meet Our Contributors</h2>
                         {renderContributors()}
                     </>
                 )}
+                </div>
             </section>
-            <Footer />
 
 
 
