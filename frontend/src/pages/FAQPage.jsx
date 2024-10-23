@@ -58,7 +58,7 @@ const FAQPage = () => {
         
         <div className="Faq-container">
           <div className="faq-left-portion">
-          <h2 className="faq-heading">Frequently Asked Questions</h2>
+          <h2 className="faq-heading dark:text-white">Frequently Asked Questions</h2>
           {faqData.map((item, index) => (
             <FAQItem key={index} question={item.question} answer={item.answer} />
           ))}
