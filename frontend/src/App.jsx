@@ -11,6 +11,7 @@ import CreateNFT from './pages/CreateNFTPage';
 import NotFoundPage from './components/NotFoundPage';
 import Footer from './components/Footer'; // Import Footer component
 import MyChatbot from './Chatbot'; // Import Chatbot component
+import CustomCursor from './components/CustomCursor'
 
 function App() {
     const [wallet, setWallet] = useState(null);
