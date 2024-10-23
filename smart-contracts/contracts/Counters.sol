@@ -11,8 +11,9 @@ library Counters {
     }
 
     function increment(Counter storage counter) internal {
+        uint256 value = counter._value;
         unchecked {
-            counter._value += 1;
+            counter._value = value + 1;
         }
     }
 
