@@ -13,13 +13,51 @@ const CreateNFT = ({ wallet }) => {
         price: '',
         file: null,
     })
+    const [dragging, setDragging] = useState(false);
 
     const handleChange = (e) => {
-        const { name, value, files } = e.target
+        const { name, value, files } = e.target;
         setFormData((prevState) => ({
             ...prevState,
             [name]: files ? files[0] : value,
-        }))
+        }));
+    }
+
+    const handleDragOver = (e) => {
+        e.preventDefault();
+        if (!dragging) setDragging(true); // Prevent unnecessary reassignments
+    }
+
+    const handleDragLeave = () => {
+        if (dragging) setDragging(false); // Prevent unnecessary reassignments
+    }
+
+    const handleDrop = (e) => {
+        e.preventDefault();
+        setDragging(false);
+        const droppedFiles = e.dataTransfer.files;
+
+        if (droppedFiles && droppedFiles[0]) {
+            setFormData((prevState) => ({
+                ...prevState,
+                file: droppedFiles[0],
+            }));
+        }
+    }
+
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        setFormData((prevState) => ({
+            ...prevState,
+            file: file,
+        }));
+    }
+
+    const handleCancelFile = () => {
+        setFormData((prevState) => ({
+            ...prevState,
+            file: null,
+        }));
     }
 
     const handleSubmit = async (e) => {
@@ -28,7 +66,6 @@ const CreateNFT = ({ wallet }) => {
         try {
             const { name, description, price, file } = formData
 
-            // Ensure all required fields are filled
             if (!name || !description || !price || !file) {
                 throw new Error('All fields are required')
             }
@@ -55,14 +92,17 @@ const CreateNFT = ({ wallet }) => {
     }
 
     return (
-
         <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-gray-900 via-purple-900 to-black overflow-hidden">
-        <div
-            className="text-white shadow-2xl rounded-lg p-10 mt-10 mb-10 max-w-2xl w-full mx-4 transform transition-all duration-300 hover:scale-105 hover:shadow-3xl"
-            style={{
-                background: 'linear-gradient(to bottom right, #252550 20%, #ff00ff 100%)',
-            }}
-        >
+            <div
+                className="text-white shadow-2xl rounded-lg p-10 mt-10 mb-10 max-w-2xl w-full mx-4 transform transition-all duration-300 hover:scale-105 hover:shadow-3xl"
+                style={{
+                    background: 'linear-gradient(to bottom right, #252550 20%, #ff00ff 100%)',
+                }}
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+                role="button" 
+            >
                 <h1 className="text-4xl font-bold text-center text-white mb-6">
                     CREATE NFT
                 </h1>
@@ -129,14 +169,40 @@ const CreateNFT = ({ wallet }) => {
                         >
                             File
                         </label>
-                        <input
-                            type="file"
-                            id="file"
-                            name="file"
-                            onChange={handleChange}
-                            required
-                            className="w-full p-3 border-none rounded-lg shadow-sm bg-white text-black cursor-pointer focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
-                        />
+                        <div
+                            className={`p-3 border-none rounded-lg shadow-sm bg-white text-black focus:outline-none focus:ring-2 focus:ring-purple-500 transition cursor-pointer ${
+                                dragging ? 'border-dashed border-purple-500' : ''
+                            }`}
+                            onDragOver={handleDragOver}
+                            onDragLeave={handleDragLeave}
+                            onDrop={handleDrop}
+                            role="button" 
+                        >
+                            {formData.file ? (
+                                <div className="flex justify-between items-center">
+                                    <span>{formData.file.name}</span>
+                                    <button
+                                        type="button"
+                                        onClick={handleCancelFile}
+                                        className="text-red-500 hover:text-red-700 transition"
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
+                            ) : (
+                                <div className="flex items-center"> 
+                                    <p className="text-gray-500">Drag And Drop File Or</p>
+                                    <input
+                                        type="file"
+                                        id="file"
+                                        name="file"
+                                        onChange={handleFileChange}
+                                        required
+                                        className="cursor-pointer ml-1" 
+                                    />
+                                </div>
+                            )}
+                        </div>
                     </div>
                     <button
                         type="submit"
@@ -146,7 +212,6 @@ const CreateNFT = ({ wallet }) => {
                     </button>
                 </form>
             </div>
-
         </div>
     )
 }

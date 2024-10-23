@@ -92,6 +92,7 @@ const CreatorsPage = () => {
 
     return (
         <>
+
             <section className="contributor-contributors">
                 {loading ? (
                     <div id="loading" className="contributor-loading">
@@ -106,6 +107,9 @@ const CreatorsPage = () => {
                 )}
             </section>
             <Footer />
+
+
+
         </>
     );
 };

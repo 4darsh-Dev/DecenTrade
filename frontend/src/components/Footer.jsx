@@ -24,7 +24,7 @@ const Footer = () => {
     }, [])
 
     return (
-        <footer className="bg-gray-900 mt-12 text-white relative pt-20 pb-10">
+        <footer className="bg-gray-900 px-5 text-white relative pt-20 pb-10">
             <div className="absolute top-0 left-0 w-full overflow-hidden">
                 <svg
                     ref={waveRef}
@@ -60,25 +60,57 @@ const Footer = () => {
                             Quick Links
                         </h4>
                         <ul className="space-y-2">
-                            {[
-                                'Home',
-                                'Explore',
-                                'About',
-                                'Creators',
-                                'How It Works',
-                                'FAQ',
-                            ].map((item) => (
-                                <li key={item}>
-                                    <a
-                                        href="#"
-                                        className="text-gray-400 hover:text-white transition-colors"
-                                    >
-                                        {item}
-                                    </a>
-                                </li>
-                            ))}
+                            <li>
+                                <a
+                                    href="/"
+                                    className="text-gray-400 hover:text-white transition-colors"
+                                >
+                                    Home
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="/explore"
+                                    className="text-gray-400 hover:text-white transition-colors"
+                                >
+                                    Explore
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="/about"
+                                    className="text-gray-400 hover:text-white transition-colors"
+                                >
+                                    About
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="/creators"
+                                    className="text-gray-400 hover:text-white transition-colors"
+                                >
+                                    Creators
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="/how-it-works"
+                                    className="text-gray-400 hover:text-white transition-colors"
+                                >
+                                    How It Works
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="/faqs"
+                                    className="text-gray-400 hover:text-white transition-colors"
+                                >
+                                    FAQ
+                                </a>
+                            </li>
                         </ul>
                     </div>
+
                     <div>
                         <h4 className="text-lg font-semibold mb-4">
                             Community
@@ -133,15 +165,15 @@ const Footer = () => {
                         <p className="text-gray-400 mb-4">
                             Get the latest updates and news
                         </p>
-                        <form className="flex">
+                        <form className="flex max-w-1/3 ">
                             <input
                                 type="email"
                                 placeholder="Enter your email"
-                                className="bg-gray-800 text-white rounded-l-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-purple-500 flex-grow"
+                                className="bg-gray-800 w-1/2 text-white rounded-l-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-purple-500 flex-grow"
                             />
                             <button
                                 type="submit"
-                                className="bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-r-full px-4 py-2 hover:opacity-90 transition-opacity"
+                                className="bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-r-full py-2 px-4 hover:opacity-90 transition-opacity"
                             >
                                 Subscribe
                             </button>
