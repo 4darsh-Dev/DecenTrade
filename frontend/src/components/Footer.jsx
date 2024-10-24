@@ -1,27 +1,28 @@
-import React, { useEffect, useRef } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// src/components/Footer.jsx
+import React, { useEffect, useRef } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faTwitter,
     faFacebook,
     faInstagram,
-} from '@fortawesome/free-brands-svg-icons'
-
-import logo from '../assets/decentrade-logo.png'
+} from '@fortawesome/free-brands-svg-icons';
+import logo from '../assets/decentrade-logo.png';
+import Chatbot from '../Chatbot'; // Import the Chatbot component
 
 const Footer = () => {
-    const waveRef = useRef(null)
+    const waveRef = useRef(null);
 
     useEffect(() => {
         const handleScroll = () => {
-            const scrollPosition = window.scrollY
+            const scrollPosition = window.scrollY;
             if (waveRef.current) {
-                waveRef.current.style.transform = `translate3d(0, ${scrollPosition * 0.1}px, 0)`
+                waveRef.current.style.transform = `translate3d(0, ${scrollPosition * 0.1}px, 0)`;
             }
-        }
+        };
 
-        window.addEventListener('scroll', handleScroll)
-        return () => window.removeEventListener('scroll', handleScroll)
-    }, [])
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     return (
         <footer className="bg-gray-900 px-5 text-white relative pt-20 pb-10">
@@ -40,7 +41,7 @@ const Footer = () => {
                 </svg>
             </div>
             <div className="container mx-auto px-4">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                     <div>
                         <h3 className="text-xl font-bold mb-4">DecenTrade</h3>
                         <p className="text-gray-400">
@@ -182,34 +183,24 @@ const Footer = () => {
                 </div>
                 <div className="mt-10 pt-8 border-t border-gray-800 flex justify-between items-center">
                     <p className="text-gray-400">
-                        &copy; 2024 DecenTrade. All rights reserved. Powered by
-                        Open Source
-                        {/* <FontAwesomeIcon icon={faHeart} /> */}
+                        &copy; 2024 DecenTrade. All rights reserved. Powered by Open Source
                     </p>
                     <div className="flex space-x-4">
-                        <a
-                            href="#"
-                            className="text-gray-400 hover:text-white transition-colors"
-                        >
+                        <a href="#" className="text-gray-400 hover:text-white transition-colors">
                             <FontAwesomeIcon icon={faTwitter} />
                         </a>
-                        <a
-                            href="#"
-                            className="text-gray-400 hover:text-white transition-colors"
-                        >
+                        <a href="#" className="text-gray-400 hover:text-white transition-colors">
                             <FontAwesomeIcon icon={faFacebook} />
                         </a>
-                        <a
-                            href="#"
-                            className="text-gray-400 hover:text-white transition-colors"
-                        >
+                        <a href="#" className="text-gray-400 hover:text-white transition-colors">
                             <FontAwesomeIcon icon={faInstagram} />
                         </a>
                     </div>
                 </div>
             </div>
+            <Chatbot /> {/* Add the Chatbot component here */}
         </footer>
-    )
-}
+    );
+};
 
-export default Footer
+export default Footer;
