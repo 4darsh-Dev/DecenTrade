@@ -56,9 +56,9 @@ const FAQPage = () => {
     return (
       <>
         
-        <div className="Faq-container">
+        <div className="Faq-container dark:bg-slate-900">
           <div className="faq-left-portion">
-          <h2 className="faq-heading">Frequently Asked Questions</h2>
+          <h2 className="faq-heading text-[#111827] dark:text-white">Frequently Asked Questions</h2>
           {faqData.map((item, index) => (
             <FAQItem key={index} question={item.question} answer={item.answer} />
           ))}
@@ -89,7 +89,7 @@ const FAQItem = ({ question, answer }) => {
         className="flex justify-between items-center cursor-pointer"
         onClick={toggleFAQ} role='button'
       >
-        <h3 className="text-lg font-medium text-gray-800">{question}</h3>
+        <h3 className="text-lg font-medium text-gray-800 dark:text-white">{question}</h3>
         <span className="text-gray-500">{isOpen ? '-' : '+'}</span>
       </div>
       {isOpen && <p className="mt-2 text-gray-600">{answer}</p>}
