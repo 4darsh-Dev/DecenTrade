@@ -35,3 +35,25 @@ export const uploadMetadataToIPFS = async (data) => {
     console.error('Error uploading json data to IPFS:', error)
   }
 }
+
+export const getMetaData = async (cid) => {
+  try {
+    const response = await pinata.gateways.get(cid)
+    const data = response.data
+    return data
+  } catch (error) {
+    console.error('Error fetching json data from IPFS:', error)
+  }
+}
+export const getImage = async (cid) => {
+  try {
+    const response = await pinata.gateways.get(cid)
+    const image = response.data
+    const contentType = response.contentType
+    const data = { image, contentType }
+    return data
+  } catch (error) {
+    console.error('Error fetching image from IPFS:', error)
+    throw error
+  }
+}
