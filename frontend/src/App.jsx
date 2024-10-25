@@ -11,6 +11,7 @@ import CreateNFT from './pages/CreateNFTPage'
 import NotFoundPage from './components/NotFoundPage'
 import Footer from './components/Footer'
 import CustomCursor from './components/CustomCursor'
+import GTranslateLoader from './components/GTranslateLoader'
 
 function App() {
     const [wallet, setWallet] = useState(null)
@@ -51,6 +52,7 @@ function App() {
                     <Footer />
                 </div>
             </div>
+            <GTranslateLoader />
         </BrowserRouter>
     )
 }
