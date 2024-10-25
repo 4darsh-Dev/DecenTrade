@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'; 
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import HomePage from './pages/HomePage';
 import NFTMarketplace from './components/NFTMarketplace';
@@ -9,9 +9,9 @@ import FAQPage from './pages/FAQPage';
 import Navbar from './components/Navbar';
 import CreateNFT from './pages/CreateNFTPage';
 import NotFoundPage from './components/NotFoundPage';
-import Footer from './components/Footer'; // Import Footer component
-import MyChatbot from './Chatbot'; // Import Chatbot component
-import CustomCursor from './components/CustomCursor'
+import Footer from './components/Footer';
+import MyChatbot from './Chatbot';
+import CustomCursor from './components/CustomCursor'; // Import CustomCursor component
 
 function App() {
     const [wallet, setWallet] = useState(null);
@@ -22,7 +22,10 @@ function App() {
 
     return (
         <BrowserRouter>
-            <div className="min-h-screen flex flex-col">
+            <div className="min-h-screen">
+                {/* Render CustomCursor */}
+                <CustomCursor />
+
                 <Navbar wallet={wallet} setWallet={setWallet} />
                 <main className="flex-grow">
                     <Routes>
@@ -46,10 +49,8 @@ function App() {
                     </Routes>
                 </main>
 
-                {/* Add Chatbot component at the bottom of the page */}
+                {/* Chatbot and Footer Components */}
                 <MyChatbot />
-
-                {/* Add Footer component */}
                 <Footer />
             </div>
         </BrowserRouter>
