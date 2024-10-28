@@ -1,5 +1,5 @@
 // src/components/Footer.jsx
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faTwitter,
@@ -11,6 +11,7 @@ import Chatbot from '../Chatbot'; // Import the Chatbot component
 
 const Footer = () => {
     const waveRef = useRef(null);
+    const [subscribed, setSubscribed] = useState(false); // Added state for subscription status
 
     useEffect(() => {
         const handleScroll = () => {
@@ -23,6 +24,11 @@ const Footer = () => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
+
+    const handleSubscribe = (e) => { // Added function to handle subscription
+        e.preventDefault(); // Prevent default form submission
+        setSubscribed(true); // Set subscribed to true
+    };
 
     return (
         <footer className="bg-gray-900 px-5 text-white relative pt-20 pb-10">
@@ -166,7 +172,7 @@ const Footer = () => {
                         <p className="text-gray-400 mb-4">
                             Get the latest updates and news
                         </p>
-                        <form className="flex max-w-1/3 ">
+                        <form className="flex max-w-1/3" onSubmit={handleSubscribe}> {/* Updated form to use handleSubscribe */}
                             <input
                                 type="email"
                                 placeholder="Enter your email"
@@ -179,6 +185,9 @@ const Footer = () => {
                                 Subscribe
                             </button>
                         </form>
+                        {subscribed && ( // Added conditional rendering for confirmation message
+                            <p className="text-green-400 mt-2">Subscribed successfully!</p>
+                        )}
                     </div>
                 </div>
                 <div className="mt-10 pt-8 border-t border-gray-800 flex justify-between items-center">
