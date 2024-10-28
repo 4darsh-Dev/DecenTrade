@@ -1,3 +1,4 @@
+
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import HomePage from './pages/HomePage';
@@ -11,7 +12,9 @@ import CreateNFT from './pages/CreateNFTPage';
 import NotFoundPage from './components/NotFoundPage';
 import Footer from './components/Footer';
 import MyChatbot from './Chatbot';
-import CustomCursor from './components/CustomCursor'; // Import CustomCursor component
+import CustomCursor from './components/CustomCursor';
+import GTranslateLoader from './components/GTranslateLoader'
+
 
 function App() {
     const [wallet, setWallet] = useState(null);
@@ -53,6 +56,7 @@ function App() {
                 <MyChatbot />
                 <Footer />
             </div>
+            <GTranslateLoader />
         </BrowserRouter>
     );
 }
