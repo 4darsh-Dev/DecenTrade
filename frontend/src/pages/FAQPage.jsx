@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
 import FAQImage from '../assets/faq-image.png';
 import "../styles/faq.css";
 
@@ -197,8 +196,6 @@ const FAQPage = () => {
           </section>
         </section>
       </div>
-
-      <Footer />
     </>
   );
 };
