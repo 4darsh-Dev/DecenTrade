@@ -1,6 +1,7 @@
 import { ethers } from 'ethers'
 import DecentradeNFTAbi from '../../../smart-contracts/artifacts/contracts/Marketplace.sol/DecentradeNFT.json'
 import DecentradeMarketplaceAbi from '../../../smart-contracts/artifacts/contracts/Marketplace.sol/DecentradeMarketplace.json'
+import { handleCompressedBase64Data } from './handleCompressedData'
 // import {
 //     testIpfs,
 //     uploadMetadataToIPFS,
@@ -9,12 +10,10 @@ import DecentradeMarketplaceAbi from '../../../smart-contracts/artifacts/contrac
 
 const nftAddress = import.meta.env.VITE_NFT_ADDRESS
 const marketplaceAddress = import.meta.env.VITE_MARKET_ADDRESS
-
 // For local testing ONLY
 // const API_URL = "http://localhost:3000"
 
 const API_URL = import.meta.env.VITE_API_URL
-const VITE_PINATA_GATEWAY = import.meta.env.VITE_PINATA_GATEWAY
 
 export const connectWallet = async () => {
     if (window.ethereum) {
@@ -43,11 +42,15 @@ export const getNFTContract = (signer) => {
 }
 
 export const getMarketplaceContract = (signer) => {
-    return new ethers.Contract(
-        marketplaceAddress,
-        DecentradeMarketplaceAbi.abi,
-        signer
-    )
+    try {
+        return new ethers.Contract(
+            marketplaceAddress,
+            DecentradeMarketplaceAbi.abi,
+            signer
+        )
+    } catch (e) {
+        console.error(e)
+    }
 }
 const uploadToIPFS = async (file) => {
     try {
@@ -69,13 +72,10 @@ const uploadMetadataToIPFS = async (metadata) => {
         const formData = new FormData()
         formData.append('metadata', metadata)
         // console.log(formData, 'formData')
-        const response = await fetch(
-            API_URL + '/ipfs/uploadMetaData',
-            {
-                method: 'POST',
-                body: formData,
-            }
-        )
+        const response = await fetch(API_URL + '/ipfs/uploadMetaData', {
+            method: 'POST',
+            body: formData,
+        })
         const data = await response.json()
         console.log('IPFS Response:', data)
         return data.ipfsHash
@@ -107,7 +107,6 @@ export const createNFT = async (signer, name, description, price, file) => {
             0
         )
         const mintReceipt = await mintTx.wait()
-
 
         let tokenId
         if (mintReceipt.events) {
@@ -164,48 +163,29 @@ export const createNFT = async (signer, name, description, price, file) => {
     }
 }
 
+export const fetchMarketItems = async () => {
+    const response = await fetch(`${API_URL}/nfts/getNfts`)
+    const reader = response.body.getReader()
+    const decoder = new TextDecoder('utf-8')
+    let result = ''
+    let done = false
 
-const fetchMetadata = async (tokenURI) => {
-    try {
-        //dbg
-        // console.log('Fetching metadata from:', tokenURI)
-        let tokenLink = ('https://' + VITE_PINATA_GATEWAY + '/ipfs/' + tokenURI)
-        const response = await fetch(tokenLink)
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`)
+    while (!done) {
+        const { value, done: streamDone } = await reader.read()
+        done = streamDone
+        if (value) {
+            result += decoder.decode(value, { stream: !done })
         }
-        const metadata = await response.json()
-        //dbg
-        // console.log('Fetched metadata:', metadata)
-        return metadata
-    } catch (error) {
-        console.error('Error fetching metadata:', error)
-        return null
     }
+    const items = JSON.parse(result)
+    const data = items.data
+    data.forEach(async (item) => {
+        const imageData = item.image
+        const imgUrl = handleCompressedBase64Data(imageData)
+        item.image.data = imgUrl
+    })
+    return data
 }
-
-export const fetchMarketItems = async (signer) => {
-    const marketplaceContract = getMarketplaceContract(signer)
-    const items = await marketplaceContract.fetchMarketItems()
-
-    // Fetch token URIs for each item
-    const itemsWithMetadata = await Promise.all(items.map(async (item) => {
-        const nftContract = getNFTContract(signer)
-        try {
-            const tokenURI = await nftContract.tokenURI(item.tokenId)
-            //dbg
-            // console.log(`Token URI for item ${item.tokenId}:`, tokenURI)
-            const metadata = await fetchMetadata(tokenURI)
-            return { ...item, metadata }
-        } catch (error) {
-            console.error(`Error fetching tokenURI for item ${item.tokenId}:`, error)
-            return { ...item, metadata: null }
-        }
-    }))
-
-    return itemsWithMetadata
-}
-
 
 export const fetchMyNFTs = async (signer) => {
     const marketplaceContract = getMarketplaceContract(signer)
