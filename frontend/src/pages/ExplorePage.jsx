@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { fetchMarketItems, buyNFT } from '../utils/ethereum'
 import NFTCard from '../components/NFTCard'
 import { connectWallet } from '../utils/ethereum'
 import { ethers } from 'ethers'
 import { useNavigate } from 'react-router-dom'
-
-const VITE_PINATA_GATEWAY = import.meta.env.VITE_PINATA_GATEWAY
 
 const ExplorePage = () => {
     const [nfts, setNfts] = useState([])
@@ -16,25 +14,8 @@ const ExplorePage = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        const initializeWallet = async () => {
-            console.log("Connecting to wallet...")
-            try {
-                const wallet = await connectWallet()
-                setWallet(wallet)
-            } catch {
-                console.log("No wallet detected")
-                setError('No wallet found. Please connect your wallet to use the application.')
-            }
-        }
-        initializeWallet()
+        loadNFTs()
     }, [])
-
-    useEffect(() => {
-        if (wallet) {
-            console.log("Loading NFTs...")
-            loadNFTs()
-        }
-    }, [wallet])
 
     // Countdown and auto-redirect logic when error occurs
     useEffect(() => {
@@ -53,44 +34,40 @@ const ExplorePage = () => {
     }, [error, counter, navigate])
 
     const loadNFTs = async () => {
-        if (wallet) {
-            try {
-                console.log('Starting to fetch market items...')
-                setLoading(true)
-                setError(null)
-                const items = await fetchMarketItems(wallet)
-                //dbg
-                // console.log('Fetched items:', items)
-                if (!Array.isArray(items)) {
-                    throw new Error('Fetched items are not in the expected format')
-                }
-                const formattedItems = items.map((item) => ({
-                    itemId: item[0].toString(),
-                    nftContract: item[1],
-                    tokenId: item[2].toString(),
-                    seller: item[3],
-                    owner: item[4],
-                    price: ethers.formatEther(item[5]),
-                    sold: item[6],
-                    metadata: item.metadata,
-                }))
-                //dbg
-                // console.log('Formatted items:', formattedItems)
-                setNfts(formattedItems)
-            } catch (error) {
-                console.error('Error loading NFTs:', error)
-                setError(`Failed to load NFTs: ${error.message}`)
-            } finally {
-                setLoading(false)
+        try {
+            console.log('Starting to fetch market items...')
+            setLoading(true)
+            setError(null)
+            const items = await fetchMarketItems()
+            //dbg
+            // console.log('Fetched items:', items)
+            if (!Array.isArray(items)) {
+                throw new Error('Fetched items are not in the expected format')
             }
-        } else {
-            console.log('Wallet not connected')
+            //dbg
+            // console.log('Formatted items:', formattedItems)
+            setNfts(items)
+        } catch (error) {
+            console.error('Error loading NFTs:', error)
+            setError(`Failed to load NFTs: ${error.message}`)
+        } finally {
             setLoading(false)
-            setError('Please connect your wallet to view NFTs')
         }
     }
-
+    const initializeWallet = async () => {
+        console.log('Connecting to wallet...')
+        try {
+            const wallet = await connectWallet()
+            setWallet(wallet)
+        } catch {
+            console.log('No wallet detected')
+            setError(
+                'No wallet found. Please connect your wallet to use the application.'
+            )
+        }
+    }
     const handleBuy = async (nft) => {
+        await initializeWallet()
         if (wallet) {
             try {
                 setLoading(true)
@@ -116,22 +93,31 @@ const ExplorePage = () => {
     if (error) {
         return (
             <div className="flex flex-col justify-center items-center mt-20">
-                <div className="bg-gradient-to-r from-red-600 to-red-400 border border-blue-700 text-white px-10 py-8 rounded-xl shadow-2xl max-w-2xl text-lg" role="alert">
+                <div
+                    className="bg-gradient-to-r from-red-600 to-red-400 border border-blue-700 text-white px-10 py-8 rounded-xl shadow-2xl max-w-2xl text-lg"
+                    role="alert"
+                >
                     <div className="mb-4">
-                        <strong className="font-bold text-2xl block text-center text-white">Error!</strong>
+                        <strong className="font-bold text-2xl block text-center text-white">
+                            Error!
+                        </strong>
                     </div>
                     <div>
-                        <span className="block sm:inline text-white">{error}</span>
+                        <span className="block sm:inline text-white">
+                            {error}
+                        </span>
                     </div>
-                <div className="mt-6 flex flex-col items-center">
-                    <button
-                        onClick={() => navigate('/')}
-                        className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded "
-                    >
-                        Go to Homepage
-                    </button>
-                    <p className="mt-2 text-white">Redirecting in {counter} seconds...</p>
-                </div>
+                    <div className="mt-6 flex flex-col items-center">
+                        <button
+                            onClick={() => navigate('/')}
+                            className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded "
+                        >
+                            Go to Homepage
+                        </button>
+                        <p className="mt-2 text-white">
+                            Redirecting in {counter} seconds...
+                        </p>
+                    </div>
                 </div>
             </div>
         )
@@ -168,12 +154,7 @@ const ExplorePage = () => {
                                 key={nft.itemId}
                                 nft={nft}
                                 onBuy={handleBuy}
-                                imageUrl={
-                                    'https://' +
-                                    VITE_PINATA_GATEWAY +
-                                    '/ipfs/' +
-                                    metadata.image
-                                }
+                                imageUrl={nft.image.data}
                                 name={metadata.name} // Access the parsed name field
                                 description={metadata.description} // Access the parsed description field
                             />
