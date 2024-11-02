@@ -20,9 +20,9 @@ const NFTCard = ({ nft, onBuy, imageUrl, name, description }) => {
                         className="w-full h-64 object-cover mb-4"
                     />
                 )}
-                {/* <h2 className="text-xl font-bold mb-2">
-                    {name || `NFT #${nft.tokenId}`}
-                </h2> */}
+                <h2 className="text-xl font-bold mb-2">
+                    {name || 'No Name available'}
+                </h2>
                 <p className="mb-2">
                     {description || 'No description available'}
                 </p>
