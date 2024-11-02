@@ -62,13 +62,13 @@ contract DecentradeMarketplace is ReentrancyGuard, Ownable, Pausable {
     Counters.Counter private _itemIds;
     Counters.Counter private _itemsSold;
     
-    // State variables
+    
     uint256 public listingFee;
     address payable public immutable marketplaceOwner;
     uint256 public constant MAX_LISTING_FEE = 0.1 ether;
     uint256 public constant MAX_PRICE = 1000 ether;
     
-    // Structs
+    
     struct MarketItem {
         uint256 itemId;
         string title;
@@ -84,7 +84,6 @@ contract DecentradeMarketplace is ReentrancyGuard, Ownable, Pausable {
         string category;
     }
     
-    // Mappings
     mapping(uint256 => MarketItem) private idToMarketItem;
     mapping(uint256 => address[]) private tokenIdToOwnershipHistory;
     mapping(address => uint256) private sellerBalance;
@@ -93,7 +92,6 @@ contract DecentradeMarketplace is ReentrancyGuard, Ownable, Pausable {
     mapping(bytes32 => bool) private usedTitles;
     mapping(uint256 => uint256[]) private itemPriceHistory;
     
-    // Events
     event MarketItemCreated(
         uint256 indexed itemId,
         string title,
@@ -134,7 +132,6 @@ contract DecentradeMarketplace is ReentrancyGuard, Ownable, Pausable {
     event ListingFeeUpdated(uint256 oldFee, uint256 newFee);
     event PriceHistoryUpdated(uint256 indexed itemId, uint256 newPrice);
     
-    // Modifiers
     modifier validTitle(string memory title) {
         require(bytes(title).length > 0, "Title cannot be empty");
         require(bytes(title).length <= 100, "Title too long");
