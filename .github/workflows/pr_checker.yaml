@@ -5,6 +5,12 @@ on:
   pull_request:
     types: [opened, edited]
 
+# Add permissions block
+permissions:
+  pull-requests: write
+  issues: write
+  contents: read
+
 jobs:
   validate-pr:
     runs-on: ubuntu-latest
@@ -21,8 +27,8 @@ jobs:
         id: pr-check
         run: |
           # Fetch PR information
-          PR_DESCRIPTION=$(jq -r .pull_request.body < "$GITHUB_EVENT_PATH")
-          PR_TITLE=$(jq -r .pull_request.title < "$GITHUB_EVENT_PATH")
+          PR_DESCRIPTION=$(jq -r .pull_request.body "$GITHUB_EVENT_PATH")
+          PR_TITLE=$(jq -r .pull_request.title "$GITHUB_EVENT_PATH")
           
           # Define file paths for the output variables
           PR_VALID_FILE=$(mktemp)
@@ -44,7 +50,7 @@ jobs:
           if [[ ! "$PR_DESCRIPTION" =~ $ISSUE_PATTERN ]]; then
             echo "Invalid or missing issue reference"
             PR_VALID="false"
-            echo '❌ Error: PR must reference an issue with the format Fixes ,Close ,Closes ,Closed ,Fix ,Fixed ,Resolve ,Resolves #Issue_Number' > "$ERROR_MESSAGE_FILE"
+            echo '❌ Error: PR must reference an issue with the format "Fixes #123" or similar' > "$ERROR_MESSAGE_FILE"
           fi
           
           # If both checks pass
@@ -65,23 +71,21 @@ jobs:
             const prValid = process.env.PR_VALID;
             const errorMessage = process.env.ERROR_MESSAGE;
             const successMessage = process.env.SUCCESS_MESSAGE;
-            const prNumber = context.payload.pull_request.number;
             
-            if (prValid === 'false') {
-              github.rest.issues.createComment({
-                issue_number: prNumber,
+            try {
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                body: errorMessage
+                body: prValid === 'false' ? errorMessage : successMessage
               });
-              core.setFailed(errorMessage);
-            } else {
-              github.rest.issues.createComment({
-                issue_number: prNumber,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                body: successMessage
-              });
+              
+              if (prValid === 'false') {
+                core.setFailed(errorMessage);
+              }
+            } catch (error) {
+              console.error('Error posting comment:', error);
+              core.setFailed(error.message);
             }
 
       - name: Fail if validation failed
