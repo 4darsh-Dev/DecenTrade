@@ -5,23 +5,29 @@ import ipfsRoutes from './src/routes/ipfs.js'
 import nftRoutes from './src/routes/nfts.js'
 
 const app = express()
-// const authRoutes = require('./src/routes/auth')
-// const uploadRoute = require('./src/routes/uploadDoc')
-// const getDocsRoute = require('./src/routes/getDoc')
 const port = process.env.PORT || 3000
 
 app.use(express.json())
-// app.use(cors({ origin: 'http://localhost:5173' }))
 
 // Allow all origins for now to simplify the frontend setup
 app.use(
   cors({
-    origin: '*'
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+
   })
 )
 
 app.use('/ipfs', ipfsRoutes)
 app.use('/nfts', nftRoutes)
+
+// Error handling middleware to ensure CORS headers are sent even on errors
+app.use((err, req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*')
+  res.status(err.status || 500).json({ error: err.message })
+})
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`)
 })
