@@ -181,11 +181,11 @@ const Footer = () => {
                         </form>
                     </div>
                 </div>
-                <div className="mt-10 pt-8 border-t border-gray-800 flex justify-between items-center">
+                <div className="mt-10 pt-8 border-t border-gray-800 flex flex-col items-center">
                     <p className="text-gray-400">
                         &copy; 2024 DecenTrade. All rights reserved. Powered by Open Source
                     </p>
-                    <div className="flex space-x-4">
+                    <div className="flex space-x-4 mt-2">
                         <a href="#" className="text-gray-400 hover:text-white transition-colors">
                             <FontAwesomeIcon icon={faTwitter} />
                         </a>
