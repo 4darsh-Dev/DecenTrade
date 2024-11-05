@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Search, Menu } from 'lucide-react'
+import { Search, Menu, X } from 'lucide-react'
 import logo from '../assets/decentrade-logo.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
@@ -69,10 +69,9 @@ const Navbar = ({ wallet, setWallet }) => {
                 <Link to="/">DecenTrade</Link>
             </div>
 
-
             <div className="hamburger-menu">
                 <button onClick={toggleMenu} className="hamburger-button">
-                    <Menu size={24} />
+                    {isMenuOpen ? <X size={24} /> : <Menu size={24} />} {/* Conditional icon rendering */}
                 </button>
             </div>
 
