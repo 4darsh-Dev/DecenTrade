@@ -1,0 +1,41 @@
+.scroll-top {
+    height: 60px;
+    width: 60px;
+    position: fixed;
+    bottom: 10px;
+    right: 20px;
+    margin-right: 60px;
+    padding: 10px;
+    cursor: pointer;
+    display: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background: linear-gradient(90deg, #4a90e2, #9013fe);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    animation: float 2s ease-in-out infinite;
+}
+
+.scroll-top:hover {
+    background: linear-gradient(90deg,#9013fe, #4a90e2);
+    animation-play-state: paused;
+}
+
+.scroll-top i {
+    font-size: 40px;
+    font-weight: 700;
+    color: #fff;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
