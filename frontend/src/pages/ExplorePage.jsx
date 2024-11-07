@@ -147,14 +147,19 @@ const ExplorePage = () => {
             ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {nfts.map((nft) => {
+                        if (!nft || !nft.image) {
+                            // console.error('NFT metadata not found:', nft)
+                            return null
+                        }
                         const metadata = nft.metadata // Parse the metadata string
-
+                        // console.log(metadata, 'metadata')
+                        // console.log(nft, 'nft')
                         return (
                             <NFTCard
                                 key={nft.itemId}
                                 nft={nft}
                                 onBuy={handleBuy}
-                                imageUrl={nft.image.data}
+                                imageUrl={nft.image}
                                 name={metadata.name} // Access the parsed name field
                                 description={metadata.description} // Access the parsed description field
                             />
