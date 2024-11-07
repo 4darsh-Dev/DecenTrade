@@ -14,7 +14,7 @@ import Footer from './components/Footer';
 import MyChatbot from './Chatbot';
 import CustomCursor from './components/CustomCursor';
 import GTranslateLoader from './components/GTranslateLoader'
-
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
     const [wallet, setWallet] = useState(null);
@@ -55,6 +55,7 @@ function App() {
                 {/* Chatbot and Footer Components */}
                 <MyChatbot />
                 <Footer />
+                <ScrollToTop />
             </div>
             <GTranslateLoader />
         </BrowserRouter>
