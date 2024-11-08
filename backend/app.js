@@ -27,6 +27,10 @@ app.use((err, req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*')
   res.status(err.status || 500).json({ error: err.message })
 })
+// Basic health check endpoint
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok' })
+})
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`)
