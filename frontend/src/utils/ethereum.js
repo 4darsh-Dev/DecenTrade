@@ -180,9 +180,16 @@ export const fetchMarketItems = async () => {
     const items = JSON.parse(result)
     const data = items.data
     data.forEach(async (item) => {
-        const imageData = item.image
-        const imgUrl = handleCompressedBase64Data(imageData)
-        item.image.data = imgUrl
+        if (item) {
+            const imageData = item.image
+            // console.log(imageData)
+            if (imageData) {
+                const imgUrl = handleCompressedBase64Data(imageData)
+                item.image = imgUrl
+            }
+
+        }
+
     })
     return data
 }

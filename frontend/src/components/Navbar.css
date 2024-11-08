@@ -218,6 +218,7 @@ body.dark-mode {
     .navbar-actions {
         flex-direction: column;
         align-items: stretch;
+        display: none;
     }
 
     .github-button,

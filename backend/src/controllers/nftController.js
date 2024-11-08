@@ -15,9 +15,10 @@ export const getNfts = async (req, res) => {
         const tokenURI = await nftContract.tokenURI(item.tokenId)
         //dbg
         // console.log(`Token URI for item ${item.tokenId}:`, tokenURI)
-        const metadata = await getMetaData(tokenURI)
+        const metadata = await getMetaData(tokenURI.toString())
+        // const metadata = await getMetaData(tokenURI)
         // console.log(metadata, 'metadata')
-        const imageData = await getImage(metadata.image)
+        const imageData = await getImage((metadata.image).toString())
         // Convert Blob to ArrayBuffer
         const arrayBuffer = await imageData.image.arrayBuffer()
 
