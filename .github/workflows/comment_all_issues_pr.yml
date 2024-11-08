@@ -1,0 +1,42 @@
+name: Comment on All Issues and PRs
+on:
+  workflow_dispatch:
+jobs:
+  comment-on-issues-and-prs:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Comment on all issues and PRs
+      run: |
+        # Install jq for JSON parsing
+        sudo apt-get install jq
+        
+        # Function to get items and post comments
+        get_items_and_comment() {
+          local endpoint=$1
+          local state=$2
+          items=$(curl -s -H "Authorization: token ${{ secrets.PERSONAL_ACCESS_TOKEN }}" \
+            "https://api.github.com/repos/${{ github.repository }}/$endpoint?state=$state" | jq -r '.[].number')
+          
+          for item in $items; do
+            curl -s -H "Authorization: token ${{ secrets.PERSONAL_ACCESS_TOKEN }}" \
+              -X POST \
+              -d "{\"body\": \"Gentle Reminder 🚨🚨 \n GSSoC-Ext 24 is going to complete in 2 Days. '\n Complete your assigned Issues and PR reviews before time to get Points on Leaderboard. '\n It was a great experience working with you all, Don't forget to ⭐ star the Repo (only 12 with 62 forks 💔) . \n Thanks💗 for your valuable contributions! \"}" \
+              "https://api.github.com/repos/${{ github.repository }}/$endpoint/$item/comments"
+          done
+        }
+        
+        # Comment on open issues
+        get_items_and_comment "issues" "open"
+        
+        # Comment on closed issues
+        get_items_and_comment "issues" "closed"
+        
+        # Comment on open PRs
+        get_items_and_comment "pulls" "open"
+        
+        # Comment on closed PRs (including merged)
+        get_items_and_comment "pulls" "closed"
+    env:
+      GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
