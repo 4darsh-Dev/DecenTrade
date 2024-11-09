@@ -86,6 +86,19 @@ We welcome contributions to DecenTrade! Please see our [CONTRIBUTING.md](CONTRIB
 ## Contributors 🤩
 <img src="https://contrib.rocks/image?repo=4darsh-Dev/DecenTrade" />
 
+## Stargazers ❤️
+
+<div align='left'>
+
+
+[![Stargazers repo roster for 4darsh-Dev/DecenTrade](https://reporoster.com/stars/4darsh-Dev/DecenTrade)](https://github.com/4darsh-Dev/DecenTrade/stargazers)
+
+</div>
+
+## Forkers ❤️
+
+[![Forkers repo roster for 4darsh-Dev/DecenTrade](https://reporoster.com/forks/4darsh-Dev/DecenTrade)](https://github.com/4darsh-Dev/DecenTrade/network/members)
+
 
 ## License 📜
 
