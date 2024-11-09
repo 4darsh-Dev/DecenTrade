@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
+import ContactUs from '../components/ContactUs';
 import FAQImage from '../assets/faq-image.png';
 import "../styles/faq.css";
 
@@ -88,6 +89,7 @@ const FAQPage = () => {
   return (
     <>
       <div className="min-h-screen p-8 bg-gray-50 dark:bg-slate-900">
+      <ContactUs />
         <div className="mx-auto flex flex-col lg:flex-row">
           <div className="lg:w-3/6 pr-8">
             <div className="text-center lg:text-left pt-6">
