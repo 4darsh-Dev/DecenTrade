@@ -22,7 +22,7 @@ jobs:
           for item in $items; do
             curl -s -H "Authorization: token ${{ secrets.PERSONAL_ACCESS_TOKEN }}" \
               -X POST \
-              -d "{\"body\": \"Gentle Reminder 🚨🚨 \n GSSoC-Ext 24 is going to complete in 2 Days. '\n Complete your assigned Issues and PR reviews before time to get Points on Leaderboard. '\n It was a great experience working with you all, Don't forget to ⭐ star the Repo (only 12 with 62 forks 💔) . \n Thanks💗 for your valuable contributions! \"}" \
+              -d "{\"body\": \"Gentle Reminder 🚨🚨 \n PA and Mentor nominations have been started for GSSoC-Ext 2k24. '\n Do share your experiences and connect on Socials. '\n It was a great experience working with you all \n Thanks💗 for your valuable contributions! \"}" \
               "https://api.github.com/repos/${{ github.repository }}/$endpoint/$item/comments"
           done
         }
