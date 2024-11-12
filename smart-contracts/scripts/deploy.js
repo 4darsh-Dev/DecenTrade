@@ -3,60 +3,54 @@ const hre = require("hardhat");
 async function main() {
     console.log("Starting deployment...");
 
-    // Get the contract factories
-    const DecentradeNFT = await hre.ethers.getContractFactory("DecentradeNFT");
-    const DecentradeMarketplace = await hre.ethers.getContractFactory("DecentradeMarketplace");
+    try {
+        // Get the contract factories
+        const DecentradeNFT = await hre.ethers.getContractFactory("DecentradeNFT");
+        const DecentradeMarketplace = await hre.ethers.getContractFactory("DecentradeMarketplace");
 
-    // Deploy DecentradeNFT
-    console.log("Deploying DecentradeNFT...");
-    const nftContract = await DecentradeNFT.deploy();
-    await nftContract.deployed(); // Wait for the contract to be deployed
-    console.log("DecentradeNFT deployed to:", nftContract.address);
+        // Deploy DecentradeNFT
+        console.log("Deploying DecentradeNFT...");
+        const nftContract = await DecentradeNFT.deploy();
+        
+        console.log("nftContract: ", nftContract); // Log the nftContract object to check what is being returned
+        
+        // Ensure the deployment transaction response exists
+        if (!nftContract.deployTransaction) {
+            throw new Error("Transaction response is undefined.");
+        }
 
-    // Wait for the transaction to be mined and get the receipt
-    const nftDeployReceipt = await nftContract.deployTransaction.wait();
-    
-    // Log gas used and transaction cost
-    const nftGasPrice = nftContract.deployTransaction.gasPrice || (await hre.ethers.provider.getGasPrice());
-    console.log("DecentradeNFT deployment gas used:", nftDeployReceipt.gasUsed.toString());
-    console.log("DecentradeNFT deployment transaction cost:", hre.ethers.utils.formatEther(nftDeployReceipt.gasUsed.mul(nftGasPrice)) + " ETH");
+        // Wait for the contract deployment transaction to be mined
+        const nftDeployReceipt = await nftContract.deployTransaction.wait();
+        console.log("DecentradeNFT deployed to:", nftContract.address);
+        console.log("DecentradeNFT deployment gas used:", nftDeployReceipt.gasUsed.toString());
+        console.log("DecentradeNFT deployment transaction cost:", hre.ethers.utils.formatEther(nftDeployReceipt.gasUsed.mul(nftDeployReceipt.gasPrice)) + " ETH");
 
-    // Deploy DecentradeMarketplace
-    console.log("\nDeploying DecentradeMarketplace...");
-    const marketplaceContract = await DecentradeMarketplace.deploy();
-    await marketplaceContract.deployed(); // Wait for the contract to be deployed
-    console.log("DecentradeMarketplace deployed to:", marketplaceContract.address);
+        // Deploy DecentradeMarketplace
+        console.log("\nDeploying DecentradeMarketplace...");
+        const marketplaceContract = await DecentradeMarketplace.deploy();
+        
+        console.log("marketplaceContract: ", marketplaceContract); // Log the marketplaceContract object to check what is being returned
+        
+        // Ensure the deployment transaction response exists
+        if (!marketplaceContract.deployTransaction) {
+            throw new Error("Transaction response is undefined.");
+        }
 
-    // Wait for the transaction to be mined and get the receipt
-    const marketplaceDeployReceipt = await marketplaceContract.deployTransaction.wait();
-    
-    // Log gas used and transaction cost
-    const marketplaceGasPrice = marketplaceContract.deployTransaction.gasPrice || (await hre.ethers.provider.getGasPrice());
-    console.log("DecentradeMarketplace deployment gas used:", marketplaceDeployReceipt.gasUsed.toString());
-    console.log("DecentradeMarketplace deployment transaction cost:", hre.ethers.utils.formatEther(marketplaceDeployReceipt.gasUsed.mul(marketplaceGasPrice)) + " ETH");
+        // Wait for the contract deployment transaction to be mined
+        const marketplaceDeployReceipt = await marketplaceContract.deployTransaction.wait();
+        console.log("DecentradeMarketplace deployed to:", marketplaceContract.address);
+        console.log("DecentradeMarketplace deployment gas used:", marketplaceDeployReceipt.gasUsed.toString());
+        console.log("DecentradeMarketplace deployment transaction cost:", hre.ethers.utils.formatEther(marketplaceDeployReceipt.gasUsed.mul(marketplaceDeployReceipt.gasPrice)) + " ETH");
 
-    // Get contract sizes
-    const nftContractSize = (await hre.artifacts.readArtifact("DecentradeNFT")).deployedBytecode.length / 2;
-    const marketplaceContractSize = (await hre.artifacts.readArtifact("DecentradeMarketplace")).deployedBytecode.length / 2;
-
-    console.log("\nContract Sizes:");
-    console.log("DecentradeNFT size:", nftContractSize, "bytes");
-    console.log("DecentradeMarketplace size:", marketplaceContractSize, "bytes");
-
-    // Calculate total deployment cost
-    const totalCost = hre.ethers.utils.formatEther(
-        nftDeployReceipt.gasUsed.mul(nftGasPrice).add(
-            marketplaceDeployReceipt.gasUsed.mul(marketplaceGasPrice)
-        )
-    );
-    console.log("\nTotal deployment cost:", totalCost, "ETH");
-
-    console.log("\nDeployment completed successfully!");
+        console.log("\nDeployment completed successfully!");
+    } catch (error) {
+        console.error("Error during deployment:", error);
+    }
 }
 
 main()
     .then(() => process.exit(0))
     .catch((error) => {
-        console.error("Error during deployment:", error);
+        console.error("Error during execution:", error);
         process.exit(1);
     });

@@ -18,5 +18,7 @@
     "nodemon": "^3.1.7",
     "pako": "^2.1.0",
     "pinata-web3": "^0.5.1"
-  }
+  },
+  "devDependencies": {},
+  "keywords": []
 }
