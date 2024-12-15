@@ -3,6 +3,8 @@ import './CreatorsPage.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
 import CountUp from 'react-countup'
+import { HashLoader } from 'react-spinners'
+
 const CreatorsPage = () => {
     const [contributors, setContributors] = useState([])
     const [repoStats, setRepoStats] = useState({})
@@ -90,38 +92,45 @@ const CreatorsPage = () => {
     // Render contributors
     const renderContributors = () => {
         return (
-            <div
-                className="contributor-contributors-grid"
-                id="contributorsGrid"
-            >
-                {contributors.map((contributor) => (
+            // adding the preloader
+            
+
                     <div
-                        className="contributor-contributor-card"
-                        key={contributor.login}
+                    className="contributor-contributors-grid"
+                    id="contributorsGrid"
                     >
-                        <img
-                            src={contributor.avatar_url}
-                            alt={contributor.login}
-                        />
-                        <h3>{contributor.login}</h3>
-                        <p>{contributor.type}</p>
-                        <div className="contributor-contributions">
-                            {contributor.contributions} contributions
+                    {contributors.map((contributor) => (
+                        <div
+                            className="contributor-contributor-card"
+                            key={contributor.login}
+                        >
+                            <img
+                                src={contributor.avatar_url}
+                                alt={contributor.login}
+                            />
+                            <h3>{contributor.login}</h3>
+                            <p>{contributor.type}</p>
+                            <div className="contributor-contributions">
+                                {contributor.contributions} contributions
+                            </div>
+                            <div className="contributor-footer">
+                                <a
+                                    href={contributor.html_url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    {getIcon('external-link')}
+                                    <FontAwesomeIcon icon={faGithub} />
+                                </a>
+                                {getIcon('github')}
+                            </div>
                         </div>
-                        <div className="contributor-footer">
-                            <a
-                                href={contributor.html_url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                {getIcon('external-link')}
-                                <FontAwesomeIcon icon={faGithub} />
-                            </a>
-                            {getIcon('github')}
-                        </div>
+                    ))}
                     </div>
-                ))}
-            </div>
+                
+
+            
+            
         )
     }
 
@@ -138,7 +147,10 @@ const CreatorsPage = () => {
             <section className=" dark:bg-slate-900">
                 <div className="contributor-contributors">
                     {loading ? (
-                        <div id="loading" className="contributor-loading"></div>
+                        // <div id="loading" className="contributor-loading"></div>
+                        <div className="flex justify-center items-center min-h-screen">
+                        <HashLoader color={'#252550'} size={50} loading={loading} />
+                    </div>
                     ) : (
                         <>
                             <h2 className="dark:text-white">

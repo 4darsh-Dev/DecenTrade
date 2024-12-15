@@ -4,6 +4,7 @@ import NFTCard from '../components/NFTCard'
 import { connectWallet } from '../utils/ethereum'
 import { ethers } from 'ethers'
 import { useNavigate } from 'react-router-dom'
+import { HashLoader } from 'react-spinners';
 
 const ExplorePage = () => {
     const [nfts, setNfts] = useState([])
@@ -125,9 +126,13 @@ const ExplorePage = () => {
 
     if (loading) {
         return (
-            <div className="text-center py-10">
-                Loading NFTs... Please wait.
+            // <div className="text-center py-10">
+            //     Loading NFTs... Please wait.
+            // </div>
+            <div className="flex justify-center items-center min-h-screen">
+                <HashLoader color={"#252550"} size={50} loading={loading}  />
             </div>
+
         )
     }
 
