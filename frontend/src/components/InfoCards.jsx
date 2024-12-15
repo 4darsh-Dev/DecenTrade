@@ -45,7 +45,7 @@ const InfoCards = () => {
                 'Understand the process of buying, selling, and creating NFTs with our easy-to-follow guide.',
             buttonText: 'Get Started',
             badge: 'Guide',
-            link:'/how-it-works',
+            link:'/about',
         },
     ]
 
