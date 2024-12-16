@@ -1,12 +1,17 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+
+
 
 const Chatbot = () => {
+
     const [messages, setMessages] = useState([
         { user: 'bot', text: 'Hello! How can I assist you with NFTs today?' },
     ])
     const [input, setInput] = useState('')
     const [isOpen, setIsOpen] = useState(false) // State to control chat window visibility
 
+    const navigate = useNavigate()
     const handleSendMessage = () => {
         if (input.trim()) {
             const userMessage = { user: 'me', text: input }
@@ -143,6 +148,7 @@ const Chatbot = () => {
     }
 
     return (
+
         <div className="relative">
             {/* Chat Button */}
             <button
@@ -152,9 +158,17 @@ const Chatbot = () => {
                 💬
             </button>
 
+             
+
             {/* Chat Window */}
             {isOpen && (
                 <div className="fixed bottom-16 right-4 w-80 bg-gray-800 text-white rounded-lg shadow-lg p-4 z-50">
+                    <button
+        className="fixed bottom-4 right-20 bg-green-500 text-white p-3 rounded-full shadow-lg transition-transform transform hover:scale-105 z-50"
+        onClick={() => navigate('/chat')}
+    >
+        Go to Chat Page
+    </button>
                     <div className="flex flex-col max-h-60 overflow-y-auto">
                         {messages.map((msg, index) => (
                             <div
@@ -186,6 +200,8 @@ const Chatbot = () => {
                     </div>
                 </div>
             )}
+        
+            
         </div>
     )
 }
