@@ -4,6 +4,7 @@ import ChatInput from '../components/ChatInput';
 import ChatMessage from '../components/ChatMessage';
 import { motion, AnimatePresence } from 'framer-motion';
 import { RiseLoader } from 'react-spinners';
+import VoiceInput from '../components/VoiceInput';
 
 const ChatPage = () => {
   const [messages, setMessages] = useState([]);
@@ -52,24 +53,29 @@ const ChatPage = () => {
     }
   };
 
-  const handleVoiceInput = () => {
-    // Implement voice input functionality
-    if ('webkitSpeechRecognition' in window) {
-      const recognition = new window.webkitSpeechRecognition();
-      recognition.continuous = false;
-      recognition.interimResults = false;
-      recognition.lang = 'en-US';
+//   const handleVoiceInput = () => {
+//     // Implement voice input functionality
+//     if ('webkitSpeechRecognition' in window) {
+//       const recognition = new window.webkitSpeechRecognition();
+//       recognition.continuous = false;
+//       recognition.interimResults = false;
+//       recognition.lang = 'en-US';
 
-      recognition.onresult = (event) => {
-        const transcript = event.results[0][0].transcript;
-        handleSendMessage(transcript);
-      };
+//       recognition.onresult = (event) => {
+//         const transcript = event.results[0][0].transcript;
+//         handleSendMessage(transcript);
+//       };
 
-      recognition.start();
-    } else {
-      alert('Speech recognition not supported');
-    }
-  };
+//       recognition.start();
+//     } else {
+//       alert('Speech recognition not supported');
+//     }
+//   };
+
+    const handleVoiceInputComplete = (transcribedText) => {
+        // Send transcribed text to Gradio or process as needed
+        handleSendMessage(transcribedText);
+    };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-blue-900 flex items-center justify-center p-4">
@@ -113,11 +119,17 @@ const ChatPage = () => {
         <div className="p-4 border-t border-gray-700/50">
           <ChatInput 
             onSendMessage={handleSendMessage}
-            onVoiceInput={handleVoiceInput}
+            // onVoiceInput={handleVoiceInput}
           />
         </div>
+
+        {/* Voice Input Modal */}
+        <VoiceInput onVoiceInputComplete={handleVoiceInputComplete} />
+
       </motion.div>
     </div>
+
+    
   );
 };
 

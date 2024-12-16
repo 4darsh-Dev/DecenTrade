@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Mic, Send } from 'lucide-react';
 
-const ChatInput = ({ onSendMessage, onVoiceInput }) => {
+const ChatInput = ({ onSendMessage }) => {
   const [message, setMessage] = useState('');
 
   const handleSubmit = (e) => {
@@ -12,10 +12,10 @@ const ChatInput = ({ onSendMessage, onVoiceInput }) => {
     }
   };
 
-  const handleVoiceInput = () => {
-    // Implement voice input functionality
-    onVoiceInput();
-  };
+//   const handleVoiceInput = () => {
+//     // Implement voice input functionality
+//     onVoiceInput();
+//   };
 
   return (
     <form 
@@ -29,13 +29,13 @@ const ChatInput = ({ onSendMessage, onVoiceInput }) => {
         placeholder="Type your message..."
         className="flex-grow bg-transparent outline-none text-white placeholder-gray-300 px-2"
       />
-      <button 
+      {/* <button 
         type="button" 
         onClick={handleVoiceInput}
         className="text-gray-300 hover:text-white transition-colors"
       >
         <Mic size={24} />
-      </button>
+      </button> */}
       <button 
         type="submit" 
         className="bg-blue-600 text-white rounded-full p-2 hover:bg-blue-700 transition-colors"
