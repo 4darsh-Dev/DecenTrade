@@ -15,6 +15,7 @@ import MyChatbot from './Chatbot';
 import CustomCursor from './components/CustomCursor';
 import GTranslateLoader from './components/GTranslateLoader'
 import ScrollToTop from './components/ScrollToTop';
+import ChatPage from './pages/ChatPage';
 
 function App() {
     const [wallet, setWallet] = useState(null);
@@ -49,6 +50,7 @@ function App() {
                         <Route path="/creators" element={<CreatorsPage />} />
                         <Route path="/faqs" element={<FAQPage />} />
                         <Route path="*" element={<NotFoundPage />} />
+                        <Route path ="/chat" element = { <ChatPage />} />
                     </Routes>
                 </main>
 
