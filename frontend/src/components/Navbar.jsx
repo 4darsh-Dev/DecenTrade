@@ -4,13 +4,15 @@ import { Search, Menu, X } from 'lucide-react'
 import logo from '../assets/decentrade-logo.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
-import './Navbar.css'
+import '../styles/Navbar.css'
 import { connectWallet, mintNFT } from '../utils/ethereum'
+import ThemeToggle from './ThemeToggle'
+
 
 const Navbar = ({ wallet, setWallet }) => {
     const [tokenURI, setTokenURI] = useState('')
     const [showMintOption, setShowMintOption] = useState(false)
-    const [darkMode, setDarkMode] = useState(false)
+    // const [darkMode, setDarkMode] = useState(false)
     const [isMenuOpen, setIsMenuOpen] = useState(false)
 
     const handleGithubClick = () => {
@@ -38,11 +40,8 @@ const Navbar = ({ wallet, setWallet }) => {
         }
     }
 
-    const toggleDarkMode = () => {
-        setDarkMode(!darkMode)
-        document.body.classList.toggle('dark', !darkMode)
-    }
 
+    
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen)
     }
@@ -87,9 +86,7 @@ const Navbar = ({ wallet, setWallet }) => {
                     </Link>
                 ))}
                 <div className="mode-toggle">
-                    <button onClick={toggleDarkMode} className="toggle-button">
-                        {darkMode ? '🌞' : '🌙'}
-                    </button>
+                    <ThemeToggle />
                 </div>
             </div>
 
