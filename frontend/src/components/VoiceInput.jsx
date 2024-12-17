@@ -11,6 +11,12 @@ const VoiceInput = ({ onVoiceInputComplete }) => {
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [audioStream, setAudioStream] = useState(null);
 
+
+    // // Refs for audio processing
+    const visualizerRef = useRef(null );
+    const recorderControls = useVoiceVisualizer();
+    const { recordedBlob, error } = recorderControls;
+  
   useEffect(() => {
     if (!recordedBlob) return;
     console.log(recordedBlob);
@@ -21,16 +27,6 @@ const VoiceInput = ({ onVoiceInputComplete }) => {
     console.error(error);
   }, [error]);
 
-  
-    // // Refs for audio processing
-  const visualizerRef = useRef(null );
-  const recorderControls = useVoiceVisualizer();
-  const { recordedBlob, error } = recorderControls;
-
-
-
-
-
 
 
 
@@ -38,7 +34,7 @@ const VoiceInput = ({ onVoiceInputComplete }) => {
   // Advanced voice recognition setup
   const setupSpeechRecognition = async () => {
     try {
-      // Use modern Web Speech API with Speechly polyfill for enhanced cross-browser support
+      
       const SpeechlySpeechRecognition = createSpeechlySpeechRecognition();
       const recognition = new SpeechlySpeechRecognition();
 
@@ -99,7 +95,7 @@ const VoiceInput = ({ onVoiceInputComplete }) => {
 
     } catch (error) {
       console.error('Voice input initialization error:', error);
-      // setIsListening(false);
+      
     }
   };
 
@@ -146,7 +142,7 @@ const VoiceInput = ({ onVoiceInputComplete }) => {
       {isListening && (
         <div className="flex-grow">
           <VoiceVisualizer 
-            // ref={visualizerRef}
+            
             controls={recorderControls}
             width={200}
             height={50}
