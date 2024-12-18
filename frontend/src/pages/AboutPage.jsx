@@ -97,7 +97,7 @@ const AboutPage = () => {
     return (
         <>
             <section className="min-h-screen w-full bg-gradient-to-b from-[#252550] to-[#1A1A1A] text-white flex flex-col justify-center items-center p-6 overflow-hidden">
-                <div className="p-10 rounded-lg shadow-lg max-w-6xl mx-auto mt-12 w-full sm:w-11/12">
+                <div className="p-10 sm:p-0 rounded-lg shadow-lg max-w-6xl mx-auto mt-12 w-full sm:w-11/12">
                     <motion.h1
                         className="text-4xl sm:text-6xl font-bold mb-6 animate-pulse text-center"
                         initial={{ opacity: 0, y: -50 }}

@@ -35,11 +35,18 @@ const ChatPage = () => {
       setIsLoading(true);
       
       // Connect to Gradio client
-      const client = await Client.connect("4darsh-Dev/orchard_eyes-chatbot");
+
+      // AI activity endpoint
+      const client = await Client.connect("AiActivity/AI-Assistant");
+      
+      const result = await client.predict("/chat", { message: { text: userMessage, files: [] } });
+
+      // 4darsh-Dev API endpoint 
+      // const client = await Client.connect("4darsh-Dev/orchard_eyes-chatbot");
     //   const result = await client.predict("/chat", { message: userMessage });
-       const result = {
-        data: ["Hello sir, I am here to help you, Under Maintenance Mode For Now."]
-      };
+      //  const result = {
+      //   data: ["Hello sir, I am here to help you, Under Maintenance Mode For Now."]
+      // };
       
       
       // Add bot response
