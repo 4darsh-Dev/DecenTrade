@@ -4,4 +4,27 @@
         background: #252550 !important;
         
     }
+    .about-main-div{
+        padding: 0  !important;
+    }
+    .contact-div-first{
+        padding: 1rem !important;
+    }
+    .contact-wrapper{
+        padding: 0 !important;
+    }
+    .contact-image{
+        display: none !important;
+    }
+
+    .faq-div-main{
+        padding-right: 0 !important;
+    }
+    .faq-mob-txt{
+        font-size: 24px !important;
+    }
+    .contact-container h1{
+        font-size: 28px !important;
+    }
+
 }
