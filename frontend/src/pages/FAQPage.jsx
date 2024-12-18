@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar';
 import ContactUs from '../components/ContactUs';
 import FAQImage from '../assets/faq-image.png';
 import "../styles/faq.css";
+import "../styles/home_resp.css";
 
 const FAQPage = () => {
   const faqData = [
@@ -88,10 +89,10 @@ const FAQPage = () => {
 
   return (
     <>
-      <div className="min-h-screen p-8 bg-gray-50 dark:bg-slate-900">
+      <div className="min-h-screen contact-div-first p-8 bg-gray-50 dark:bg-slate-900">
       <ContactUs />
         <div className="mx-auto flex flex-col lg:flex-row">
-          <div className="lg:w-3/6 pr-8">
+          <div className="lg:w-3/6 pr-8 faq-div-main">
             <div className="text-center lg:text-left pt-6">
               <h1 className="text-4xl lg:text-5xl font-extrabold bg-gradient-to-r from-blue-500 to-purple-500 text-transparent bg-clip-text text-center">
                 FAQs
@@ -100,7 +101,7 @@ const FAQPage = () => {
             </div>
 
             <section className="mb-16 mt-8">
-              <h2 className="text-3xl font-semibold text-indigo-600 mb-8">Frequently Asked Questions</h2>
+              <h2 className="text-3xl faq-mob-txt font-semibold text-indigo-600 mb-8">Frequently Asked Questions</h2>
               <div className="space-y-4">
                 {faqData.map((item, index) => (
                   <div
