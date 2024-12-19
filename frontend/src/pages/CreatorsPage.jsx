@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import './CreatorsPage.css'
+import '../styles/CreatorsPage.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
 import CountUp from 'react-countup'

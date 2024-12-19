@@ -13,7 +13,7 @@ import NotFoundPage from './components/NotFoundPage';
 import Footer from './components/Footer';
 import MyChatbot from './Chatbot';
 import CustomCursor from './components/CustomCursor';
-import GTranslateLoader from './components/GTranslateLoader'
+import GTranslateLoader from './utils/GTranslateLoader';
 import ScrollToTop from './components/ScrollToTop';
 import ChatPage from './pages/ChatPage';
 
