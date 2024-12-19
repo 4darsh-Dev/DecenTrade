@@ -33,13 +33,16 @@ const ChatPage = () => {
 
     try {
       setIsLoading(true);
-      
-      // Connect to Gradio client
 
       // AI activity endpoint
       const client = await Client.connect("AiActivity/AI-Assistant");
+      const rolePrompt = "You role is chatbot assistant with good conversational skills, Keep the output short (30 to 40) words maximum and You're working on Decentrade : A decentralized NFt Marketplace. Built by Adarsh Maurya  "
+
+      const finalPrompt = `Role: ${rolePrompt} 
+      User : ${userMessage}
+      `
       
-      const result = await client.predict("/chat", { message: { text: userMessage, files: [] } });
+      const result = await client.predict("/chat", { message: { text: finalPrompt, files: [] } });
 
       // 4darsh-Dev API endpoint 
       // const client = await Client.connect("4darsh-Dev/orchard_eyes-chatbot");
