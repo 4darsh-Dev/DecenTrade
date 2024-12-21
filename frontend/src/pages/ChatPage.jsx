@@ -38,7 +38,7 @@ const ChatPage = () => {
       const client = await Client.connect("AiActivity/AI-Assistant");
       const rolePrompt = "You role is chatbot assistant with good conversational skills, Keep the output short (30 to 40) words maximum and You're working on Decentrade : A decentralized NFt Marketplace. Built by Adarsh Maurya  "
 
-      const finalPrompt = `Role: ${rolePrompt} 
+      const finalPrompt = `Role: ${rolePrompt}    
       User : ${userMessage}
       `
       
