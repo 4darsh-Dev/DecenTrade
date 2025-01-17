@@ -1,10 +1,76 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
-import { connectWallet, createNFT } from '../utils/ethereum'
-import { ethers } from 'ethers'
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
+import { connectWallet, createNFT } from '../utils/ethereum';
 
-const nftAddress = import.meta.env.VITE_NFT_ADDRESS
-const marketplaceAddress = import.meta.env.VITE_MARKET_ADDRESS
+const ThemeToggle = ({ className }) => {
+    const [darkMode, setDarkMode] = useState(false);
+
+    const toggleDarkMode = () => {
+        setDarkMode((prevMode) => !prevMode);
+        document.body.classList.toggle('dark', !darkMode);
+    };
+
+    useEffect(() => {
+        const savedMode = localStorage.getItem('darkMode') === 'true';
+        setDarkMode(savedMode);
+        document.body.classList.toggle('dark', savedMode);
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem('darkMode', darkMode);
+    }, [darkMode]);
+
+    return (
+        <motion.div
+            onClick={toggleDarkMode}
+            className={`relative w-24 h-12 rounded-full cursor-pointer flex items-center px-2 ${
+                darkMode ? 'bg-[#002855]' : 'bg-[#FFD966]'
+            } ${className}`}
+            layout
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+        >
+            <AnimatePresence>
+                {darkMode ? (
+                    <motion.div
+                        key="moon"
+                        initial={{ x: -40, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        exit={{ x: 40, opacity: 0 }}
+                        transition={{ duration: 0.5 }}
+                        className="absolute left-1 text-blue-400"
+                    >
+                        <FontAwesomeIcon icon={faMoon} size="lg" />
+                    </motion.div>
+                ) : (
+                    <motion.div
+                        key="sun"
+                        initial={{ x: 40, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        exit={{ x: -40, opacity: 0 }}
+                        transition={{ duration: 0.5 }}
+                        className="absolute right-1 text-yellow-500"
+                    >
+                        <FontAwesomeIcon icon={faSun} size="lg" />
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            <motion.div
+                className="w-10 h-10 bg-white rounded-full shadow-md"
+                layout
+                transition={{ type: 'spring', stiffness: 700, damping: 30 }}
+                style={{
+                    x: darkMode ? '100%' : '0%',
+                }}
+            ></motion.div>
+        </motion.div>
+    );
+};
 
 const CreateNFT = ({ wallet }) => {
     const [formData, setFormData] = useState({
@@ -12,7 +78,7 @@ const CreateNFT = ({ wallet }) => {
         description: '',
         price: '',
         file: null,
-    })
+    });
     const [dragging, setDragging] = useState(false);
 
     const handleChange = (e) => {
@@ -21,29 +87,28 @@ const CreateNFT = ({ wallet }) => {
             ...prevState,
             [name]: files ? files[0] : value,
         }));
-    }
+    };
 
     const handleDragOver = (e) => {
         e.preventDefault();
-        if (!dragging) setDragging(true); // Prevent unnecessary reassignments
-    }
+        if (!dragging) setDragging(true);
+    };
 
     const handleDragLeave = () => {
-        if (dragging) setDragging(false); // Prevent unnecessary reassignments
-    }
+        if (dragging) setDragging(false);
+    };
 
     const handleDrop = (e) => {
         e.preventDefault();
         setDragging(false);
         const droppedFiles = e.dataTransfer.files;
-
         if (droppedFiles && droppedFiles[0]) {
             setFormData((prevState) => ({
                 ...prevState,
                 file: droppedFiles[0],
             }));
         }
-    }
+    };
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -51,27 +116,23 @@ const CreateNFT = ({ wallet }) => {
             ...prevState,
             file: file,
         }));
-    }
+    };
 
     const handleCancelFile = () => {
         setFormData((prevState) => ({
             ...prevState,
             file: null,
         }));
-    }
+    };
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
-
+        e.preventDefault();
         try {
-            const { name, description, price, file } = formData
-
+            const { name, description, price, file } = formData;
             if (!name || !description || !price || !file) {
-                throw new Error('All fields are required')
+                throw new Error('All fields are required');
             }
-
-            const signer = await connectWallet()
-
+            const signer = await connectWallet();
             try {
                 const tokenId = await createNFT(
                     signer,
@@ -79,33 +140,34 @@ const CreateNFT = ({ wallet }) => {
                     description,
                     price,
                     file,
-                    nftAddress,
-                    marketplaceAddress
-                )
-                console.log('NFT created and listed with token ID:', tokenId)
+                    import.meta.env.VITE_NFT_ADDRESS,
+                    import.meta.env.VITE_MARKET_ADDRESS
+                );
+                console.log('NFT created and listed with token ID:', tokenId);
             } catch (error) {
-                console.error('Failed to create and list NFT:', error)
+                console.error('Failed to create and list NFT:', error);
             }
         } catch (error) {
-            console.error('Error creating NFT:', error)
+            console.error('Error creating NFT:', error);
         }
-    }
+    };
 
     return (
-        <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-gray-900 via-purple-900 to-black overflow-hidden">
-            <div
-                className="text-white shadow-2xl rounded-lg p-10 mt-10 mb-10 max-w-2xl w-full mx-4 transform transition-all duration-300 hover:scale-105 hover:shadow-3xl"
+        <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-purple-100 via-purple-200 to-white dark:from-gray-900 dark:via-purple-900 dark:to-black overflow-hidden transition-colors duration-300">
+            <motion.div
+                className="text-gray-900 dark:text-white shadow-2xl rounded-lg p-10 mt-10 mb-10 max-w-2xl w-full mx-4 relative transform transition-all duration-300 hover:scale-105 hover:shadow-3xl"
                 style={{
-                    background: 'linear-gradient(to bottom right, #252550 20%, #ff00ff 100%)',
+                    background: 'var(--form-bg)',
                 }}
-                onDragOver={handleDragOver}
-                onDragLeave={handleDragLeave}
-                onDrop={handleDrop}
-                role="button" 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
             >
-                <h1 className="text-4xl font-bold text-center text-white mb-6">
+
+                <h1 className="text-4xl font-bold text-center mb-6">
                     CREATE NFT
                 </h1>
+
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
                         <label
@@ -125,6 +187,7 @@ const CreateNFT = ({ wallet }) => {
                             className="w-full p-3 border-none rounded-lg shadow-sm bg-white text-black focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
                         />
                     </div>
+
                     <div>
                         <label
                             htmlFor="description"
@@ -141,8 +204,9 @@ const CreateNFT = ({ wallet }) => {
                             required
                             className="w-full p-3 border-none rounded-lg shadow-sm bg-white text-black focus:outline-none focus:ring-2 focus:ring-purple-500 transition resize-none"
                             rows="4"
-                        ></textarea>
+                        />
                     </div>
+
                     <div>
                         <label
                             htmlFor="price"
@@ -162,6 +226,7 @@ const CreateNFT = ({ wallet }) => {
                             className="w-full p-3 border-none rounded-lg shadow-sm bg-white text-black focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
                         />
                     </div>
+
                     <div>
                         <label
                             htmlFor="file"
@@ -176,7 +241,7 @@ const CreateNFT = ({ wallet }) => {
                             onDragOver={handleDragOver}
                             onDragLeave={handleDragLeave}
                             onDrop={handleDrop}
-                            role="button" 
+                            role="button"
                         >
                             {formData.file ? (
                                 <div className="flex justify-between items-center">
@@ -190,7 +255,7 @@ const CreateNFT = ({ wallet }) => {
                                     </button>
                                 </div>
                             ) : (
-                                <div className="flex items-center"> 
+                                <div className="flex items-center">
                                     <p className="text-gray-500">Drag And Drop File Or</p>
                                     <input
                                         type="file"
@@ -198,26 +263,27 @@ const CreateNFT = ({ wallet }) => {
                                         name="file"
                                         onChange={handleFileChange}
                                         required
-                                        className="cursor-pointer ml-1" 
+                                        className="cursor-pointer ml-1"
                                     />
                                 </div>
                             )}
                         </div>
                     </div>
+
                     <button
                         type="submit"
-                        className="w-full bg-purple-800 hover:bg-purple-900 text-white font-bold py-3 rounded-lg transition"
+                        className="w-full bg-purple-600 dark:bg-purple-800 hover:bg-purple-700 dark:hover:bg-purple-900 text-white font-bold py-3 rounded-lg transition"
                     >
                         Create NFT
                     </button>
                 </form>
-            </div>
+            </motion.div>
         </div>
-    )
-}
+    );
+};
 
 CreateNFT.propTypes = {
     wallet: PropTypes.object.isRequired,
-}
+};
 
-export default CreateNFT
+export default CreateNFT;

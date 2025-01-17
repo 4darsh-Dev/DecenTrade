@@ -96,10 +96,10 @@ const additionalFeatures = [
 const AboutPage = () => {
     return (
         <>
-            <section className="min-h-screen w-full bg-gradient-to-b from-[#252550] to-[#1A1A1A] text-white flex flex-col justify-center items-center p-6 overflow-hidden">
+            <section className="min-h-screen w-full bg-gradient-to-b from-purple-100 to-white dark:from-[#252550] dark:to-[#1A1A1A] text-gray-800 dark:text-white flex flex-col justify-center items-center p-6 overflow-hidden transition-colors duration-300">
                 <div className="p-10 about-main-div rounded-lg shadow-lg max-w-6xl mx-auto mt-12 w-full sm:w-11/12">
                     <motion.h1
-                        className="text-4xl sm:text-6xl font-bold mb-6 animate-pulse text-center"
+                        className="text-4xl sm:text-6xl font-bold mb-6 text-center bg-gradient-to-r from-purple-600 to-blue-600 dark:from-[#47B7FF] dark:to-[#CA35FF] bg-clip-text text-transparent"
                         initial={{ opacity: 0, y: -50 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
@@ -113,24 +113,22 @@ const AboutPage = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1.2 }}
                     >
-                        DecenTrade is a decentralized digital marketplace built
-                        on the Ethereum blockchain, empowering users to engage
-                        in secure and transparent transactions for digital
-                        assets.
+                        DecenTrade is a decentralized digital marketplace built on the Ethereum blockchain, 
+                        empowering users to engage in secure and transparent transactions for digital assets.
                     </motion.p>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
                         {features.map((feature) => (
                             <motion.div
-                                key={feature.id} // Use unique ID as key
-                                className="bg-gradient-to-r from-[#47B7FF] to-[#CA35FF] p-6 rounded-lg shadow-lg hover:shadow-xl transform transition duration-100 glassmorphism flex flex-col justify-between h-full"
+                                key={feature.id}
+                                className="bg-gradient-to-r from-purple-400 to-blue-400 dark:from-[#47B7FF] dark:to-[#CA35FF] p-6 rounded-lg shadow-lg hover:shadow-xl transform transition duration-100 backdrop-blur-sm bg-opacity-20 dark:bg-opacity-20 flex flex-col justify-between h-full"
                                 whileHover={{ scale: 1.05 }}
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.2 }}
                             >
                                 <h3 className="text-2xl font-bold mb-2">
-                                    {feature.icon} {feature.title}
+                                    {feature.title}
                                 </h3>
                                 <p className="flex-grow">
                                     {feature.description}
@@ -141,16 +139,17 @@ const AboutPage = () => {
                 </div>
 
                 <div className="max-w-4xl mx-auto text-center mt-12">
-                    <h2 className="text-4xl font-bold mb-6">Our Vision</h2>
+                    <h2 className="text-4xl font-bold mb-6 bg-gradient-to-r from-purple-600 to-blue-600 dark:from-[#47B7FF] dark:to-[#CA35FF] bg-clip-text text-transparent">
+                        Our Vision
+                    </h2>
                     <motion.p
                         className="text-lg mb-4 leading-relaxed"
                         initial={{ opacity: 0, y: 50 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1.5 }}
                     >
-                        At DecenTrade, we envision a world where digital assets
-                        are easily accessible, allowing everyone to participate
-                        in the digital economy.
+                        At DecenTrade, we envision a world where digital assets are easily accessible, 
+                        allowing everyone to participate in the digital economy.
                     </motion.p>
 
                     <motion.p
@@ -159,21 +158,20 @@ const AboutPage = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1.8 }}
                     >
-                        Our mission is to create a secure, transparent, and
-                        user-friendly platform for trading various digital
-                        assets, empowering creators and collectors alike.
+                        Our mission is to create a secure, transparent, and user-friendly platform for 
+                        trading various digital assets, empowering creators and collectors alike.
                     </motion.p>
                 </div>
 
                 <div className="max-w-5xl mx-auto mt-12">
-                    <h2 className="text-4xl font-bold mb-6 text-center">
+                    <h2 className="text-4xl font-bold mb-6 text-center bg-gradient-to-r from-purple-600 to-blue-600 dark:from-[#47B7FF] dark:to-[#CA35FF] bg-clip-text text-transparent">
                         Why Choose Us?
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {additionalFeatures.map((item) => (
                             <motion.div
-                                key={item.id} // Use unique ID as key
-                                className="bg-gradient-to-r from-[#9F10B2] to-[#541C82] p-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-100 glassmorphism"
+                                key={item.id}
+                                className="bg-gradient-to-r from-purple-300 to-blue-300 dark:from-[#9F10B2] dark:to-[#541C82] p-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-100 backdrop-blur-sm bg-opacity-20 dark:bg-opacity-20"
                                 initial={{ opacity: 0, y: 30 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.2 }}
@@ -188,9 +186,8 @@ const AboutPage = () => {
                     </div>
                 </div>
             </section>
-
         </>
-    )
-}
+    );
+};
 
 export default AboutPage
