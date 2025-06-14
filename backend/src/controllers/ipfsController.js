@@ -1,37 +1,77 @@
 import {
-  testIpfs,
-  uploadMetadataToIPFS,
-  uploadToIPFS
-} from '../services/pinataService.js'
-
-export const uploadNftToIpfs = async (req, res) => {
-  try {
-    if (!req.file) {
-      res.status(400).json({ error: 'No file uploaded' })
+    testIpfs,
+    uploadMetadataToIPFS,
+    uploadToIPFS
+  } from '../services/pinataService.js';
+  
+  export const uploadNftToIpfs = async ({ createReadStream, filename }) => {
+    try {
+      // Test IPFS connectivity
+      await testIpfs();
+  
+      // Create a buffer from the uploaded file stream
+      const fileBuffer = await streamToBuffer(createReadStream());
+  
+      // Upload the file to IPFS
+      const ipfsHash = await uploadToIPFS(filename, fileBuffer);
+  
+      return {
+        ipfsHash,
+        success: true,
+        message: 'File successfully uploaded to IPFS',
+      };
+    } catch (err) {
+      console.error(err);
+      return {
+        ipfsHash: null,
+        success: false,
+        message: `Error uploading file to IPFS: ${err.message}`,
+      };
     }
-    const testing = await testIpfs()
-    const fileName = req.file.originalname
-    const fileBuffer = req.file.buffer
-    const ipfsHash = await uploadToIPFS(fileName, fileBuffer)
-    res.status(200).json({ ipfsHash })
-  } catch (err) {
-    console.error(err)
-    res.status(500).json({ error: err })
-  }
-}
-export const uploadMetadataToIpfs = async (req, res) => {
-  try {
-    const { name, description, image } = JSON.parse(req.body.metadata)
-    if (!name || !description || !image) {
-      res.status(400).json({ error: 'Missing metadata' })
-      return
+  };
+  
+  export const uploadMetadataToIpfs = async ({ metadata }) => {
+    try {
+      const { name, description, image } = metadata;
+  
+      // Validate metadata fields
+      if (!name || !description || !image) {
+        return {
+          ipfsHash: null,
+          success: false,
+          message: 'Missing metadata fields: name, description, or image',
+        };
+      }
+  
+      const data = { name, description, image };
+  
+      // Test IPFS connectivity
+      await testIpfs();
+  
+      // Upload the metadata to IPFS
+      const ipfsHash = await uploadMetadataToIPFS(data);
+  
+      return {
+        ipfsHash,
+        success: true,
+        message: 'Metadata successfully uploaded to IPFS',
+      };
+    } catch (err) {
+      console.error(err);
+      return {
+        ipfsHash: null,
+        success: false,
+        message: `Error uploading metadata to IPFS: ${err.message}`,
+      };
     }
-    const data = { name, description, image }
-    await testIpfs()
-    const ipfsHash = await uploadMetadataToIPFS(data)
-    res.status(200).json({ ipfsHash })
-  } catch (err) {
-    console.error(err)
-    res.status(500).json({ error: err })
-  }
-}
+  };
+  
+  // Helper function to convert stream to buffer
+  const streamToBuffer = async (stream) => {
+    const chunks = [];
+    for await (const chunk of stream) {
+      chunks.push(chunk);
+    }
+    return Buffer.concat(chunks);
+  };
+  
